@@ -3,7 +3,11 @@ extends RigidBody3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	match color:
+		0:
+			$MeshInstance3D.mesh = load("res://Fields/DECODE/Artifact/Purple.res")
+		1:
+			$MeshInstance3D.mesh = load("res://Fields/DECODE/Artifact/Green.res")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
