@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dolt2v1md0ndy"]
+
+[ext_resource type="Script" uid="uid://d328hy25pcrq0" path="res://Fields/DECODE/Artifact/Artifact.gd" id="1_aetso"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ahc0e"]
+bounce = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_aetso"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ahc0e"]
+
+[node name="Artifact" type="RigidBody3D" unique_id=441454740]
+physics_material_override = SubResource("PhysicsMaterial_ahc0e")
+script = ExtResource("1_aetso")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1368811541]
+mesh = SubResource("SphereMesh_aetso")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1549520216]
+shape = SubResource("SphereShape3D_ahc0e")
