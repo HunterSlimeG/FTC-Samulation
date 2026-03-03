@@ -2,9 +2,11 @@ extends Field
 
 
 # Called when the node enters the scene tree for the first time.
+var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 func _ready() -> void:
 	Global.field = "DECODE"
-	$AprilTags/Obelisk.texture = load("res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png")
+	$AprilTags/Obelisk.texture = load(tag)
+	$DECODEOverlay/Sprite2D.texture = load(tag)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

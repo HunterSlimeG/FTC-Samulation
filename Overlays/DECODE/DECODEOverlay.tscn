@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c1h8i4cru3yy1"]
+
+[ext_resource type="Script" uid="uid://bgrjyxn3fhyyl" path="res://Overlays/Overlay.gd" id="1_3m4pp"]
+[ext_resource type="Texture2D" uid="uid://cta66qeo8jl0g" path="res://Fields/DECODE/AprilTags/AprilTag (1).png" id="2_7csio"]
+
+[node name="DECODEOverlay" type="Node2D" unique_id=1425552271]
+script = ExtResource("1_3m4pp")
+
+[node name="Button" type="Button" parent="." unique_id=1091993787]
+offset_right = 61.0
+offset_bottom = 31.0
+text = "Reload"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=496070192]
+position = Vector2(1425, 225)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_7csio")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
