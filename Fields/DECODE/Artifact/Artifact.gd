@@ -1,7 +1,6 @@
-
+class_name Artifact
 extends RigidBody3D
 @export_enum("Purple", "Green") var color := 0
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	match color:

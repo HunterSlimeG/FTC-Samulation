@@ -13,13 +13,16 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
-func _on_area_3d_body_exited(body: RigidBody3D) -> void:
-	if body.position.x>0:
-		body.position = $"Misc/Blue Spawner".position
-	elif body.position.x<0:
-		body.position = $"Misc/Red Spawner".position
+func returnArtifact(art: Artifact):
+	if art.position.x>0:
+		art.position = $"Misc/Blue Spawner".position
+	elif art.position.x<0:
+		art.position = $"Misc/Red Spawner".position
 	else:
-		body.position = get_node(["Misc/Red Spawner", "Misc/Blue Spawner"].pick_random()).position
-	body.linear_velocity = Vector3.ZERO
-	body.angular_velocity = Vector3.ZERO
+		art.position = get_node(["Misc/Red Spawner", "Misc/Blue Spawner"].pick_random()).position
+	art.linear_velocity = Vector3.ZERO
+	art.angular_velocity = Vector3.ZERO
+
+func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
+	if body is Artifact:
+		returnArtifact(body)
