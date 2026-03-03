@@ -11,9 +11,18 @@ config_version=5
 [application]
 
 config/name="FTCMariosDemo"
-run/main_scene="uid://u7gs4s6n63hk"
+run/main_scene="uid://u2c0ace8gp4h"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*uid://dkdjfdw8ftxiv"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [physics]
 
