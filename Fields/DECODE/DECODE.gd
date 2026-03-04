@@ -8,9 +8,10 @@ func _ready() -> void:
 	$DECODEOverlay/Sprite2D.texture = load(tag)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("SwitchCams"):
+		$Robot/Patton/Turret/Camera3D.current = not $Robot/Patton/Turret/Camera3D.current
+		
 
 
 func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:

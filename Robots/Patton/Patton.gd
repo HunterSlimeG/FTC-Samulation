@@ -17,9 +17,13 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * (delta*2)
 		
-	input_dir = snapped(Vector2(Input.get_joy_axis(0, JoyAxis.JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JoyAxis.JOY_AXIS_LEFT_Y)), Vector2(0.2, 0.2))
-	#print(input_dir)
-	turn = -snapped(Input.get_joy_axis(0, JoyAxis.JOY_AXIS_RIGHT_X), 0.1)
+	if Input.get_joy_name(0)!="":
+		input_dir = snapped(Vector2(Input.get_joy_axis(0, JoyAxis.JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JoyAxis.JOY_AXIS_LEFT_Y)), Vector2(0.2, 0.2))
+		turn = -snapped(Input.get_joy_axis(0, JoyAxis.JOY_AXIS_RIGHT_X), 0.1)
+	else:
+		input_dir = Input.get_vector("LLeft", "LRight", "LUp", "LDown")
+		turn = -Input.get_axis("RLeft", "RRight")
+	
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	rotate(Vector3.UP, turn/12)
@@ -51,11 +55,16 @@ func launch(v, a):
 	arti.global_position = $Turret/Out.global_position
 	var vel := Vector3.ZERO
 	vel.y = -sin(deg_to_rad(a)) * v
-	vel.x = v
+	vel.x = 0.5 * v
 	
 	arti.apply_central_impulse(velocity)
-	arti.visible = false
-	arti.freeze = true
-	arti.get_node("CollisionShape3D").disabled = true
+	arti.visible = true
+	arti.freeze = false
+	arti.get_node("CollisionShape3D").disabled = false
 	
 	intakeArtifacts.remove_at(0)
+
+func updateTurret(targetPos: Vector3):
+	var fDir := Vector2(position.x, position.z).direction_to(Vector2($Forward.position.x, $Forward.position.z))
+	var tDir :=Vector2(position.x, position.z).direction_to(Vector2(targetPos.x, targetPos.z))
+	$Turret.rotation.y = fDir.angle_to(tDir)
