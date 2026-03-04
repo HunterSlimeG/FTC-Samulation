@@ -1,0 +1,2 @@
+class_name Robot
+extends CharacterBody3D

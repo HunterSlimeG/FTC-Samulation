@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d0f5mr0b5y3tb"]
+
+[ext_resource type="Script" uid="uid://bsi75moqhuhx3" path="res://Robots/Patton/Patton.gd" id="1_ug82c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ug82c"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ug82c"]
+albedo_color = Color(0.30692267, 0.3069227, 0.3069227, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_ug82c"]
+material = SubResource("StandardMaterial3D_ug82c")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
+size = Vector3(1.2827148, 1, 1)
+
+[node name="Patton" type="CharacterBody3D" unique_id=1724793012]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_ug82c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_axnu4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1937931118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_ug82c")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1958583594]
+transform = Transform3D(-1, -8.742278e-08, 3.821371e-15, 0, -4.371139e-08, -1, 8.742278e-08, -1, 4.371139e-08, 0, 1.6752878, 0)
+mesh = SubResource("PrismMesh_ug82c")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=973410427]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2016903743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1)
+shape = SubResource("BoxShape3D_ug82c")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
