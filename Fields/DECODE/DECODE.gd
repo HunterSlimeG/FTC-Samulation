@@ -7,6 +7,8 @@ func _ready() -> void:
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
 
+func _process(delta: float) -> void:
+	$Robot/Patton.updateTurret($Goals/Blue.global_position)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("SwitchCams"):
@@ -30,12 +32,14 @@ func reload():
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
+	$Robot/Patton.transform = transform
 	for a in $Artifacts.get_children():
-		var art: RigidBody3D = a.get_node("Artifact")
-		art.position = Vector3.ZERO
+		var art: Artifact = a.get_node("Artifact")
+		art.freeze = true
 		art.linear_velocity = Vector3.ZERO
 		art.angular_velocity = Vector3.ZERO
-	$Robot/Patton.transform = transform
+		art.move_body(a.global_position)
+		art.freeze = false
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:

@@ -6,11 +6,20 @@ var push_force = 4.0
 var input_dir := Vector2.ZERO
 var turn := 0.0
 
+var targetPos: Vector3
+
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
 
+func _input(event: InputEvent) -> void:
+	if event.device==1 or event is InputEventKey:
+		if event.is_action_pressed("R1"):
+			launch(45)
 func _process(delta: float) -> void:
-	intaking = int(Input.get_joy_axis(1, JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
+	if Input.get_joy_name(1)!="":
+		intaking = int(Input.get_joy_axis(1, JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
+	else:
+		intaking = Input.is_action_pressed("R2")
 	$Area3D/CollisionShape3D.disabled = not intaking
 		
 func _physics_process(delta: float) -> void:
@@ -47,24 +56,34 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		body.freeze = true
 		body.get_node("CollisionShape3D").disabled = true
 		intakeArtifacts.append(body)
-		print(intakeArtifacts)
+		#print(intakeArtifacts)
 
-func launch(v, a):
-	var arti = intakeArtifacts[0]
-	
-	arti.global_position = $Turret/Out.global_position
-	var vel := Vector3.ZERO
-	vel.y = -sin(deg_to_rad(a)) * v
-	vel.x = 0.5 * v
-	
-	arti.apply_central_impulse(velocity)
-	arti.visible = true
-	arti.freeze = false
-	arti.get_node("CollisionShape3D").disabled = false
-	
-	intakeArtifacts.remove_at(0)
+func launch(a):
+	if not intakeArtifacts.is_empty():
+		var arti = intakeArtifacts[0]
+		
+		arti.move_body($Turret/Out.global_position)
+		var x = targetPos.distance_to($Turret/Out.global_position)
+		var vel := Vector3.ZERO
+		var v = (24.5*(x**2))/(2*(cos(a)**2)*(x*tan(a)-targetPos.y))
+		v = sqrt(v)/2
+		print(v)
+		vel.y = sin(deg_to_rad(a)) * v
+		vel.x = -0.5 * v
+		vel.z = -0.5 * v
+		
+		arti.visible = true
+		arti.freeze = false
+		arti.get_node("CollisionShape3D").disabled = false
+		print(vel)
+		arti.apply_central_impulse(vel)
+		
+		intakeArtifacts.remove_at(0)
 
-func updateTurret(targetPos: Vector3):
-	var fDir := Vector2(position.x, position.z).direction_to(Vector2($Forward.position.x, $Forward.position.z))
-	var tDir :=Vector2(position.x, position.z).direction_to(Vector2(targetPos.x, targetPos.z))
-	$Turret.rotation.y = fDir.angle_to(tDir)
+func updateTurret(tPos: Vector3):
+	targetPos = tPos
+	var fDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Forward.global_position.x, $Forward.global_position.z))
+	var tDir := Vector2(global_position.x, global_position.z).direction_to(Vector2(targetPos.x, targetPos.z))
+	var ang = fDir.angle_to(tDir)
+	
+	$Turret.global_rotation.y = -ang+rotation.y

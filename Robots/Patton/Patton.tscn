@@ -52,7 +52,7 @@ transform = Transform3D(-0.5, -7.54979e-08, 3.300118e-15, 0, -2.1855694e-08, -0.
 mesh = SubResource("PrismMesh_ug82c")
 
 [node name="Out" type="Node3D" parent="Turret" unique_id=1979211238]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, -0.6)
 
 [node name="Camera3D" type="Camera3D" parent="Turret" unique_id=270797113]
 transform = Transform3D(1, 0, 0, 0, 0.9063078, -0.4226183, 0, 0.4226183, 0.9063078, 0, 2.5, -0.5)
