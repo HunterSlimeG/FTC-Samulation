@@ -8,9 +8,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if ResourceLoader.load_threaded_get_status("res://Fields/"+Global.field+"/"+Global.field+".scn")==3:
+	var progress = []
+	if ResourceLoader.load_threaded_get_status("res://Fields/"+Global.field+"/"+Global.field+".scn", progress)==3:
 		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get("res://Fields/"+Global.field+"/"+Global.field+".scn"))
-
+	$ProgressBar.value = move_toward($ProgressBar.value, progress[0]*100, delta * 20)
 
 func _on_item_list_item_activated(index: int) -> void:
 	var text = $ItemList.get_item_text(index)

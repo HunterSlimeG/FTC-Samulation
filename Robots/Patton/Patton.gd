@@ -1,7 +1,8 @@
 extends Robot
 
 
-const SPEED = 5.0
+const MAXSPEED = 10
+var SPEED = 0
 var push_force = 4.0
 var input_dir := Vector2.ZERO
 var turn := 0.0
@@ -14,7 +15,13 @@ var intakeArtifacts: Array[Artifact] = []
 func _input(event: InputEvent) -> void:
 	if event.device==1 or event is InputEventKey:
 		if event.is_action_pressed("R1"):
-			launch(45)
+			print(global_position.distance_to(targetPos))
+			if global_position.distance_to(targetPos)<20:
+				launch(60)
+			elif global_position.distance_to(targetPos)<30:
+				launch(45)
+			elif global_position.distance_to(targetPos)<40:
+				launch(30)
 func _process(delta: float) -> void:
 	if Input.get_joy_name(1)!="":
 		intaking = int(Input.get_joy_axis(1, JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
@@ -37,11 +44,13 @@ func _physics_process(delta: float) -> void:
 	
 	rotate(Vector3.UP, turn/12)
 	if direction:
+		SPEED = move_toward(SPEED, MAXSPEED, 1)
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, MAXSPEED)
+		velocity.z = move_toward(velocity.z, 0, MAXSPEED)
+		SPEED = 0
 		
 	move_and_slide()
 	
@@ -64,13 +73,15 @@ func launch(a):
 		
 		arti.move_body($Turret/Out.global_position)
 		var x = targetPos.distance_to($Turret/Out.global_position)
+		var y = targetPos.y
 		var vel := Vector3.ZERO
-		var v = (24.5*(x**2))/(2*(cos(a)**2)*(x*tan(a)-targetPos.y))
-		v = sqrt(v)/2
+		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
+		#print(a)
+		var v = sqrt((24.5*(x**2))/(2*(cos(a)**2)*(x*tan(a)-y)))/2
 		print(v)
 		vel.y = sin(deg_to_rad(a)) * v
-		vel.x = -0.5 * v
-		vel.z = -0.5 * v
+		vel.x = updateTurret(targetPos).x * v
+		vel.z = updateTurret(targetPos).y * v
 		
 		arti.visible = true
 		arti.freeze = false
@@ -80,10 +91,11 @@ func launch(a):
 		
 		intakeArtifacts.remove_at(0)
 
-func updateTurret(tPos: Vector3):
+func updateTurret(tPos: Vector3) -> Vector2:
 	targetPos = tPos
 	var fDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Forward.global_position.x, $Forward.global_position.z))
 	var tDir := Vector2(global_position.x, global_position.z).direction_to(Vector2(targetPos.x, targetPos.z))
 	var ang = fDir.angle_to(tDir)
 	
 	$Turret.global_rotation.y = -ang+rotation.y
+	return tDir
