@@ -7,21 +7,19 @@ var push_force = 4.0
 var input_dir := Vector2.ZERO
 var turn := 0.0
 
+@export var launchAngle: float = 45
 var targetPos: Vector3
 
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
 
 func _input(event: InputEvent) -> void:
-	if event.device==1 or event is InputEventKey:
+	if event.device==1 or event is InputEventKey or Input.get_joy_name(1)!="":
 		if event.is_action_pressed("R1"):
-			print(global_position.distance_to(targetPos))
-			if global_position.distance_to(targetPos)<20:
-				launch(60)
-			elif global_position.distance_to(targetPos)<30:
-				launch(45)
-			elif global_position.distance_to(targetPos)<40:
-				launch(30)
+			var dist = global_position.distance_to(targetPos)
+			print(dist)
+			launchAngle = 95.41*(0.9679**dist)
+			launch(launchAngle)
 func _process(delta: float) -> void:
 	if Input.get_joy_name(1)!="":
 		intaking = int(Input.get_joy_axis(1, JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
@@ -73,11 +71,11 @@ func launch(a):
 		
 		arti.move_body($Turret/Out.global_position)
 		var x = targetPos.distance_to($Turret/Out.global_position)
-		var y = targetPos.y
+		var y = targetPos.y-$Turret/Out.global_position.y
 		var vel := Vector3.ZERO
 		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
 		#print(a)
-		var v = sqrt((24.5*(x**2))/(2*(cos(a)**2)*(x*tan(a)-y)))/2
+		var v = sqrt((24.5*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y)))/2
 		print(v)
 		vel.y = sin(deg_to_rad(a)) * v
 		vel.x = updateTurret(targetPos).x * v
