@@ -9,6 +9,7 @@ var turn := 0.0
 
 @export var launchAngle: float = 45
 var targetPos: Vector3
+var targetDir: Vector2
 
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
@@ -18,9 +19,10 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("R1"):
 			var dist = global_position.distance_to(targetPos)
 			print(dist)
-			launchAngle = 95.41*(0.9679**dist)
+			launchAngle = 80.7499*(0.979253**dist)
 			launch(launchAngle)
 func _process(delta: float) -> void:
+	targetDir = updateTurret()
 	if Input.get_joy_name(1)!="":
 		intaking = int(Input.get_joy_axis(1, JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
 	else:
@@ -76,21 +78,20 @@ func launch(a):
 		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
 		#print(a)
 		var v = sqrt((24.5*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y)))/2
-		print(v)
+		#print(v)
 		vel.y = sin(deg_to_rad(a)) * v
-		vel.x = updateTurret(targetPos).x * v
-		vel.z = updateTurret(targetPos).y * v
+		vel.x = targetDir.x * (v*0.8)
+		vel.z = targetDir.y * (v*0.8)
 		
 		arti.visible = true
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
-		print(vel)
+		#print(vel)
 		arti.apply_central_impulse(vel)
 		
 		intakeArtifacts.remove_at(0)
 
-func updateTurret(tPos: Vector3) -> Vector2:
-	targetPos = tPos
+func updateTurret() -> Vector2:
 	var fDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Forward.global_position.x, $Forward.global_position.z))
 	var tDir := Vector2(global_position.x, global_position.z).direction_to(Vector2(targetPos.x, targetPos.z))
 	var ang = fDir.angle_to(tDir)

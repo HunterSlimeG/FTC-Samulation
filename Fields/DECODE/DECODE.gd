@@ -8,7 +8,7 @@ func _ready() -> void:
 	$DECODEOverlay/Sprite2D.texture = load(tag)
 
 func _process(delta: float) -> void:
-	$Robot/Patton.updateTurret($Goals/Blue.global_position)
+	$Robot/Patton.targetPos = $Goals/Blue.global_position
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("SwitchCams"):
@@ -44,12 +44,13 @@ func reload():
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
-		$AnimationPlayer.play("OpenBlue")
-
+		$AnimationPlayer.play("OpenBlue", -1, 1.5)
+		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 0.5))
 
 func _on_red_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
-		$AnimationPlayer.play("OpenRed")
+		$AnimationPlayer.play("OpenRed", -1, 1.5)
+		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 0.5))
 
 
 func _on_blue_g_body_exited(body: Node3D) -> void:
@@ -60,3 +61,11 @@ func _on_blue_g_body_exited(body: Node3D) -> void:
 func _on_red_g_body_exited(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play_backwards("OpenRed")
+		
+func closestArtifact(gate: Node3D) -> Artifact:
+	var closest = null
+	for a in $Artifacts.get_children():
+		var art: Artifact = a.get_node("Artifact")
+		if closest==null or gate.position.distance_to(art.position)<gate.position.distance_to(closest.position):
+			closest = art
+	return closest
