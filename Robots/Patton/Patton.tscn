@@ -17,7 +17,11 @@ material = SubResource("StandardMaterial3D_ug82c")
 [sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
 size = Vector3(1.2827148, 1, 1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_yrf0x"]
+size = Vector3(2, 1.5, 2)
+
 [node name="Patton" type="CharacterBody3D" unique_id=1724793012]
+axis_lock_linear_y = true
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_ug82c")
@@ -44,20 +48,24 @@ disabled = true
 [node name="Turret" type="Node3D" parent="." unique_id=1636897788]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Turret" unique_id=1116531197]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.5, 0)
-mesh = SubResource("BoxMesh_ug82c")
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.2970598, 0)
+mesh = SubResource("BoxMesh_yrf0x")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Turret" unique_id=1913642787]
-transform = Transform3D(-0.5, -7.54979e-08, 3.300118e-15, 0, -2.1855694e-08, -0.5, 7.54979e-08, -0.5, 2.1855694e-08, 0, 2.8, 0)
+transform = Transform3D(-0.5, -7.54979e-08, 3.300118e-15, 0, -2.1855694e-08, -0.5, 7.54979e-08, -0.5, 2.1855694e-08, 0, 2.4717393, 0)
 mesh = SubResource("PrismMesh_ug82c")
 
 [node name="Out" type="Node3D" parent="Turret" unique_id=1979211238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.15)
 
 [node name="Camera3D" type="Camera3D" parent="Turret" unique_id=270797113]
-transform = Transform3D(1, 0, 0, 0, 0.9063078, -0.4226183, 0, 0.4226183, 0.9063078, 0, 2.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 0.9961947, -0.08715574, 0, 0.08715574, 0.9961947, 0, 2.7855816, 0.4361139)
 
 [node name="Forward" type="Node3D" parent="." unique_id=30534963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
+[node name="ShotCool" type="Timer" parent="." unique_id=1166907530]
+wait_time = 0.25
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="ShotCool" to="." method="_on_shot_cool_timeout"]

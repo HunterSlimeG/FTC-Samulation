@@ -1,7 +1,7 @@
 extends Robot
 
 
-const MAXSPEED = 10
+const MAXSPEED = 8
 var SPEED = 0
 var push_force = 4.0
 var input_dir := Vector2.ZERO
@@ -10,28 +10,41 @@ var turn := 0.0
 @export var launchAngle: float = 45
 var targetPos: Vector3
 var targetDir: Vector2
+var targetAng: float
+var dist: float
+
+var shooting = false
+var canShoot = true
+var revTime = 0.25
 
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
 
 func _input(event: InputEvent) -> void:
-	if event.device==1 or event is InputEventKey or Input.get_joy_name(1)!="":
-		if event.is_action_pressed("R1"):
-			var dist = global_position.distance_to(targetPos)
-			print(dist)
-			launchAngle = 80.7499*(0.979253**dist)
-			launch(launchAngle)
+	if event.device==1 or Input.get_joy_name(1)=="":
+		shooting = event.is_action_pressed("R1")
 func _process(delta: float) -> void:
-	targetDir = updateTurret()
+	updateTurret()
+	dist = global_position.distance_to(targetPos)
+	revTime = 0.25+(0.4*(dist/35))
+	
+	$Turret.global_rotation.y = move_toward($Turret.global_rotation.y, -targetAng+rotation.y, 0.03)
+	
 	if Input.get_joy_name(1)!="":
 		intaking = int(Input.get_joy_axis(1, JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
 	else:
 		intaking = Input.is_action_pressed("R2")
 	$Area3D/CollisionShape3D.disabled = not intaking
-		
+	if shooting and canShoot:
+		canShoot = false
+		#print(dist)
+		launchAngle = 80.7499*(0.979253**dist)
+		launch(launchAngle)
+	elif shooting and $ShotCool.is_stopped():
+		$ShotCool.start()
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
-		velocity += get_gravity() * (delta*2)
+		velocity += 2*get_gravity() * delta
 		
 	if Input.get_joy_name(0)!="":
 		input_dir = snapped(Vector2(Input.get_joy_axis(0, JoyAxis.JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JoyAxis.JOY_AXIS_LEFT_Y)), Vector2(0.2, 0.2))
@@ -42,7 +55,7 @@ func _physics_process(delta: float) -> void:
 	
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	rotate(Vector3.UP, turn/12)
+	rotate(Vector3.UP, turn/18)
 	if direction:
 		SPEED = move_toward(SPEED, MAXSPEED, 1)
 		velocity.x = direction.x * SPEED
@@ -80,8 +93,9 @@ func launch(a):
 		var v = sqrt((24.5*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y)))/2
 		#print(v)
 		vel.y = sin(deg_to_rad(a)) * v
-		vel.x = targetDir.x * (v*0.8)
-		vel.z = targetDir.y * (v*0.8)
+		var turretDir := Vector2($Turret.global_position.x, $Turret.global_position.z).direction_to(Vector2($Turret/Out.global_position.x, $Turret/Out.global_position.z))
+		vel.x = turretDir.x * (v*0.8)
+		vel.z = turretDir.y * (v*0.8)
 		
 		arti.visible = true
 		arti.freeze = false
@@ -90,11 +104,11 @@ func launch(a):
 		arti.apply_central_impulse(vel)
 		
 		intakeArtifacts.remove_at(0)
-
-func updateTurret() -> Vector2:
+func updateTurret():
 	var fDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Forward.global_position.x, $Forward.global_position.z))
 	var tDir := Vector2(global_position.x, global_position.z).direction_to(Vector2(targetPos.x, targetPos.z))
-	var ang = fDir.angle_to(tDir)
-	
-	$Turret.global_rotation.y = -ang+rotation.y
-	return tDir
+	targetAng = fDir.angle_to(tDir)
+	targetDir = tDir
+
+func _on_shot_cool_timeout() -> void:
+	canShoot = true
