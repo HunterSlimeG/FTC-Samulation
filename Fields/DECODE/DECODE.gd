@@ -1,6 +1,8 @@
 extends Field
 
-var goal= true
+var goal = true
+@onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("Robot/Patton/Turret/Camera3D"), get_node("BlueCam")]
+var cam = 0
 # Called when the node enters the scene tree for the first time.
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 func _ready() -> void:
@@ -8,6 +10,7 @@ func _ready() -> void:
 	$DECODEOverlay/Sprite2D.texture = load(tag)
 
 func _process(delta: float) -> void:
+	$DECODEOverlay.artifacts = $Robot/Patton.intakeArtifacts
 	if goal:
 		$Robot/Patton.targetPos = $Goals/Blue.global_position
 	else:
@@ -15,10 +18,18 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("SwitchCams"):
-		$Robot/Patton/Turret/Camera3D.current = not $Robot/Patton/Turret/Camera3D.current
+		cam += 1
+		cam %= 3
+		cams[cam-1].current = false
+		cams[cam].current = true
+		cams[(cam+1)%3].current = false
 	if event.device==1 or Input.get_joy_name(1)=="":
 		if event.is_action_pressed("Square"):
 			goal = not goal
+			if goal:
+				cams[2] = get_node("BlueCam")
+			else:
+				cams[2] = get_node("RedCam")
 
 
 func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:

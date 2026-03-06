@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bgrjyxn3fhyyl" path="res://Overlays/Overlay.gd" id="1_3m4pp"]
 [ext_resource type="Texture2D" uid="uid://cta66qeo8jl0g" path="res://Fields/DECODE/AprilTags/AprilTag (1).png" id="2_7csio"]
+[ext_resource type="ArrayMesh" uid="uid://br6o4yk5bm81y" path="res://Fields/DECODE/Artifact/Green.res" id="3_5e8wv"]
 
 [node name="DECODEOverlay" type="Node2D" unique_id=1425552271]
 script = ExtResource("1_3m4pp")
@@ -15,5 +16,27 @@ text = "Reload"
 position = Vector2(1425, 225)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_7csio")
+
+[node name="Artifacts" type="Node2D" parent="." unique_id=1186286108]
+position = Vector2(1019, 451)
+scale = Vector2(0.75, 0.75)
+
+[node name="0" type="MeshInstance2D" parent="Artifacts" unique_id=910239301]
+modulate = Color(0, 0.88235295, 0, 1)
+position = Vector2(387.00006, 75)
+scale = Vector2(10, 10)
+mesh = ExtResource("3_5e8wv")
+
+[node name="1" type="MeshInstance2D" parent="Artifacts" unique_id=841392749]
+modulate = Color(0, 0.88235295, 0, 1)
+position = Vector2(537, 75)
+scale = Vector2(10, 10)
+mesh = ExtResource("3_5e8wv")
+
+[node name="2" type="MeshInstance2D" parent="Artifacts" unique_id=1020282406]
+modulate = Color(0, 0.88235295, 0, 1)
+position = Vector2(687, 75)
+scale = Vector2(10, 10)
+mesh = ExtResource("3_5e8wv")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

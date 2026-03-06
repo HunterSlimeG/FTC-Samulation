@@ -31,7 +31,7 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	updateTurret()
 	dist = global_position.distance_to(targetPos)
-	revTime = 0.25+(0.3*(dist/40))
+	revTime = (0.3*(dist/40))
 	
 	$Turret.global_rotation.y = move_toward($Turret.global_rotation.y, -targetAng+rotation.y, 0.03)
 	
@@ -44,8 +44,9 @@ func _process(delta: float) -> void:
 		if canShoot:
 			canShoot = false
 			launch()
-		elif $ShotCool.is_stopped():
 			$ShotCool.start(revTime)
+		#elif $ShotCool.is_stopped():
+		#	$ShotCool.start(revTime)
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += 2*get_gravity() * delta
