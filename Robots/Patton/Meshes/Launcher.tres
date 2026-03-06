@@ -1,10 +1,7 @@
 [gd_resource type="ArrayMesh" format=4 uid="uid://c3x36m0f0ja17"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8vy2"]
-resource_name = "Steel - Satin"
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.8137818, 0.8137818, 0.8137818, 1)
-emission_enabled = true
+albedo_color = Color(0, 1, 0, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3uxas"]
 _surfaces = [{

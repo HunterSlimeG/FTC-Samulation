@@ -8,6 +8,7 @@ var input_dir := Vector2.ZERO
 var turn := 0.0
 
 @export var launchAngle: float = 45
+var goal = "blue"
 var targetPos: Vector3
 var targetDir: Vector2
 var targetAng: float
@@ -22,11 +23,15 @@ var intakeArtifacts: Array[Artifact] = []
 
 func _input(event: InputEvent) -> void:
 	if event.device==1 or Input.get_joy_name(1)=="":
-		shooting = event.is_action_pressed("R1")
+		if event.is_action_pressed("R1"):
+			shooting = true
+		elif event.is_action_released("R1"):
+			shooting = false
+			
 func _process(delta: float) -> void:
 	updateTurret()
 	dist = global_position.distance_to(targetPos)
-	revTime = 0.25+(0.4*(dist/35))
+	revTime = 0.25+(0.3*(dist/40))
 	
 	$Turret.global_rotation.y = move_toward($Turret.global_rotation.y, -targetAng+rotation.y, 0.03)
 	
@@ -35,13 +40,12 @@ func _process(delta: float) -> void:
 	else:
 		intaking = Input.is_action_pressed("R2")
 	$Area3D/CollisionShape3D.disabled = not intaking
-	if shooting and canShoot:
-		canShoot = false
-		#print(dist)
-		launchAngle = 80.7499*(0.979253**dist)
-		launch(launchAngle)
-	elif shooting and $ShotCool.is_stopped():
-		$ShotCool.start()
+	if shooting:
+		if canShoot:
+			canShoot = false
+			launch()
+		elif $ShotCool.is_stopped():
+			$ShotCool.start(revTime)
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += 2*get_gravity() * delta
@@ -66,6 +70,7 @@ func _physics_process(delta: float) -> void:
 		SPEED = 0
 		
 	move_and_slide()
+	wheels()
 	
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -80,7 +85,9 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		intakeArtifacts.append(body)
 		#print(intakeArtifacts)
 
-func launch(a):
+func launch():
+	launchAngle = 80.7499*(0.979253**dist)
+	var a = launchAngle
 	if not intakeArtifacts.is_empty():
 		var arti = intakeArtifacts[0]
 		
@@ -101,7 +108,7 @@ func launch(a):
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
 		#print(vel)
-		arti.apply_central_impulse(vel)
+		arti.apply_central_impulse(vel+velocity)
 		
 		intakeArtifacts.remove_at(0)
 func updateTurret():
@@ -112,3 +119,9 @@ func updateTurret():
 
 func _on_shot_cool_timeout() -> void:
 	canShoot = true
+
+func wheels():
+	$Wheels/FR.rotate_x(rad_to_deg(-velocity.x+velocity.y))
+	$Wheels/FL.rotate_x(rad_to_deg(velocity.x+velocity.y))
+	$Wheels/BR.rotate_x(rad_to_deg(velocity.x+velocity.y))
+	$Wheels/BL.rotate_x(rad_to_deg(-velocity.x+velocity.y))
