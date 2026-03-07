@@ -1,7 +1,8 @@
 extends Field
 
 var goal = true
-@onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("Robot/Patton/Turret/Camera3D"), get_node("BlueCam")]
+@onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("BlueCam"), get_node("RedCam")]
+#get_node("Robot/Patton/Turret/Camera3D"),
 var cam = 0
 # Called when the node enters the scene tree for the first time.
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
@@ -10,27 +11,24 @@ func _ready() -> void:
 	$DECODEOverlay/Sprite2D.texture = load(tag)
 
 func _process(delta: float) -> void:
-	$DECODEOverlay.artifacts = $Robot/Patton.intakeArtifacts
-	if goal:
-		$Robot/Patton.targetPos = $Goals/Blue.global_position
-	else:
-		$Robot/Patton.targetPos = $Goals/Red.global_position
+	#updateCurve()
+	$DECODEOverlay.artifactsB = $Robot/B/PattonB.intakeArtifacts
+	$DECODEOverlay.artifactsR = $Robot/R/PattonR.intakeArtifacts
+	$Robot/B/PattonB.targetPos = $Goals/Blue.global_position
+	$Robot/R/PattonR.targetPos = $Goals/Red.global_position
 
 func _input(event: InputEvent) -> void:
+	#print(event.device)
 	if event.is_action_pressed("SwitchCams"):
 		cam += 1
 		cam %= 3
-		cams[cam-1].current = false
-		cams[cam].current = true
-		cams[(cam+1)%3].current = false
-	if event.device==1 or Input.get_joy_name(1)=="":
-		if event.is_action_pressed("Square"):
-			goal = not goal
-			if goal:
-				cams[2] = get_node("BlueCam")
-			else:
-				cams[2] = get_node("RedCam")
-
+		camSwitch()
+	#elif event.device==$Robot/PattonB.drivers[1] or Input.get_joy_name($Robot/PattonB.drivers[1])=="":
+		#pass
+		#if event.is_action_pressed("Square"):
+		#	goal = not goal
+	if event.is_action_pressed("Reload"):
+		reload()
 
 func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
 	if body is Artifact:
@@ -48,7 +46,8 @@ func reload():
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
-	$Robot/Patton.transform = transform
+	$Robot/B/PattonB.transform = transform
+	$Robot/R/PattonR.transform = transform
 	for a in $Artifacts.get_children():
 		var art: Artifact = a.get_node("Artifact")
 		art.freeze = true
@@ -56,14 +55,10 @@ func reload():
 		art.angular_velocity = Vector3.ZERO
 		art.move_body(a.global_position)
 		art.freeze = false
-	for art: Artifact in $Robot/Patton.intakeArtifacts:
-		art.freeze = true
-		art.linear_velocity = Vector3.ZERO
-		art.angular_velocity = Vector3.ZERO
-		art.move_body(art.get_parent().global_position)
-		art.visible = true
-		art.freeze = false
 		art.get_node("CollisionShape3D").disabled = false
+		art.visible = true
+	$Robot/B/PattonB.intakeArtifacts.clear()
+	$Robot/R/PattonR.intakeArtifacts.clear()
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
@@ -93,3 +88,30 @@ func closestArtifact(gate: Node3D) -> Artifact:
 		if closest==null or gate.position.distance_to(art.position)<gate.position.distance_to(closest.position):
 			closest = art
 	return closest
+
+func camSwitch():
+	cams[cam-1].current = false
+	cams[cam].current = true
+	cams[(cam+1)%3].current = false
+
+func updateCurve():
+	pass
+	#$Path3D.curve.clear_points()
+	#$Path3D.curve.add_point($Robot/Patton/Turret/MeshInstance3D.global_position)
+	#if goal:
+		#$Path3D.curve.add_point($Goals/Blue.global_position)
+	#else:
+		#$Path3D.curve.add_point($Goals/Red.global_position)
+	#for i in range($Robot/Patton.dist):
+		#var val = i*tan($Robot/Patton.targetAng) - ((24.5*(i**2))/(2*($Robot/Patton.targetV**2)*(cos($Robot/Patton.targetAng)**2)))
+		#$Path3D.curve.add_point($Goals/Red.global_position+Vector3(0, val, 0))
+
+
+func _on_blue_body_entered(body: Node3D) -> void:
+	if body is Artifact:
+		$DECODEOverlay.scoreB += 1
+
+
+func _on_red_body_entered(body: Node3D) -> void:
+	if body is Artifact:
+		$DECODEOverlay.scoreR += 1
