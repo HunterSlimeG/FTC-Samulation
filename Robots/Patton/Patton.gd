@@ -7,7 +7,7 @@ var push_force = 4.0
 var input_dir := Vector2.ZERO
 var turn := 0.0
 
-var launchAngle: float = 45
+@export var launchAngle: float = 45
 var goal = "blue"
 var targetPos: Vector3
 var targetDir: Vector2
@@ -99,6 +99,8 @@ func _physics_process(delta: float) -> void:
 		var c = get_slide_collision(i)
 		if c.get_collider(i) is Artifact:
 			c.get_collider(i).apply_central_impulse(-c.get_normal(i) * (push_force*abs(direction)))
+		elif c.get_collider(i) is Robot:
+			c.get_collider(i).velocity = -c.get_normal(i) * (push_force*abs(direction))
 func _ready() -> void:
 	print(drivers)
 	print(Input.get_joy_name(drivers[0]), Input.get_joy_name(drivers[1]))
@@ -127,7 +129,7 @@ func launch():
 		#print(a)
 		targetV = sqrt((24.5*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y)))/2
 		#print(v)
-		vel.y = sin(deg_to_rad(a)) * targetV
+		vel.y = (sin(deg_to_rad(a)) * targetV)
 		var turretDir := Vector2($Turret.global_position.x, $Turret.global_position.z).direction_to(Vector2($Turret/Out.global_position.x, $Turret/Out.global_position.z))
 		vel.x = turretDir.x * (targetV*0.8)
 		vel.z = turretDir.y * (targetV*0.8)

@@ -59,6 +59,8 @@ func reload():
 		art.visible = true
 	$Robot/B/PattonB.intakeArtifacts.clear()
 	$Robot/R/PattonR.intakeArtifacts.clear()
+	$DECODEOverlay.scoreB = 0
+	$DECODEOverlay.scoreR = 0
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
