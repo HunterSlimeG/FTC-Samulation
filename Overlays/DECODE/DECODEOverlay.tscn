@@ -7,7 +7,26 @@
 [node name="DECODEOverlay" type="Node2D" unique_id=1425552271]
 script = ExtResource("1_5e8wv")
 
+[node name="Label" type="Label" parent="." unique_id=1989287683]
+offset_right = 271.0
+offset_bottom = 441.0
+theme_override_font_sizes/font_size = 24
+text = "Controls:
+Driver 1:
+Left Stick - Movement
+Righ Stick - Turning
+
+Driver 2:
+Right Trigger - Intake
+Left Trigger - Outtake
+Right Bumper - Launch
+
+Both:
+Options - Reset
+Touchpad - Switch View"
+
 [node name="Button" type="Button" parent="." unique_id=1091993787]
+visible = false
 offset_right = 61.0
 offset_bottom = 31.0
 text = "Reload"
@@ -45,6 +64,7 @@ offset_left = 325.0
 offset_top = -80.0
 offset_right = 744.0
 offset_bottom = -13.0
+theme_override_constants/outline_size = 15
 theme_override_font_sizes/font_size = 48
 text = "Artifacts Scored: 0"
 
@@ -76,7 +96,42 @@ offset_left = 325.0
 offset_top = -80.0
 offset_right = 744.0
 offset_bottom = -13.0
+theme_override_constants/outline_size = 15
 theme_override_font_sizes/font_size = 48
 text = "Artifacts Scored: 0"
 
+[node name="Timer" type="Timer" parent="." unique_id=237060943]
+wait_time = 121.0
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1862365501]
+offset_right = 1600.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CenterContainer" unique_id=1689489726]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "1:30"
+
+[node name="CenterContainer2" type="CenterContainer" parent="." unique_id=2068614026]
+offset_top = 360.0
+offset_right = 1600.0
+offset_bottom = 481.0
+
+[node name="Label" type="Label" parent="CenterContainer2" unique_id=1311616113]
+layout_mode = 2
+theme_override_font_sizes/font_size = 104
+text = "5"
+
+[node name="CenterContainer3" type="CenterContainer" parent="." unique_id=1273265139]
+offset_top = 816.0
+offset_right = 1600.0
+offset_bottom = 904.0
+
+[node name="Label" type="Label" parent="CenterContainer3" unique_id=723700846]
+layout_mode = 2
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 48
+text = "High Score: 0"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

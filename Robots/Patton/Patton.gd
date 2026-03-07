@@ -20,6 +20,7 @@ var shooting = false
 var canShoot = true
 var revTime = 0.25
 
+var canOuttake = true
 var outtaking = false
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
@@ -28,7 +29,12 @@ var intakeArtifacts: Array[Artifact] = []
 @export_enum("Blue", "Red") var alliance := 0
 
 func _input(event: InputEvent) -> void:
-	if event.device==drivers[1] or Input.get_joy_name(drivers[1])=="":
+	if event.device==drivers[1]:
+		if event.is_action_pressed("R1"):
+			shooting = true
+		elif event.is_action_released("R1"):
+			shooting = false
+	elif event.device==drivers[0] and Input.get_joy_name(drivers[1])!="":
 		if event.is_action_pressed("R1"):
 			shooting = true
 		elif event.is_action_released("R1"):
@@ -46,9 +52,12 @@ func _process(delta: float) -> void:
 	if Input.get_joy_name(drivers[1])!="":
 		intaking = int(Input.get_joy_axis(drivers[1], JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
 		outtaking = int(Input.get_joy_axis(drivers[1], JoyAxis.JOY_AXIS_TRIGGER_LEFT))
+	elif Input.get_joy_name(drivers[0])!="":
+		intaking = int(Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
+		outtaking = int(Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_TRIGGER_LEFT))
 	else:
 		intaking = Input.is_action_pressed("R2")
-		outtaking = Input.is_action_just_pressed("L2")
+		outtaking = Input.is_action_pressed("L2")
 	$Area3D/CollisionShape3D.disabled = not intaking
 	if shooting:
 		if canShoot:
@@ -58,7 +67,9 @@ func _process(delta: float) -> void:
 		#elif $ShotCool.is_stopped():
 		#	$ShotCool.start(revTime)
 		
-	if outtaking and intakeArtifacts.size()>0:
+	if outtaking and intakeArtifacts.size()>0 and canOuttake:
+		canOuttake = false
+		$OutCool.start()
 		var arti = intakeArtifacts[0]
 		arti.move_body($Forward.global_position)
 		
@@ -67,7 +78,7 @@ func _process(delta: float) -> void:
 		arti.get_node("CollisionShape3D").disabled = false
 		#print(vel)
 		var fdir = global_position.direction_to($Forward.global_position)
-		arti.apply_central_impulse(fdir*2)
+		arti.apply_central_impulse(fdir*3.5)
 		intakeArtifacts.remove_at(0)
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -82,7 +93,7 @@ func _physics_process(delta: float) -> void:
 	
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	rotate(Vector3.UP, turn/18)
+	rotate(Vector3.UP, turn/14)
 	if direction:
 		SPEED = move_toward(SPEED, MAXSPEED, 0.4)
 		velocity.x = direction.x * SPEED
@@ -138,7 +149,7 @@ func launch():
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
 		#print(vel)
-		arti.apply_central_impulse(vel+(velocity/4))
+		arti.apply_central_impulse(vel+(velocity/6))
 		
 		intakeArtifacts.remove_at(0)
 func updateTurret():
@@ -149,6 +160,8 @@ func updateTurret():
 
 func _on_shot_cool_timeout() -> void:
 	canShoot = true
+func _on_out_cool_timeout() -> void:
+	canOuttake = true
 
 func wheels():
 	$Wheels/FR.rotate_x(rad_to_deg(-velocity.x+velocity.y))

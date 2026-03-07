@@ -7,8 +7,7 @@ var cam = 0
 # Called when the node enters the scene tree for the first time.
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 func _ready() -> void:
-	$AprilTags/Obelisk.texture = load(tag)
-	$DECODEOverlay/Sprite2D.texture = load(tag)
+	reload()
 
 func _process(delta: float) -> void:
 	#updateCurve()
@@ -43,6 +42,12 @@ func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
 
 func reload():
 	super()
+	$Robot.process_mode = Node.PROCESS_MODE_DISABLED
+	$Timer.process_mode = Node.PROCESS_MODE_INHERIT
+	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_DISABLED
+	$Timer.start()
+	$DECODEOverlay.countDown = true
+	$DECODEOverlay/CenterContainer/Label.text = "1:30"
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
@@ -61,23 +66,25 @@ func reload():
 	$Robot/R/PattonR.intakeArtifacts.clear()
 	$DECODEOverlay.scoreB = 0
 	$DECODEOverlay.scoreR = 0
+	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
+	$DECODEOverlay/CenterContainer3/Label.text = "High Score: "+hs.get_as_text()
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play("OpenBlue", -1, 1.5)
-		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 0.5))
+		await $AnimationPlayer.animation_finished
+		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 2))
 
 func _on_red_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play("OpenRed", -1, 1.5)
-		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 0.5))
-
+		await $AnimationPlayer.animation_finished
+		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 2))
 
 func _on_blue_g_body_exited(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play_backwards("OpenBlue")
-
 
 func _on_red_g_body_exited(body: Node3D) -> void:
 	if body is Robot:
@@ -87,7 +94,7 @@ func closestArtifact(gate: Node3D) -> Artifact:
 	var closest = null
 	for a in $Artifacts.get_children():
 		var art: Artifact = a.get_node("Artifact")
-		if closest==null or gate.position.distance_to(art.position)<gate.position.distance_to(closest.position):
+		if closest==null or gate.global_position.distance_to(art.global_position)<gate.global_position.distance_to(closest.global_position):
 			closest = art
 	return closest
 
@@ -117,3 +124,13 @@ func _on_blue_body_entered(body: Node3D) -> void:
 func _on_red_body_entered(body: Node3D) -> void:
 	if body is Artifact:
 		$DECODEOverlay.scoreR += 1
+
+
+func _on_timer_timeout() -> void:
+	$Robot.process_mode = Node.PROCESS_MODE_INHERIT
+	$DECODEOverlay/ArtifactsB/B.process_mode = Node.PROCESS_MODE_INHERIT
+	$DECODEOverlay/ArtifactsR/R.process_mode = Node.PROCESS_MODE_INHERIT
+	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
+	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_INHERIT
+	$DECODEOverlay/Timer.start()
+	$DECODEOverlay.countDown = false
