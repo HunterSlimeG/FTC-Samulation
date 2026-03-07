@@ -40,6 +40,7 @@ scale = Vector2(10, 10)
 mesh = ExtResource("3_5e8wv")
 
 [node name="R" type="Label" parent="ArtifactsR" unique_id=2123871310]
+modulate = Color(0.9254902, 0, 0, 1)
 offset_left = 325.0
 offset_top = -80.0
 offset_right = 744.0
@@ -70,6 +71,7 @@ scale = Vector2(10, 10)
 mesh = ExtResource("3_5e8wv")
 
 [node name="B" type="Label" parent="ArtifactsB" unique_id=241735474]
+modulate = Color(0, 0, 0.8862745, 1)
 offset_left = 325.0
 offset_top = -80.0
 offset_right = 744.0
