@@ -7,7 +7,7 @@ var push_force = 4.0
 var input_dir := Vector2.ZERO
 var turn := 0.0
 
-@export var launchAngle: float = 45
+var launchAngle: float = 45
 var goal = "blue"
 var targetPos: Vector3
 var targetDir: Vector2
@@ -25,8 +25,6 @@ var outtaking = false
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
 
-@export var drivers = [0, 1]
-@export_enum("Blue", "Red") var alliance := 0
 
 func _input(event: InputEvent) -> void:
 	if event.device==drivers[1]:

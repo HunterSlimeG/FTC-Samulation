@@ -64,6 +64,7 @@ axis_lock_linear_y = true
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_ug82c")
+drivers = [1, 2]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
