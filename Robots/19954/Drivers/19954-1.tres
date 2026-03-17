@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="GUIDEMappingContext" format=3 uid="uid://g5tcugki8ryi"]
+
+[ext_resource type="Script" uid="uid://cpplm41b5bt6m" path="res://addons/guide/guide_action_mapping.gd" id="1_mhl63"]
+[ext_resource type="Script" uid="uid://cluhc11vixkf1" path="res://addons/guide/guide_action.gd" id="2_swdem"]
+[ext_resource type="Script" uid="uid://mtx1unc2aqn7" path="res://addons/guide/guide_input_mapping.gd" id="3_e5au1"]
+[ext_resource type="Script" uid="uid://doauobik3xyea" path="res://addons/guide/inputs/guide_input_joy_axis_2d.gd" id="4_loih5"]
+[ext_resource type="Script" uid="uid://bl8rjl4oaldje" path="res://addons/guide/modifiers/guide_modifier.gd" id="5_kvdn2"]
+[ext_resource type="Script" uid="uid://x74mnwgr08a7" path="res://addons/guide/triggers/guide_trigger.gd" id="6_r7v21"]
+[ext_resource type="Script" uid="uid://c47lkb48itd6l" path="res://addons/guide/modifiers/guide_modifier_deadzone.gd" id="6_swdem"]
+[ext_resource type="Script" uid="uid://bbhoxsiqwo07l" path="res://addons/guide/inputs/guide_input_joy_axis_1d.gd" id="7_jyufs"]
+[ext_resource type="Script" uid="uid://dsa1dnifd6w32" path="res://addons/guide/guide_mapping_context.gd" id="8_a4qil"]
+
+[sub_resource type="Resource" id="Resource_27fxf"]
+script = ExtResource("2_swdem")
+name = &"Movement"
+action_value_type = 2
+is_remappable = true
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_osgg5"]
+script = ExtResource("4_loih5")
+
+[sub_resource type="Resource" id="Resource_e5au1"]
+script = ExtResource("6_swdem")
+
+[sub_resource type="Resource" id="Resource_k48jp"]
+script = ExtResource("3_e5au1")
+input = SubResource("Resource_osgg5")
+modifiers = Array[ExtResource("5_kvdn2")]([SubResource("Resource_e5au1")])
+
+[sub_resource type="Resource" id="Resource_1nffg"]
+script = ExtResource("1_mhl63")
+action = SubResource("Resource_27fxf")
+input_mappings = Array[ExtResource("3_e5au1")]([SubResource("Resource_k48jp")])
+
+[sub_resource type="Resource" id="Resource_p8dov"]
+script = ExtResource("2_swdem")
+name = &"Turning"
+action_value_type = 1
+is_remappable = true
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_h1pwb"]
+script = ExtResource("7_jyufs")
+axis = 2
+
+[sub_resource type="Resource" id="Resource_loih5"]
+script = ExtResource("6_swdem")
+
+[sub_resource type="Resource" id="Resource_loq2q"]
+script = ExtResource("3_e5au1")
+input = SubResource("Resource_h1pwb")
+modifiers = Array[ExtResource("5_kvdn2")]([SubResource("Resource_loih5")])
+
+[sub_resource type="Resource" id="Resource_bgjb0"]
+script = ExtResource("1_mhl63")
+action = SubResource("Resource_p8dov")
+input_mappings = Array[ExtResource("3_e5au1")]([SubResource("Resource_loq2q")])
+
+[resource]
+script = ExtResource("8_a4qil")
+mappings = Array[ExtResource("1_mhl63")]([SubResource("Resource_1nffg"), SubResource("Resource_bgjb0")])
+metadata/_custom_type_script = "uid://dsa1dnifd6w32"

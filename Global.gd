@@ -1,16 +1,12 @@
 extends Node
 
 var field = ""
-var drivers: Array[GUIDEMappingContext] = [preload("res://Drivers/Driver0.tres"), preload("res://Drivers/Driver1.tres"), preload("res://Drivers/Driver2.tres"), preload("res://Drivers/Driver3.tres"), preload("res://Drivers/Driver4.tres"), null]
 
 var fullscreen = false
+var baseControls = preload("res://BaseControls.tres")
 
 func _input(event: InputEvent) -> void:
-	GUIDE.enable_mapping_context(Global.drivers[0])
-	GUIDE.enable_mapping_context(Global.drivers[1])
-	GUIDE.enable_mapping_context(Global.drivers[2])
-	GUIDE.enable_mapping_context(Global.drivers[3])
-	GUIDE.enable_mapping_context(Global.drivers[4])
+	GUIDE.enable_mapping_context(baseControls)
 	if event.is_action_pressed("FullScreen"):
 		fullscreen = not fullscreen
 		if fullscreen:

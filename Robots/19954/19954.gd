@@ -28,12 +28,12 @@ var intakeArtifacts: Array[Artifact] = []
 func _ready() -> void:
 	super()
 	if alliance==0:
-		$MeshInstance3D.mesh = load("res://Robots/Patton/Meshes/BodyB.tres")
+		$MeshInstance3D.mesh = load("res://Robots/19954/Meshes/BodyB.tres")
 func _input(event: InputEvent) -> void:
 	pass
 func _process(delta: float) -> void:
 	super(delta)
-	shooting = driver2.mappings[11].action.value_bool
+	shooting = driverContexts[1].mappings[2].action.value_bool
 	updateTurret()
 	dist = global_position.distance_to(targetPos)
 	revTime = (0.3*(dist/40))
@@ -43,8 +43,8 @@ func _process(delta: float) -> void:
 	if $Turret.global_rotation.y == -targetAng+rotation.y:
 		turretSpeed = 0.03
 	
-	intaking = int(driver2.mappings[13].action.value_axis_1d)
-	outtaking = int(driver2.mappings[12].action.value_axis_1d)
+	intaking = driverContexts[1].mappings[0].action.value_bool
+	outtaking = driverContexts[1].mappings[1].action.value_bool
 	
 	$Area3D/CollisionShape3D.disabled = not intaking
 	if shooting:
@@ -71,9 +71,9 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += 2*get_gravity() * delta
-		
-	input_dir = driver1.mappings[0].action.value_axis_2d
-	turn = -driver1.mappings[1].action.value_axis_2d.x
+	
+	input_dir = driverContexts[0].mappings[0].action.value_axis_2d
+	turn = -driverContexts[0].mappings[1].action.value_axis_1d
 	
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	

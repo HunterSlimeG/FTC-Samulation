@@ -7,15 +7,15 @@ var cam = 0
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 
 func _ready() -> void:
-	$Robot/B/PattonB.targetPos = $Goals/Blue.global_position
-	$Robot/R/PattonR.targetPos = $Goals/Red.global_position
-	Global.drivers[0].mappings[14].action.completed.connect(camSwitch)
-	Global.drivers[0].mappings[15].action.completed.connect(reload)
+	$"Robot/B/19954B".targetPos = $Goals/Blue.global_position
+	$"Robot/R/19954R".targetPos = $Goals/Red.global_position
+	Global.baseControls.mappings[0].action.completed.connect(camSwitch)
+	Global.baseControls.mappings[1].action.completed.connect(reload)
 	reload()
 
 func _process(delta: float) -> void:
 	#updateCurve()
-	$DECODEOverlay.updateArtifacts($Robot/B/PattonB.intakeArtifacts, $Robot/R/PattonR.intakeArtifacts)
+	$DECODEOverlay.updateArtifacts($"Robot/B/19954B".intakeArtifacts, $"Robot/R/19954R".intakeArtifacts)
 
 func _input(event: InputEvent) -> void:
 	pass
@@ -41,8 +41,8 @@ func reload():
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
-	$Robot/B/PattonB.transform = transform
-	$Robot/R/PattonR.transform = transform
+	$"Robot/B/19954B".transform = transform
+	$"Robot/R/19954R".transform = transform
 	for a in $Artifacts.get_children():
 		var art: Artifact = a.get_node("Artifact")
 		art.freeze = true
@@ -52,8 +52,8 @@ func reload():
 		art.freeze = false
 		art.get_node("CollisionShape3D").disabled = false
 		art.visible = true
-	$Robot/B/PattonB.intakeArtifacts.clear()
-	$Robot/R/PattonR.intakeArtifacts.clear()
+	$"Robot/B/19954B".intakeArtifacts.clear()
+	$"Robot/R/19954R".intakeArtifacts.clear()
 	$DECODEOverlay.scoreB = 0
 	$DECODEOverlay.scoreR = 0
 	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
@@ -98,13 +98,13 @@ func camSwitch():
 func updateCurve():
 	pass
 	#$Path3D.curve.clear_points()
-	#$Path3D.curve.add_point($Robot/Patton/Turret/MeshInstance3D.global_position)
+	#$Path3D.curve.add_point($Robot/19954/Turret/MeshInstance3D.global_position)
 	#if goal:
 		#$Path3D.curve.add_point($Goals/Blue.global_position)
 	#else:
 		#$Path3D.curve.add_point($Goals/Red.global_position)
-	#for i in range($Robot/Patton.dist):
-		#var val = i*tan($Robot/Patton.targetAng) - ((24.5*(i**2))/(2*($Robot/Patton.targetV**2)*(cos($Robot/Patton.targetAng)**2)))
+	#for i in range($Robot/19954.dist):
+		#var val = i*tan($Robot/19954.targetAng) - ((24.5*(i**2))/(2*($Robot/19954.targetV**2)*(cos($Robot/19954.targetAng)**2)))
 		#$Path3D.curve.add_point($Goals/Red.global_position+Vector3(0, val, 0))
 
 
@@ -120,9 +120,15 @@ func _on_red_body_entered(body: Node3D) -> void:
 
 func _on_timer_timeout() -> void:
 	$Robot.process_mode = Node.PROCESS_MODE_INHERIT
-	$DECODEOverlay/ArtifactsB/B.process_mode = Node.PROCESS_MODE_INHERIT
-	$DECODEOverlay/ArtifactsR/R.process_mode = Node.PROCESS_MODE_INHERIT
+	$Goals/Blue/Blue/CollisionShape3D.disabled = true
+	$Goals/Red/Red/CollisionShape3D.disabled = true
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_INHERIT
 	$DECODEOverlay/Timer.start()
 	$DECODEOverlay.countDown = false
+
+
+func _on_decode_overlay_match_finished() -> void:
+	$Robot.process_mode = Node.PROCESS_MODE_DISABLED
+	$Goals/Blue/Blue/CollisionShape3D.disabled = true
+	$Goals/Red/Red/CollisionShape3D.disabled = true

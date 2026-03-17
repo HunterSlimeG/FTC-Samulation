@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="GUIDEMappingContext" format=3 uid="uid://cyo87xeeuxdwr"]
+
+[ext_resource type="Script" uid="uid://cpplm41b5bt6m" path="res://addons/guide/guide_action_mapping.gd" id="1_oym5y"]
+[ext_resource type="Script" uid="uid://cluhc11vixkf1" path="res://addons/guide/guide_action.gd" id="2_mpjyl"]
+[ext_resource type="Script" uid="uid://dsa1dnifd6w32" path="res://addons/guide/guide_mapping_context.gd" id="2_x6lwe"]
+[ext_resource type="Script" uid="uid://mtx1unc2aqn7" path="res://addons/guide/guide_input_mapping.gd" id="3_cqp6i"]
+[ext_resource type="Script" uid="uid://rvttn472ix6v" path="res://addons/guide/inputs/guide_input_joy_button.gd" id="4_fucjq"]
+[ext_resource type="Script" uid="uid://bl8rjl4oaldje" path="res://addons/guide/modifiers/guide_modifier.gd" id="5_bk5uf"]
+[ext_resource type="Script" uid="uid://x74mnwgr08a7" path="res://addons/guide/triggers/guide_trigger.gd" id="6_qr217"]
+
+[sub_resource type="Resource" id="Resource_57dt0"]
+script = ExtResource("2_mpjyl")
+name = &"SwitchCams"
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_pv5e6"]
+script = ExtResource("4_fucjq")
+button = 4
+
+[sub_resource type="Resource" id="Resource_i2732"]
+script = ExtResource("3_cqp6i")
+input = SubResource("Resource_pv5e6")
+
+[sub_resource type="Resource" id="Resource_ylvsq"]
+script = ExtResource("1_oym5y")
+action = SubResource("Resource_57dt0")
+input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_i2732")])
+
+[sub_resource type="Resource" id="Resource_271p5"]
+script = ExtResource("2_mpjyl")
+name = &"Reset"
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_jin7n"]
+script = ExtResource("4_fucjq")
+button = 6
+
+[sub_resource type="Resource" id="Resource_ttwyp"]
+script = ExtResource("3_cqp6i")
+input = SubResource("Resource_jin7n")
+
+[sub_resource type="Resource" id="Resource_4r6oc"]
+script = ExtResource("1_oym5y")
+action = SubResource("Resource_271p5")
+input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_ttwyp")])
+
+[resource]
+script = ExtResource("2_x6lwe")
+mappings = Array[ExtResource("1_oym5y")]([SubResource("Resource_ylvsq"), SubResource("Resource_4r6oc")])
+metadata/_custom_type_script = "uid://dsa1dnifd6w32"
