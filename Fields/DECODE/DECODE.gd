@@ -2,33 +2,23 @@ extends Field
 
 var goal = true
 @onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("BlueCam"), get_node("RedCam")]
-#get_node("Robot/Patton/Turret/Camera3D"),
 var cam = 0
-# Called when the node enters the scene tree for the first time.
+
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
+
 func _ready() -> void:
-	GUIDE.enable_mapping_context(load("res://Drivers/Driver1.tres"))
+	$Robot/B/PattonB.targetPos = $Goals/Blue.global_position
+	$Robot/R/PattonR.targetPos = $Goals/Red.global_position
+	Global.drivers[0].mappings[14].action.completed.connect(camSwitch)
+	Global.drivers[0].mappings[15].action.completed.connect(reload)
 	reload()
 
 func _process(delta: float) -> void:
 	#updateCurve()
-	$DECODEOverlay.artifactsB = $Robot/B/PattonB.intakeArtifacts
-	$DECODEOverlay.artifactsR = $Robot/R/PattonR.intakeArtifacts
-	$Robot/B/PattonB.targetPos = $Goals/Blue.global_position
-	$Robot/R/PattonR.targetPos = $Goals/Red.global_position
+	$DECODEOverlay.updateArtifacts($Robot/B/PattonB.intakeArtifacts, $Robot/R/PattonR.intakeArtifacts)
 
 func _input(event: InputEvent) -> void:
-	#print(event.device)
-	if event.is_action_pressed("SwitchCams"):
-		cam += 1
-		cam %= 3
-		camSwitch()
-	#elif event.device==$Robot/PattonB.drivers[1] or Input.get_joy_name($Robot/PattonB.drivers[1])=="":
-		#pass
-		#if event.is_action_pressed("Square"):
-		#	goal = not goal
-	if event.is_action_pressed("Reload"):
-		reload()
+	pass
 
 func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
 	if body is Artifact:
@@ -40,7 +30,6 @@ func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
 			body.global_position = get_node(["Misc/Red Spawner", "Misc/Blue Spawner"].pick_random()).global_position
 		body.linear_velocity = Vector3.ZERO
 		body.angular_velocity = Vector3.ZERO
-
 func reload():
 	super()
 	$Robot.process_mode = Node.PROCESS_MODE_DISABLED
@@ -100,6 +89,8 @@ func closestArtifact(gate: Node3D) -> Artifact:
 	return closest
 
 func camSwitch():
+	cam += 1
+	cam %= 3
 	cams[cam-1].current = false
 	cams[cam].current = true
 	cams[(cam+1)%3].current = false

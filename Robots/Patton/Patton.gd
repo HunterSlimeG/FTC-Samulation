@@ -25,19 +25,15 @@ var outtaking = false
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
 
-
+func _ready() -> void:
+	super()
+	if alliance==0:
+		$MeshInstance3D.mesh = load("res://Robots/Patton/Meshes/BodyB.tres")
 func _input(event: InputEvent) -> void:
-	if event.device==drivers[1]:
-		if event.is_action_pressed("R1"):
-			shooting = true
-		elif event.is_action_released("R1"):
-			shooting = false
-	elif event.device==drivers[0] and Input.get_joy_name(drivers[1])!="":
-		if event.is_action_pressed("R1"):
-			shooting = true
-		elif event.is_action_released("R1"):
-			shooting = false
+	pass
 func _process(delta: float) -> void:
+	super(delta)
+	shooting = driver2.mappings[11].action.value_bool
 	updateTurret()
 	dist = global_position.distance_to(targetPos)
 	revTime = (0.3*(dist/40))
@@ -47,15 +43,9 @@ func _process(delta: float) -> void:
 	if $Turret.global_rotation.y == -targetAng+rotation.y:
 		turretSpeed = 0.03
 	
-	if Input.get_joy_name(drivers[1])!="":
-		intaking = int(Input.get_joy_axis(drivers[1], JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
-		outtaking = int(Input.get_joy_axis(drivers[1], JoyAxis.JOY_AXIS_TRIGGER_LEFT))
-	elif Input.get_joy_name(drivers[0])!="":
-		intaking = int(Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_TRIGGER_RIGHT))
-		outtaking = int(Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_TRIGGER_LEFT))
-	else:
-		intaking = Input.is_action_pressed("R2")
-		outtaking = Input.is_action_pressed("L2")
+	intaking = int(driver2.mappings[13].action.value_axis_1d)
+	outtaking = int(driver2.mappings[12].action.value_axis_1d)
+	
 	$Area3D/CollisionShape3D.disabled = not intaking
 	if shooting:
 		if canShoot:
@@ -82,12 +72,8 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += 2*get_gravity() * delta
 		
-	if Input.get_joy_name(drivers[0])!="":
-		input_dir = snapped(Vector2(Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_LEFT_X), Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_LEFT_Y)), Vector2(0.2, 0.2))
-		turn = -snapped(Input.get_joy_axis(drivers[0], JoyAxis.JOY_AXIS_RIGHT_X), 0.1)
-	else:
-		input_dir = Input.get_vector("LLeft", "LRight", "LUp", "LDown")
-		turn = -Input.get_axis("RLeft", "RRight")
+	input_dir = driver1.mappings[0].action.value_axis_2d
+	turn = -driver1.mappings[1].action.value_axis_2d.x
 	
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
@@ -102,7 +88,7 @@ func _physics_process(delta: float) -> void:
 		SPEED = 0
 		
 	move_and_slide()
-	wheels()
+	#wheels()
 	
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -110,11 +96,6 @@ func _physics_process(delta: float) -> void:
 			c.get_collider(i).apply_central_impulse(-c.get_normal(i) * (push_force*abs(direction)))
 		elif c.get_collider(i) is Robot:
 			c.get_collider(i).velocity = -c.get_normal(i) * (push_force*abs(direction))
-func _ready() -> void:
-	print(drivers)
-	print(Input.get_joy_name(drivers[0]), Input.get_joy_name(drivers[1]))
-	if alliance==0:
-		$MeshInstance3D.mesh = load("res://Robots/Patton/Meshes/BodyB.tres")
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body is Artifact and intakeArtifacts.size()<3:
@@ -123,11 +104,12 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		body.get_node("CollisionShape3D").disabled = true
 		intakeArtifacts.append(body)
 		#print(intakeArtifacts)
+		collection.emit(intakeArtifacts)
 
 func launch():
-	launchAngle = 85*(0.98**dist)
-	var a = launchAngle
 	if not intakeArtifacts.is_empty():
+		launchAngle = 85*(0.98**dist)
+		var a = launchAngle
 		var arti = intakeArtifacts[0]
 		
 		arti.move_body($Turret/Out.global_position)
@@ -143,11 +125,11 @@ func launch():
 		vel.x = turretDir.x * (targetV*0.8)
 		vel.z = turretDir.y * (targetV*0.8)
 		
-		arti.visible = true
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
 		#print(vel)
 		arti.apply_central_impulse(vel+(velocity/6))
+		arti.visible = true
 		
 		intakeArtifacts.remove_at(0)
 func updateTurret():
@@ -162,7 +144,8 @@ func _on_out_cool_timeout() -> void:
 	canOuttake = true
 
 func wheels():
-	$Wheels/FR.rotate_x(rad_to_deg(-velocity.x+velocity.y))
-	$Wheels/FL.rotate_x(rad_to_deg(velocity.x+velocity.y))
-	$Wheels/BR.rotate_x(rad_to_deg(velocity.x+velocity.y))
-	$Wheels/BL.rotate_x(rad_to_deg(-velocity.x+velocity.y))
+	pass
+	#$Wheels/FR.rotate_x(rad_to_deg(-velocity.x+velocity.y))
+	#$Wheels/FL.rotate_x(rad_to_deg(velocity.x+velocity.y))
+	#$Wheels/BR.rotate_x(rad_to_deg(velocity.x+velocity.y))
+	#$Wheels/BL.rotate_x(rad_to_deg(-velocity.x+velocity.y))

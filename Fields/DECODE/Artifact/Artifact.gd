@@ -13,11 +13,6 @@ func _ready() -> void:
 		1:
 			$MeshInstance3D.mesh = load("res://Fields/DECODE/Artifact/Green.res")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
-	pass
-
 func _integrate_forces(state):
 	if reset_state:
 		state.transform = Transform3D(Basis.IDENTITY, moveVector)

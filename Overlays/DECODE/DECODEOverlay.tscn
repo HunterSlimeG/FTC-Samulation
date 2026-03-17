@@ -8,6 +8,7 @@
 script = ExtResource("1_5e8wv")
 
 [node name="Label" type="Label" parent="." unique_id=1989287683]
+visible = false
 offset_right = 271.0
 offset_bottom = 441.0
 theme_override_font_sizes/font_size = 24
@@ -132,6 +133,27 @@ layout_mode = 2
 theme_override_constants/outline_size = 15
 theme_override_font_sizes/font_size = 48
 text = "High Score: 0"
+
+[node name="RichLabel" type="RichTextLabel" parent="." unique_id=1807816330]
+offset_right = 390.0
+offset_bottom = 478.0
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+text = "Driver 1:
+Left Stick - Movement
+Righ Stick - Turning
+
+Driver 2:
+Right Trigger - Intake
+Left Trigger - Outtake
+Right Bumper - Launch
+
+Both:
+Options - Reset
+Touchpad - Switch View"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

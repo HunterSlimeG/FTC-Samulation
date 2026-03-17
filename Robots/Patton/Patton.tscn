@@ -14,57 +14,12 @@ size = Vector3(2, 2, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
 size = Vector3(1.2827148, 1, 1)
 
-[sub_resource type="Animation" id="Animation_36y4d"]
-resource_name = "Flywheel"
-length = 0.2
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Turret/MeshInstance3D/MeshInstance3D3:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.14999998, 0.19999999),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, -90.0, -180.0, -270.0, -360.0]
-}
-
-[sub_resource type="Animation" id="Animation_dp5ih"]
-resource_name = "Forward"
-step = 0.05
-
-[sub_resource type="Animation" id="Animation_84hnb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Turret/MeshInstance3D/MeshInstance3D3:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_d1tg2"]
-_data = {
-&"Flywheel": SubResource("Animation_36y4d"),
-&"Forward": SubResource("Animation_dp5ih"),
-&"RESET": SubResource("Animation_84hnb")
-}
-
 [node name="Patton" type="CharacterBody3D" unique_id=1724793012]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 axis_lock_linear_y = true
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_ug82c")
-drivers = [1, 2]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -75,7 +30,7 @@ transform = Transform3D(-59.99999, 0, -5.2453656e-06, 0, 59.99999, 0, 5.2453656e
 mesh = ExtResource("2_gv0sk")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1958583594]
-transform = Transform3D(-2.6226833e-06, 95, -2.6226833e-06, 0, -4.152582e-06, -60, -60, -4.152582e-06, 1.1464113e-13, -0.75469613, 0.9069624, -1.1369284)
+transform = Transform3D(-2.622683e-06, 95, 0, -59.999992, -4.1525814e-06, 0, 0, 0, 59.999992, -0.75469613, 0.9069624, -1.1623269)
 mesh = ExtResource("3_1m7xy")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=434955633]
@@ -95,7 +50,7 @@ transform = Transform3D(-4.371141e-08, 1, 8.4703295e-22, -0.9999997, -4.3711392e
 mesh = ExtResource("4_t3gtg")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=24561143]
-transform = Transform3D(-4.371141e-08, 1, 8.4703295e-22, -0.9999997, -4.3711392e-08, 7.1054274e-15, 2.1575666e-22, -2.1175824e-22, 1, -0.007999999, 0.0068150093, -0.017000005)
+transform = Transform3D(-4.371141e-08, 1, 8.4703295e-22, -0.9999997, -4.3711392e-08, 7.1054274e-15, 2.1575666e-22, -2.1175824e-22, 1, -0.0079999985, 0.006647233, -0.016943477)
 mesh = ExtResource("4_t3gtg")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1783039550]
@@ -141,10 +96,6 @@ wait_time = 0.25
 
 [node name="OutCool" type="Timer" parent="." unique_id=372660273]
 wait_time = 0.25
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1371017905]
-libraries/ = SubResource("AnimationLibrary_d1tg2")
-autoplay = &"Flywheel"
 
 [node name="Wheels" type="Node3D" parent="." unique_id=211895931]
 
