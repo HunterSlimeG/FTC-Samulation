@@ -9,6 +9,10 @@ var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").p
 func _ready() -> void:
 	$"Robot/B/19954B".targetPos = $Goals/Blue.global_position
 	$"Robot/R/19954R".targetPos = $Goals/Red.global_position
+	if $"Robot/B/19954B" is AIRobot:
+		$"Robot/B/19954B".gatePosition = $Gates/B/BlueG/CollisionShape3D.global_position
+	if $"Robot/R/19954R" is AIRobot:
+		$"Robot/R/19954R".gatePosition = $Gates/R/RedG/CollisionShape3D.global_position
 	Global.baseControls.mappings[0].action.completed.connect(camSwitch)
 	Global.baseControls.mappings[1].action.completed.connect(reload)
 	reload()
@@ -61,23 +65,23 @@ func reload():
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
-	if body is Robot:
+	if body is Robot or body is AIRobot:
 		$AnimationPlayer.play("OpenBlue", -1, 1.5)
 		await $AnimationPlayer.animation_finished
 		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 2))
 
 func _on_red_g_body_entered(body: Node3D) -> void:
-	if body is Robot:
+	if body is Robot or body is AIRobot:
 		$AnimationPlayer.play("OpenRed", -1, 1.5)
 		await $AnimationPlayer.animation_finished
 		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 2))
 
 func _on_blue_g_body_exited(body: Node3D) -> void:
-	if body is Robot:
+	if body is Robot or body is AIRobot:
 		$AnimationPlayer.play_backwards("OpenBlue")
 
 func _on_red_g_body_exited(body: Node3D) -> void:
-	if body is Robot:
+	if body is Robot or body is AIRobot:
 		$AnimationPlayer.play_backwards("OpenRed")
 		
 func closestArtifact(gate: Node3D) -> Artifact:
@@ -120,8 +124,8 @@ func _on_red_body_entered(body: Node3D) -> void:
 
 func _on_timer_timeout() -> void:
 	$Robot.process_mode = Node.PROCESS_MODE_INHERIT
-	$Goals/Blue/Blue/CollisionShape3D.disabled = true
-	$Goals/Red/Red/CollisionShape3D.disabled = true
+	$Goals/Blue/Blue/CollisionShape3D.disabled = false
+	$Goals/Red/Red/CollisionShape3D.disabled = false
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_INHERIT
 	$DECODEOverlay/Timer.start()

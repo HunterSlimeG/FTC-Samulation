@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://ww3h0olvrwe1"]
+
+[ext_resource type="Script" uid="uid://ccg1nvy8qbu5n" path="res://Robots/AIRobots/19954/19954-AI.gd" id="1_8fo5w"]
+[ext_resource type="ArrayMesh" uid="uid://bqacumqrgr5na" path="res://Robots/19954/Meshes/Body.tres" id="12_uh3yo"]
+[ext_resource type="ArrayMesh" uid="uid://oy16farggjxn" path="res://Robots/19954/Meshes/Axle.tres" id="13_uk14v"]
+[ext_resource type="ArrayMesh" uid="uid://h6l2fprpr0w1" path="res://Robots/19954/Meshes/Wheel.tres" id="14_w43nh"]
+[ext_resource type="ArrayMesh" uid="uid://c3x36m0f0ja17" path="res://Robots/19954/Meshes/Launcher.tres" id="15_4epnp"]
+[ext_resource type="ArrayMesh" uid="uid://b0h3bs4pljad0" path="res://Robots/19954/Meshes/FlyWheel.tres" id="16_h2rs1"]
+[ext_resource type="ArrayMesh" uid="uid://ndl5c5tijw48" path="res://Robots/19954/Meshes/Mecanum.tres" id="17_5nwg8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
+size = Vector3(2.2, 2, 2.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
+size = Vector3(1.2827148, 1, 1)
+
+[node name="19954-AI" type="CharacterBody3D" unique_id=1724793012]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_8fo5w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.99999994, -0.06555775)
+shape = SubResource("BoxShape3D_axnu4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1937931118]
+transform = Transform3D(-59.99999, 0, -5.2453656e-06, 0, 59.99999, 0, 5.2453656e-06, 0, -59.99999, 0, 0.3269722, -0.46882933)
+mesh = ExtResource("12_uh3yo")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1958583594]
+transform = Transform3D(-2.622683e-06, 95, 0, -59.999992, -4.1525814e-06, 0, 0, 0, 59.999992, -0.75469613, 0.9069624, -1.1623269)
+mesh = ExtResource("13_uk14v")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=434955633]
+transform = Transform3D(-4.3711395e-08, 1, 8.4703295e-22, -0.9999999, -4.3711392e-08, 7.1054274e-15, 1.4210855e-14, -2.1175824e-22, 1, -0.008386984, 0.004585525, -0.016749267)
+mesh = ExtResource("14_w43nh")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=504240467]
+transform = Transform3D(-4.3711402e-08, 1, 8.4703295e-22, -0.9999998, -4.3711392e-08, 7.1054274e-15, 7.1054274e-15, -2.1175824e-22, 1, -0.008386984, 0.009100869, -0.016749267)
+mesh = ExtResource("14_w43nh")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=8746876]
+transform = Transform3D(-4.371141e-08, 1, 8.4703295e-22, -0.99999976, -4.3711392e-08, 7.1054274e-15, 2.1575666e-22, -2.1175824e-22, 1, -0.007999999, 0.00022555096, -0.017000005)
+mesh = ExtResource("14_w43nh")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=40031254]
+transform = Transform3D(-4.371141e-08, 1, 8.4703295e-22, -0.9999997, -4.3711392e-08, 7.1054274e-15, 2.1575666e-22, -2.1175824e-22, 1, -0.007999999, 0.002545754, -0.017000005)
+mesh = ExtResource("14_w43nh")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="MeshInstance3D2" unique_id=24561143]
+transform = Transform3D(-4.371141e-08, 1, 8.4703295e-22, -0.9999997, -4.3711392e-08, 7.1054274e-15, 2.1575666e-22, -2.1175824e-22, 1, -0.0079999985, 0.006647233, -0.016943477)
+mesh = ExtResource("14_w43nh")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1783039550]
+transform = Transform3D(-2.6226828e-06, 95, -2.6226828e-06, 0, -4.152581e-06, -59.99999, -59.99999, -4.152581e-06, 1.1464113e-13, -0.75469613, 1.150371, -0.8692094)
+mesh = ExtResource("13_uk14v")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D3" unique_id=301826264]
+transform = Transform3D(-4.3711395e-08, 1, 8.4703295e-22, -0.9999999, -4.3711392e-08, 7.1054274e-15, 1.4210855e-14, -2.1175824e-22, 1, -0.008386984, 0.004585525, -0.016749267)
+mesh = ExtResource("14_w43nh")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=973410427]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2016903743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1)
+shape = SubResource("BoxShape3D_ug82c")
+disabled = true
+
+[node name="Turret" type="Node3D" parent="." unique_id=1636897788]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Turret" unique_id=1116531197]
+transform = Transform3D(-60, -3.8288154e-06, -8.21092e-06, 0, 54.378464, -25.357098, 9.059748e-06, -25.357098, -54.378464, 0, 1.7454755, 0)
+mesh = ExtResource("15_4epnp")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Turret/MeshInstance3D" unique_id=1607537059]
+transform = Transform3D(-1.6292068e-07, -1, 1.03429954e-07, 1, -1.6292068e-07, 0, 1.6850879e-14, 1.03429954e-07, 1, 0.008969978, 0.0039777365, 0.0088762725)
+mesh = ExtResource("16_h2rs1")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Turret/MeshInstance3D/MeshInstance3D3" unique_id=1913642787]
+transform = Transform3D(-0.44807363, 2.3592115e-07, -0.8939967, 2.3592114e-07, 1, 1.4565053e-07, 0.8939967, -1.4565055e-07, -0.44807363, -9.313226e-10, 0.0010785498, 1.8626451e-09)
+mesh = ExtResource("13_uk14v")
+
+[node name="Out" type="Node3D" parent="Turret" unique_id=1979211238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1640472, -0.21774709)
+
+[node name="Camera3D" type="Camera3D" parent="Turret" unique_id=270797113]
+transform = Transform3D(1, 0, 0, 0, 0.9848078, -0.17364818, 0, 0.17364818, 0.9848078, 0, 2.5196187, 0.64931005)
+
+[node name="Forward" type="Node3D" parent="." unique_id=30534963]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0.40522292, -1.5958165)
+
+[node name="ShotCool" type="Timer" parent="." unique_id=1166907530]
+wait_time = 0.25
+
+[node name="OutCool" type="Timer" parent="." unique_id=372660273]
+wait_time = 0.25
+
+[node name="Wheels" type="Node3D" parent="." unique_id=211895931]
+
+[node name="FR" type="MeshInstance3D" parent="Wheels" unique_id=921572992]
+transform = Transform3D(-2.6226833e-06, -60, 0, 60, -2.6226833e-06, 0, 0, 0, 60, 0.94507754, 0.2874453, -0.7121524)
+mesh = ExtResource("17_5nwg8")
+
+[node name="BR" type="MeshInstance3D" parent="Wheels" unique_id=1640055375]
+transform = Transform3D(-2.6226833e-06, -60, 0, 60, -2.6226833e-06, 0, 0, 0, 60, 0.945, 0.287, 0.712)
+mesh = ExtResource("17_5nwg8")
+
+[node name="FL" type="MeshInstance3D" parent="Wheels" unique_id=1694112779]
+transform = Transform3D(-2.6226833e-06, -60, 0, 60, -2.6226833e-06, 0, 0, 0, 60, -0.945, 0.287, -0.712)
+mesh = ExtResource("17_5nwg8")
+
+[node name="BL" type="MeshInstance3D" parent="Wheels" unique_id=888558628]
+transform = Transform3D(-2.6226833e-06, -60, 0, 60, -2.6226833e-06, 0, 0, 0, 60, -0.945, 0.287, 0.712)
+mesh = ExtResource("17_5nwg8")
+
+[node name="Far" type="RayCast3D" parent="." unique_id=1291773077]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.04950523, 0)
+target_position = Vector3(0, 0, 0)
+hit_from_inside = true
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Close" type="RayCast3D" parent="." unique_id=2108900753]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.04950523, 0)
+target_position = Vector3(0, 0, 0)
+hit_from_inside = true
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="ShotCool" to="." method="_on_shot_cool_timeout"]
+[connection signal="timeout" from="OutCool" to="." method="_on_out_cool_timeout"]

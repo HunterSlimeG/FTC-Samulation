@@ -133,7 +133,7 @@ mappings = Array[ExtResource("3_708ph")]([SubResource("Resource_elvdg"), SubReso
 metadata/_custom_type_script = "uid://dsa1dnifd6w32"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
-size = Vector3(2, 2, 2)
+size = Vector3(2.2, 2, 2.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
 size = Vector3(1.2827148, 1, 1)
@@ -147,7 +147,7 @@ script = ExtResource("1_ug82c")
 driverContexts = Array[ExtResource("2_36y4d")]([SubResource("Resource_mjgj5"), SubResource("Resource_x87ac")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.99999994, -0.06555775)
 shape = SubResource("BoxShape3D_axnu4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1937931118]
