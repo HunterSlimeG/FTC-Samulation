@@ -1,9 +1,7 @@
 class_name AIRobot
-extends CharacterBody3D
+extends Robot
 
-@export_enum("Blue", "Red") var alliance := 0
-
-#@export var navAgent: NavigationAgent3D
+@onready var navAgent: NavigationAgent3D = $NavigationAgent3D
 @export var navPosition: Vector3
 var nav = true
 

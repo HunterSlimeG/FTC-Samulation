@@ -4,6 +4,9 @@ extends RigidBody3D
 var reset_state = false
 var moveVector: Vector3
 
+var launchZone = false
+var launchSource: Robot = null
+
 @export_enum("Purple", "Green") var color := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

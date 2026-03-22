@@ -27,14 +27,13 @@ func _process(delta: float) -> void:
 	if countDown:
 		$CenterContainer2/Label.text = str(int(owner.get_node("Timer").time_left))
 		$CenterContainer2/Label.visible = true
-	else:
-		$CenterContainer2/Label.visible = false
 	$CenterContainer/Label.text = str(int($Timer.time_left)/60)+":"+str(int($Timer.time_left)%60).lpad(2, "0")
 
 
 
 
 func _on_timer_timeout() -> void:
+	$CenterContainer2/Label.text = "Times Up!"
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$CenterContainer/Label.text = "0:00"
 	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ_WRITE)
@@ -47,8 +46,8 @@ func _on_timer_timeout() -> void:
 func updateArtifacts(B:Array[Artifact], R:Array[Artifact]):
 	artifactsB = B
 	artifactsR = R
-	$ArtifactsB/B.text = "Artifacts Scored: "+str(scoreB)
-	$ArtifactsR/R.text = "Artifacts Scored: "+str(scoreR)
+	$ArtifactsB/B.text = str(scoreB)
+	$ArtifactsR/R.text = str(scoreR)
 	for a in range(3):
 		if a<artifactsB.size():
 			match artifactsB[a].color:

@@ -165,7 +165,7 @@ Reload={
 [physics]
 
 3d/physics_engine="Jolt Physics"
-3d/default_gravity=27.719
+3d/default_gravity=29.4
 
 [rendering]
 

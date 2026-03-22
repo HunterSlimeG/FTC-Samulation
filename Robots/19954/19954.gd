@@ -1,4 +1,4 @@
-extends Robot
+extends DriveRobot
 
 
 const MAXSPEED = 12
@@ -25,8 +25,14 @@ var outtaking = false
 var intaking = false
 var intakeArtifacts: Array[Artifact] = []
 
+var inLaunch = true
+
 func _ready() -> void:
 	super()
+	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").body_entered.connect(enterLaunch)
+	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_entered.connect(enterLaunch)
+	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").body_exited.connect(exitLaunch)
+	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_exited.connect(exitLaunch)
 	if alliance==0:
 		$MeshInstance3D.mesh = load("res://Robots/19954/Meshes/BodyB.tres")
 func _input(event: InputEvent) -> void:
@@ -108,7 +114,12 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 func launch():
 	if not intakeArtifacts.is_empty():
-		launchAngle = 85*(0.98**dist)
+		print(dist)
+		if dist>=15:
+			launchAngle = clamp(85*(0.98**dist)-15, 30, 90)
+		else:
+			launchAngle = 70
+		#launchAngle = 90
 		var a = launchAngle
 		var arti = intakeArtifacts[0]
 		
@@ -118,14 +129,20 @@ func launch():
 		var vel := Vector3.ZERO
 		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
 		#print(a)
-		#targetV = sqrt((dist*27.719)/sin(2*a))
-		targetV = sqrt((27.719*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+$Turret/Out.global_position.y)/2
+		#targetV = sqrt((dist*abs(get_gravity().y))/sin(2*a))/2
+		#    (abs(get_gravity().y)/8)
+		targetV = sqrt((abs(get_gravity().y)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))/1.5
+		#targetV = sqrt(((abs(get_gravity().y)/4)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))
+		#print(launchAngle)
+		print(targetV)
 		#print(v)
-		vel.y = (sin(deg_to_rad(a)) * targetV)
 		var turretDir := Vector2($Turret.global_position.x, $Turret.global_position.z).direction_to(Vector2($Turret/Out.global_position.x, $Turret/Out.global_position.z))
-		vel.x = turretDir.x * (targetV*0.8)
-		vel.z = turretDir.y * (targetV*0.8)
+		vel.x = targetV*cos(deg_to_rad(a))*sin(-Vector2.DOWN.angle_to(turretDir))
+		vel.y = sin(deg_to_rad(a)) * targetV
+		vel.z = targetV*cos(deg_to_rad(a))*cos(-Vector2.DOWN.angle_to(turretDir))
 		
+		arti.launchSource = self
+		arti.launchZone = inLaunch
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
 		#print(vel)
@@ -143,3 +160,10 @@ func _on_shot_cool_timeout() -> void:
 	canShoot = true
 func _on_out_cool_timeout() -> void:
 	canOuttake = true
+
+func enterLaunch(body):
+	if body==self:
+		inLaunch = true
+func exitLaunch(body):
+	if body==self:
+		inLaunch = false

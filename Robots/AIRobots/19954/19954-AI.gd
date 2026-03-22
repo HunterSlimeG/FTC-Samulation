@@ -84,40 +84,47 @@ func _physics_process(delta: float) -> void:
 		elif intakeArtifacts.size()<3:
 			nearestArtifact = null
 			for i: Node3D in get_tree().root.get_node("/root/"+Global.field+"/Artifacts").get_children():
-				if not i.get_node("Artifact").freeze and i.get_node("Artifact").visible:# and i.get_node("Artifact").position.y<0.6:
+				if not i.get_node("Artifact").freeze and i.get_node("Artifact").visible and i.get_node("Artifact").position.y<0.6:
 					if nearestArtifact==null or i.get_node("Artifact").global_position.distance_to(global_position)<nearestArtifact.global_position.distance_to(global_position):
 						nearestArtifact = i.get_node("Artifact")
-			if nearestArtifact.position.y>0.6:
+			if nearestArtifact==null:
 				navPosition = gatePosition
 			else:
 				navPosition = nearestArtifact.global_position
 				global_rotation.y = move_toward(global_rotation.y, -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90), 0.1)
 				#global_rotation.y = -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90)
 				intaking = true
-		elif not inLaunch or global_position.distance_to(targetPos)<=15:
+		elif not inLaunch or dist<=15 and not intakeArtifacts.is_empty():
 			intaking = false
 			#$Far.target_position = $Far.to_local(get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").global_position)
 			#$Close.target_position = $Close.to_local(get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").global_position)
 			#if $Far.is_colliding() and $Close.is_colliding():
 				#if global_position.distance_to($Far.get_collision_point())<global_position.distance_to($Close.get_collision_point()):
-					#nearestLaunch = $Far.to_global($Far.get_collision_point())
+					#nearestLaunch = $Far.get_collision_point()
 					##print($Far.get_collision_point())
 				#else:
-					#nearestLaunch = $Close.to_global($Close.get_collision_point())
+					#nearestLaunch = $Close.get_collision_point()
 					##print($Close.get_collision_point())
+				
 			if global_position.distance_to(get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").global_position)<global_position.distance_to(get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").global_position):
 				nearestLaunch = get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").global_position
 			else:
 				nearestLaunch = get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").global_position
 			navPosition = nearestLaunch
 		else:
+			navPosition = Vector3.ZERO
+			input_dir = Vector2.ZERO
+			shooting = false
 			intaking = false
 			nav = false
 	else:
+		navPosition = global_position
+		input_dir = Vector2.ZERO
 		nav = true
+	navAgent.set_target_position(navPosition)
 	if not shooting:
-		input_dir = Vector2(global_position.direction_to(navPosition).x, global_position.direction_to(navPosition).z)
-	#input_dir = Vector2(navAgent.get_next_path_position().x, navAgent.get_next_path_position().z)
+		#input_dir = Vector2(global_position.direction_to(navPosition).x, global_position.direction_to(navPosition).z)
+		input_dir = Vector2(global_position.direction_to(navAgent.get_next_path_position()).x, global_position.direction_to(navAgent.get_next_path_position()).z)
 	
 	if not is_on_floor():
 		velocity += 2*get_gravity() * delta
@@ -152,7 +159,12 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 func launch():
 	if not intakeArtifacts.is_empty():
-		launchAngle = 85*(0.98**dist)
+		print(dist)
+		if dist>=15:
+			launchAngle = clamp(85*(0.98**dist)-15, 30, 90)
+		else:
+			launchAngle = 70
+		#launchAngle = 90
 		var a = launchAngle
 		var arti = intakeArtifacts[0]
 		
@@ -162,14 +174,20 @@ func launch():
 		var vel := Vector3.ZERO
 		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
 		#print(a)
-		#targetV = sqrt((dist*27.719)/sin(2*a))
-		targetV = sqrt((27.719*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+$Turret/Out.global_position.y)/2
+		#targetV = sqrt((dist*abs(get_gravity().y))/sin(2*a))/2
+		#    (abs(get_gravity().y)/8)
+		targetV = sqrt((abs(get_gravity().y)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))/1.5
+		#targetV = sqrt(((abs(get_gravity().y)/4)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))
+		#print(launchAngle)
+		print(targetV)
 		#print(v)
-		vel.y = (sin(deg_to_rad(a)) * targetV)
 		var turretDir := Vector2($Turret.global_position.x, $Turret.global_position.z).direction_to(Vector2($Turret/Out.global_position.x, $Turret/Out.global_position.z))
-		vel.x = turretDir.x * (targetV*0.8)
-		vel.z = turretDir.y * (targetV*0.8)
+		vel.x = targetV*cos(deg_to_rad(a))*sin(-Vector2.DOWN.angle_to(turretDir))
+		vel.y = sin(deg_to_rad(a)) * targetV
+		vel.z = targetV*cos(deg_to_rad(a))*cos(-Vector2.DOWN.angle_to(turretDir))
 		
+		arti.launchSource = self
+		arti.launchZone = inLaunch
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
 		#print(vel)

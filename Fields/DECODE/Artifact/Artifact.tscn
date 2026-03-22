@@ -9,7 +9,7 @@ bounce = 0.45
 [sub_resource type="SphereShape3D" id="SphereShape3D_ahc0e"]
 
 [node name="Artifact" type="RigidBody3D" unique_id=441454740]
-mass = 0.5
+mass = 0.6
 physics_material_override = SubResource("PhysicsMaterial_ahc0e")
 script = ExtResource("1_aetso")
 

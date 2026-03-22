@@ -6,20 +6,23 @@ var cam = 0
 
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 
+var blueGateOpener: Robot
+var redGateOpener: Robot
+
 func _ready() -> void:
-	$"Robot/B/19954B".targetPos = $Goals/Blue.global_position
-	$"Robot/R/19954R".targetPos = $Goals/Red.global_position
-	if $"Robot/B/19954B" is AIRobot:
-		$"Robot/B/19954B".gatePosition = $Gates/B/BlueG/CollisionShape3D.global_position
-	if $"Robot/R/19954R" is AIRobot:
-		$"Robot/R/19954R".gatePosition = $Gates/R/RedG/CollisionShape3D.global_position
+	$"Robot/B/19954".targetPos = $Goals/Blue.global_position
+	$"Robot/R/19954".targetPos = $Goals/Red.global_position
+	if $"Robot/B/19954" is AIRobot:
+		$"Robot/B/19954".gatePosition = $Gates/B/BlueG/CollisionShape3D.global_position
+	if $"Robot/R/19954" is AIRobot:
+		$"Robot/R/19954".gatePosition = $Gates/R/RedG/CollisionShape3D.global_position
 	Global.baseControls.mappings[0].action.completed.connect(camSwitch)
 	Global.baseControls.mappings[1].action.completed.connect(reload)
 	reload()
 
 func _process(delta: float) -> void:
 	#updateCurve()
-	$DECODEOverlay.updateArtifacts($"Robot/B/19954B".intakeArtifacts, $"Robot/R/19954R".intakeArtifacts)
+	$DECODEOverlay.updateArtifacts($"Robot/B/19954".intakeArtifacts, $"Robot/R/19954".intakeArtifacts)
 
 func _input(event: InputEvent) -> void:
 	pass
@@ -45,8 +48,8 @@ func reload():
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
-	$"Robot/B/19954B".transform = transform
-	$"Robot/R/19954R".transform = transform
+	$"Robot/B/19954".transform = transform
+	$"Robot/R/19954".transform = transform
 	for a in $Artifacts.get_children():
 		var art: Artifact = a.get_node("Artifact")
 		art.freeze = true
@@ -56,33 +59,37 @@ func reload():
 		art.freeze = false
 		art.get_node("CollisionShape3D").disabled = false
 		art.visible = true
-	$"Robot/B/19954B".intakeArtifacts.clear()
-	$"Robot/R/19954R".intakeArtifacts.clear()
+	$"Robot/B/19954".intakeArtifacts.clear()
+	$"Robot/R/19954".intakeArtifacts.clear()
 	$DECODEOverlay.scoreB = 0
 	$DECODEOverlay.scoreR = 0
 	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
-	$DECODEOverlay/CenterContainer3/Label.text = "High Score: "+hs.get_as_text()
+	$DECODEOverlay/CenterContainer3/Label.text = "High Score:\n"+hs.get_as_text()
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
-	if body is Robot or body is AIRobot:
+	if body is Robot:
 		$AnimationPlayer.play("OpenBlue", -1, 1.5)
 		await $AnimationPlayer.animation_finished
-		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 2))
+		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 1))
+		blueGateOpener = body
 
 func _on_red_g_body_entered(body: Node3D) -> void:
-	if body is Robot or body is AIRobot:
+	if body is Robot:
 		$AnimationPlayer.play("OpenRed", -1, 1.5)
 		await $AnimationPlayer.animation_finished
-		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 2))
+		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 1))
+		redGateOpener = body
 
 func _on_blue_g_body_exited(body: Node3D) -> void:
-	if body is Robot or body is AIRobot:
+	if body is Robot:
 		$AnimationPlayer.play_backwards("OpenBlue")
+		#blueGateOpener = null
 
 func _on_red_g_body_exited(body: Node3D) -> void:
-	if body is Robot or body is AIRobot:
+	if body is Robot:
 		$AnimationPlayer.play_backwards("OpenRed")
+		#redGateOpener = null
 		
 func closestArtifact(gate: Node3D) -> Artifact:
 	var closest = null
@@ -93,11 +100,12 @@ func closestArtifact(gate: Node3D) -> Artifact:
 	return closest
 
 func camSwitch():
-	cam += 1
-	cam %= 3
-	cams[cam-1].current = false
-	cams[cam].current = true
-	cams[(cam+1)%3].current = false
+	$SplitCam.visible = not $SplitCam.visible
+	#cam += 1
+	#cam %= 3
+	#cams[cam-1].current = false
+	#cams[cam].current = true
+	#cams[(cam+1)%3].current = false
 
 func updateCurve():
 	pass
@@ -112,27 +120,64 @@ func updateCurve():
 		#$Path3D.curve.add_point($Goals/Red.global_position+Vector3(0, val, 0))
 
 
-func _on_blue_body_entered(body: Node3D) -> void:
+func _on_blue_over_body_entered(body: Node3D) -> void:
 	if body is Artifact:
-		$DECODEOverlay.scoreB += 1
+		if body.launchZone and body.launchSource.alliance==0:
+			$DECODEOverlay.scoreB += 1
+		else:
+			$DECODEOverlay.scoreR += 15
 
 
-func _on_red_body_entered(body: Node3D) -> void:
+func _on_red_over_body_entered(body: Node3D) -> void:
 	if body is Artifact:
-		$DECODEOverlay.scoreR += 1
+		if body.launchZone and body.launchSource.alliance==1:
+			$DECODEOverlay.scoreR += 1
+		else:
+			$DECODEOverlay.scoreB += 15
 
 
 func _on_timer_timeout() -> void:
 	$Robot.process_mode = Node.PROCESS_MODE_INHERIT
-	$Goals/Blue/Blue/CollisionShape3D.disabled = false
-	$Goals/Red/Red/CollisionShape3D.disabled = false
+	$Goals/Blue/Over/CollisionShape3D.disabled = false
+	$Goals/Red/Over/CollisionShape3D.disabled = false
+	$Goals/Blue/Class/CollisionShape3D.disabled = false
+	$Goals/Red/Class/CollisionShape3D.disabled = false
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_INHERIT
 	$DECODEOverlay/Timer.start()
 	$DECODEOverlay.countDown = false
+	$DECODEOverlay/CenterContainer2/Label.text = ""
 
 
 func _on_decode_overlay_match_finished() -> void:
 	$Robot.process_mode = Node.PROCESS_MODE_DISABLED
-	$Goals/Blue/Blue/CollisionShape3D.disabled = true
-	$Goals/Red/Red/CollisionShape3D.disabled = true
+	$Goals/Blue/Over/CollisionShape3D.disabled = true
+	$Goals/Red/Over/CollisionShape3D.disabled = true
+	$Goals/Blue/Class/CollisionShape3D.disabled = true
+	$Goals/Red/Class/CollisionShape3D.disabled = true
+
+
+func _on_blue_class_body_entered(body: Node3D) -> void:
+	if body is Artifact and body.launchSource!=null:
+		if body.launchZone and body.launchSource.alliance==0:
+			$DECODEOverlay.scoreB += 2
+		body.launchSource = null
+
+
+func _on_red_class_body_entered(body: Node3D) -> void:
+	if body is Artifact and body.launchSource!=null:
+		if body.launchZone and body.launchSource.alliance==1:
+			$DECODEOverlay.scoreR += 2
+		body.launchSource = null
+
+
+func _on_blue_gate_body_exited(body: Node3D) -> void:
+	if body is Artifact:
+		if blueGateOpener.alliance!=0:
+			$DECODEOverlay.scoreB += 15
+
+
+func _on_red_gate_body_exited(body: Node3D) -> void:
+	if body is Artifact:
+		if redGateOpener.alliance!=1:
+			$DECODEOverlay.scoreR += 15
