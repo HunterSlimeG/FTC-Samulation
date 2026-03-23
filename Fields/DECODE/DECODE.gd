@@ -10,6 +10,8 @@ var blueGateOpener: Robot
 var redGateOpener: Robot
 
 func _ready() -> void:
+	blueGateOpener = get_node("Robot/B/19954")
+	redGateOpener = get_node("Robot/R/19954")
 	$"Robot/B/19954".targetPos = $Goals/Blue.global_position
 	$"Robot/R/19954".targetPos = $Goals/Red.global_position
 	if $"Robot/B/19954" is AIRobot:
