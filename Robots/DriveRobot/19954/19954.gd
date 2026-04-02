@@ -34,7 +34,7 @@ func _ready() -> void:
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").body_exited.connect(exitLaunch)
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_exited.connect(exitLaunch)
 	if alliance==0:
-		$MeshInstance3D.mesh = load("res://Robots/19954/Meshes/BodyB.tres")
+		$MeshInstance3D.mesh = load("res://Robots/DriveRobot/19954/Meshes/BodyB.tres")
 func _input(event: InputEvent) -> void:
 	pass
 func _process(delta: float) -> void:
@@ -114,7 +114,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 func launch():
 	if not intakeArtifacts.is_empty():
-		print(dist)
+		#print(dist)
 		if dist>=15:
 			launchAngle = clamp(85*(0.98**dist)-15, 30, 90)
 		else:
@@ -134,7 +134,7 @@ func launch():
 		targetV = sqrt((abs(get_gravity().y)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))/1.5
 		#targetV = sqrt(((abs(get_gravity().y)/4)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))
 		#print(launchAngle)
-		print(targetV)
+		#print(targetV)
 		#print(v)
 		var turretDir := Vector2($Turret.global_position.x, $Turret.global_position.z).direction_to(Vector2($Turret/Out.global_position.x, $Turret/Out.global_position.z))
 		vel.x = targetV*cos(deg_to_rad(a))*sin(-Vector2.DOWN.angle_to(turretDir))

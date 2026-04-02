@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://ww3h0olvrwe1"]
 
 [ext_resource type="Script" uid="uid://ccg1nvy8qbu5n" path="res://Robots/AIRobots/19954/19954-AI.gd" id="1_8fo5w"]
-[ext_resource type="ArrayMesh" uid="uid://bqacumqrgr5na" path="res://Robots/19954/Meshes/Body.tres" id="12_uh3yo"]
-[ext_resource type="ArrayMesh" uid="uid://oy16farggjxn" path="res://Robots/19954/Meshes/Axle.tres" id="13_uk14v"]
-[ext_resource type="ArrayMesh" uid="uid://h6l2fprpr0w1" path="res://Robots/19954/Meshes/Wheel.tres" id="14_w43nh"]
-[ext_resource type="ArrayMesh" uid="uid://c3x36m0f0ja17" path="res://Robots/19954/Meshes/Launcher.tres" id="15_4epnp"]
-[ext_resource type="ArrayMesh" uid="uid://b0h3bs4pljad0" path="res://Robots/19954/Meshes/FlyWheel.tres" id="16_h2rs1"]
-[ext_resource type="ArrayMesh" uid="uid://ndl5c5tijw48" path="res://Robots/19954/Meshes/Mecanum.tres" id="17_5nwg8"]
+[ext_resource type="ArrayMesh" uid="uid://bqacumqrgr5na" path="res://Robots/DriveRobot/19954/Meshes/Body.tres" id="12_uh3yo"]
+[ext_resource type="ArrayMesh" uid="uid://oy16farggjxn" path="res://Robots/DriveRobot/19954/Meshes/Axle.tres" id="13_uk14v"]
+[ext_resource type="ArrayMesh" uid="uid://h6l2fprpr0w1" path="res://Robots/DriveRobot/19954/Meshes/Wheel.tres" id="14_w43nh"]
+[ext_resource type="ArrayMesh" uid="uid://c3x36m0f0ja17" path="res://Robots/DriveRobot/19954/Meshes/Launcher.tres" id="15_4epnp"]
+[ext_resource type="ArrayMesh" uid="uid://b0h3bs4pljad0" path="res://Robots/DriveRobot/19954/Meshes/FlyWheel.tres" id="16_h2rs1"]
+[ext_resource type="ArrayMesh" uid="uid://ndl5c5tijw48" path="res://Robots/DriveRobot/19954/Meshes/Mecanum.tres" id="17_5nwg8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
 size = Vector3(2.2, 2, 2.3)

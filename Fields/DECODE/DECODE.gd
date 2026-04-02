@@ -98,7 +98,8 @@ func closestArtifact(gate: Node3D) -> Artifact:
 	for a in $Artifacts.get_children():
 		var art: Artifact = a.get_node("Artifact")
 		if closest==null or gate.global_position.distance_to(art.global_position)<gate.global_position.distance_to(closest.global_position):
-			closest = art
+			if closest==null or art.global_position.y>gate.global_position.y:
+				closest = art
 	return closest
 
 func camSwitch():
@@ -120,7 +121,6 @@ func updateCurve():
 	#for i in range($Robot/19954.dist):
 		#var val = i*tan($Robot/19954.targetAng) - ((24.5*(i**2))/(2*($Robot/19954.targetV**2)*(cos($Robot/19954.targetAng)**2)))
 		#$Path3D.curve.add_point($Goals/Red.global_position+Vector3(0, val, 0))
-
 
 func _on_blue_over_body_entered(body: Node3D) -> void:
 	if body is Artifact:

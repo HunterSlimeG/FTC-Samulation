@@ -11,10 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jf1j2")
 
-[node name="ItemList" type="ItemList" parent="." unique_id=1553098553]
+[node name="Season" type="ItemList" parent="." unique_id=1553098553]
 layout_mode = 0
-offset_right = 1009.0
-offset_bottom = 651.0
+offset_right = 500.0
+offset_bottom = 600.0
 theme_override_font_sizes/font_size = 48
 item_count = 1
 item_0/text = "DECODE"
@@ -27,4 +27,14 @@ offset_right = 1070.0
 offset_bottom = 781.0
 theme_override_font_sizes/font_size = 48
 
-[connection signal="item_activated" from="ItemList" to="." method="_on_item_list_item_activated"]
+[node name="Start" type="Button" parent="." unique_id=1232269747]
+layout_mode = 0
+offset_left = 1107.0
+offset_top = 695.0
+offset_right = 1266.0
+offset_bottom = 791.0
+theme_override_font_sizes/font_size = 64
+text = "Start"
+
+[connection signal="item_selected" from="Season" to="." method="_on_season_item_selected"]
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
