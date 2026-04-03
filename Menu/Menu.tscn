@@ -13,8 +13,12 @@ script = ExtResource("1_jf1j2")
 
 [node name="Season" type="ItemList" parent="." unique_id=1553098553]
 layout_mode = 0
+offset_top = 80.0
 offset_right = 500.0
-offset_bottom = 600.0
+offset_bottom = 650.0
+focus_neighbor_left = NodePath("../RobotRed")
+focus_neighbor_right = NodePath("../RobotBlue")
+focus_neighbor_bottom = NodePath("../Start")
 theme_override_font_sizes/font_size = 48
 item_count = 1
 item_0/text = "DECODE"
@@ -36,5 +40,217 @@ offset_bottom = 791.0
 theme_override_font_sizes/font_size = 64
 text = "Start"
 
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=445955701]
+layout_mode = 0
+offset_top = 780.0
+offset_right = 1600.0
+offset_bottom = 847.0
+
+[node name="Version" type="Label" parent="CenterContainer" unique_id=1636745160]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "v0.0.0"
+
+[node name="CenterContainer2" type="CenterContainer" parent="." unique_id=1865043139]
+layout_mode = 0
+offset_top = 850.0
+offset_right = 1600.0
+offset_bottom = 895.0
+
+[node name="Update-Patch" type="LinkButton" parent="CenterContainer2" unique_id=154865590]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Link Text"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1507173816]
+
+[node name="RobotBlue" type="ItemList" parent="." unique_id=11367220]
+layout_mode = 0
+offset_left = 510.0
+offset_top = 107.0
+offset_right = 1040.0
+offset_bottom = 416.0
+focus_neighbor_left = NodePath("../Season")
+focus_neighbor_right = NodePath("../RobotRed")
+focus_neighbor_bottom = NodePath("../Blue/HSplitContainer/BDr1")
+theme_override_font_sizes/font_size = 48
+
+[node name="RobotRed" type="ItemList" parent="." unique_id=447262954]
+layout_mode = 0
+offset_left = 1050.0
+offset_top = 107.0
+offset_right = 1580.0
+offset_bottom = 416.0
+focus_neighbor_left = NodePath("../RobotBlue")
+focus_neighbor_right = NodePath("../Season")
+focus_neighbor_bottom = NodePath("../Red/HSplitContainer/RDr1")
+theme_override_font_sizes/font_size = 48
+
+[node name="Red" type="VBoxContainer" parent="." unique_id=1387194206]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 443.0
+offset_right = 1448.0
+offset_bottom = 581.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Red" unique_id=347839935]
+layout_mode = 2
+split_offsets = PackedInt32Array(208)
+split_offset = 208
+
+[node name="Driver1" type="Label" parent="Red/HSplitContainer" unique_id=2020144530]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Driver 1: "
+
+[node name="RDr1" type="OptionButton" parent="Red/HSplitContainer" unique_id=1107387513]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Blue/HSplitContainer/BDr1")
+focus_neighbor_top = NodePath("../../../RobotRed")
+focus_neighbor_bottom = NodePath("../../HSplitContainer2/RDr2")
+theme_override_font_sizes/font_size = 32
+selected = 0
+item_count = 5
+popup/item_0/text = "AI"
+popup/item_0/id = 0
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="Red" unique_id=1899561836]
+layout_mode = 2
+split_offsets = PackedInt32Array(208)
+split_offset = 208
+
+[node name="Driver2" type="Label" parent="Red/HSplitContainer2" unique_id=862684815]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Driver 2: "
+
+[node name="RDr2" type="OptionButton" parent="Red/HSplitContainer2" unique_id=496195291]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Blue/HSplitContainer2/BDr2")
+focus_neighbor_top = NodePath("../../HSplitContainer/RDr1")
+focus_neighbor_bottom = NodePath("../../../Start")
+theme_override_font_sizes/font_size = 32
+selected = 0
+item_count = 5
+popup/item_0/text = "AI"
+popup/item_0/id = 0
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+
+[node name="Blue" type="VBoxContainer" parent="." unique_id=2001932430]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 443.0
+offset_right = 908.0
+offset_bottom = 581.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Blue" unique_id=1811480057]
+layout_mode = 2
+split_offsets = PackedInt32Array(208)
+split_offset = 208
+
+[node name="Driver1" type="Label" parent="Blue/HSplitContainer" unique_id=1870507782]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Driver 1: "
+
+[node name="BDr1" type="OptionButton" parent="Blue/HSplitContainer" unique_id=662920304]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../../RobotBlue")
+focus_neighbor_right = NodePath("../../../Red/HSplitContainer/RDr1")
+focus_neighbor_bottom = NodePath("../../HSplitContainer2/BDr2")
+theme_override_font_sizes/font_size = 32
+selected = 0
+item_count = 5
+popup/item_0/text = "AI"
+popup/item_0/id = 0
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="Blue" unique_id=2005763099]
+layout_mode = 2
+split_offsets = PackedInt32Array(208)
+split_offset = 208
+
+[node name="Driver2" type="Label" parent="Blue/HSplitContainer2" unique_id=1520434451]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Driver 2: "
+
+[node name="BDr2" type="OptionButton" parent="Blue/HSplitContainer2" unique_id=1157174193]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../HSplitContainer/BDr1")
+focus_neighbor_right = NodePath("../../../Red/HSplitContainer2/RDr2")
+focus_neighbor_bottom = NodePath("../../../Start")
+theme_override_font_sizes/font_size = 32
+selected = 0
+item_count = 5
+popup/item_0/text = "AI"
+popup/item_0/id = 0
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+
+[node name="BlueLabel" type="Label" parent="." unique_id=2017219816]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 32.0
+offset_right = 763.0
+offset_bottom = 99.0
+theme_override_font_sizes/font_size = 48
+text = "Blue Robot"
+horizontal_alignment = 1
+
+[node name="RedLabel" type="Label" parent="." unique_id=1601086454]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 32.0
+offset_right = 1303.0
+offset_bottom = 99.0
+theme_override_font_sizes/font_size = 48
+text = "Red Robot"
+horizontal_alignment = 1
+
+[node name="SeasonLabel" type="Label" parent="." unique_id=1430892184]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 4.0
+offset_right = 318.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 48
+text = "Seasons"
+
 [connection signal="item_selected" from="Season" to="." method="_on_season_item_selected"]
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="item_selected" from="RobotBlue" to="." method="_on_robot_blue_item_selected"]
+[connection signal="item_selected" from="RobotRed" to="." method="_on_robot_red_item_selected"]
+[connection signal="item_selected" from="Red/HSplitContainer/RDr1" to="." method="_on_r_dr_1_item_selected"]
+[connection signal="item_selected" from="Red/HSplitContainer2/RDr2" to="." method="_on_r_dr_2_item_selected"]
+[connection signal="item_selected" from="Blue/HSplitContainer/BDr1" to="." method="_on_b_dr_1_item_selected"]
+[connection signal="item_selected" from="Blue/HSplitContainer2/BDr2" to="." method="_on_b_dr_2_item_selected"]

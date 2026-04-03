@@ -2,6 +2,8 @@ class_name Field
 extends Node3D
 
 
-func reload():
-	pass
-	#get_tree().change_scene_to_file("res://Fields/"+Global.field+"/"+Global.field+".scn")
+func _ready() -> void:
+	Global.baseControls.mappings[2].action.triggered.connect(mainMenu)
+	
+func mainMenu():
+	get_tree().change_scene_to_file("res://Menu/Menu.tscn")

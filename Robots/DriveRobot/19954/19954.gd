@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 		arti.visible = true
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
-		#print(vel)
+
 		var fdir = global_position.direction_to($Forward.global_position)
 		arti.apply_central_impulse(fdir*5)
 		intakeArtifacts.remove_at(0)
@@ -109,12 +109,10 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		body.freeze = true
 		body.get_node("CollisionShape3D").disabled = true
 		intakeArtifacts.append(body)
-		#print(intakeArtifacts)
 		collection.emit(intakeArtifacts)
 
 func launch():
 	if not intakeArtifacts.is_empty():
-		#print(dist)
 		if dist>=15:
 			launchAngle = clamp(85*(0.98**dist)-15, 30, 90)
 		else:
@@ -128,14 +126,10 @@ func launch():
 		var y = targetPos.y-$Turret/Out.global_position.y
 		var vel := Vector3.ZERO
 		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
-		#print(a)
 		#targetV = sqrt((dist*abs(get_gravity().y))/sin(2*a))/2
 		#    (abs(get_gravity().y)/8)
 		targetV = sqrt((abs(get_gravity().y)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))/1.5
 		#targetV = sqrt(((abs(get_gravity().y)/4)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Turret/Out.global_position.y))
-		#print(launchAngle)
-		#print(targetV)
-		#print(v)
 		var turretDir := Vector2($Turret.global_position.x, $Turret.global_position.z).direction_to(Vector2($Turret/Out.global_position.x, $Turret/Out.global_position.z))
 		vel.x = targetV*cos(deg_to_rad(a))*sin(-Vector2.DOWN.angle_to(turretDir))
 		vel.y = sin(deg_to_rad(a)) * targetV
@@ -145,7 +139,6 @@ func launch():
 		arti.launchZone = inLaunch
 		arti.freeze = false
 		arti.get_node("CollisionShape3D").disabled = false
-		#print(vel)
 		arti.apply_central_impulse(vel+(velocity/6))
 		arti.visible = true
 		

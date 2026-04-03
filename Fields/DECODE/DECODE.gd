@@ -10,21 +10,22 @@ var blueGateOpener: Robot
 var redGateOpener: Robot
 
 func _ready() -> void:
+	super()
 	blueGateOpener = get_node("Robot/B/19954")
 	redGateOpener = get_node("Robot/R/19954")
-	$"Robot/B/19954".targetPos = $Goals/Blue.global_position
-	$"Robot/R/19954".targetPos = $Goals/Red.global_position
-	if $"Robot/B/19954" is AIRobot:
-		$"Robot/B/19954".gatePosition = $Gates/B/BlueG/CollisionShape3D.global_position
-	if $"Robot/R/19954" is AIRobot:
-		$"Robot/R/19954".gatePosition = $Gates/R/RedG/CollisionShape3D.global_position
+	get_node("Robot/B/").get_children()[0].targetPos = $Goals/Blue.global_position
+	get_node("Robot/R/").get_children()[0].targetPos = $Goals/Red.global_position
+	if get_node("Robot/B/").get_children()[0] is AIRobot:
+		get_node("Robot/B/").get_children()[0].gatePosition = $Gates/B/BlueG/CollisionShape3D.global_position
+	if get_node("Robot/R/").get_children()[0] is AIRobot:
+		get_node("Robot/R/").get_children()[0].gatePosition = $Gates/R/RedG/CollisionShape3D.global_position
 	Global.baseControls.mappings[0].action.completed.connect(camSwitch)
 	Global.baseControls.mappings[1].action.completed.connect(reload)
 	reload()
 
 func _process(delta: float) -> void:
 	#updateCurve()
-	$DECODEOverlay.updateArtifacts($"Robot/B/19954".intakeArtifacts, $"Robot/R/19954".intakeArtifacts)
+	$DECODEOverlay.updateArtifacts(get_node("Robot/B/").get_children()[0].intakeArtifacts, get_node("Robot/R/").get_children()[0].intakeArtifacts)
 
 func _input(event: InputEvent) -> void:
 	pass
@@ -40,7 +41,7 @@ func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
 		body.linear_velocity = Vector3.ZERO
 		body.angular_velocity = Vector3.ZERO
 func reload():
-	super()
+	#super()
 	$Robot.process_mode = Node.PROCESS_MODE_DISABLED
 	$Timer.process_mode = Node.PROCESS_MODE_INHERIT
 	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_DISABLED
@@ -50,8 +51,8 @@ func reload():
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
 	$DECODEOverlay/Sprite2D.texture = load(tag)
-	$"Robot/B/19954".transform = transform
-	$"Robot/R/19954".transform = transform
+	get_node("Robot/B/").get_children()[0].transform = transform
+	get_node("Robot/R/").get_children()[0].transform = transform
 	for a in $Artifacts.get_children():
 		var art: Artifact = a.get_node("Artifact")
 		art.freeze = true
@@ -61,8 +62,8 @@ func reload():
 		art.freeze = false
 		art.get_node("CollisionShape3D").disabled = false
 		art.visible = true
-	$"Robot/B/19954".intakeArtifacts.clear()
-	$"Robot/R/19954".intakeArtifacts.clear()
+	get_node("Robot/B/").get_children()[0].intakeArtifacts.clear()
+	get_node("Robot/R/").get_children()[0].intakeArtifacts.clear()
 	$DECODEOverlay.scoreB = 0
 	$DECODEOverlay.scoreR = 0
 	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
@@ -73,14 +74,14 @@ func _on_blue_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play("OpenBlue", -1, 1.5)
 		await $AnimationPlayer.animation_finished
-		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 1))
+		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 3))
 		blueGateOpener = body
 
 func _on_red_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play("OpenRed", -1, 1.5)
 		await $AnimationPlayer.animation_finished
-		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 1))
+		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 3))
 		redGateOpener = body
 
 func _on_blue_g_body_exited(body: Node3D) -> void:

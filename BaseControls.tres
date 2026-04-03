@@ -8,10 +8,12 @@
 [ext_resource type="Script" uid="uid://bl8rjl4oaldje" path="res://addons/guide/modifiers/guide_modifier.gd" id="5_bk5uf"]
 [ext_resource type="Script" uid="uid://x74mnwgr08a7" path="res://addons/guide/triggers/guide_trigger.gd" id="6_qr217"]
 [ext_resource type="Script" uid="uid://cw71o87tvdx3q" path="res://addons/guide/inputs/guide_input_key.gd" id="7_cqp6i"]
+[ext_resource type="Script" uid="uid://cfvgpvihp74si" path="res://addons/guide/triggers/guide_trigger_hold.gd" id="8_fucjq"]
 
 [sub_resource type="Resource" id="Resource_57dt0"]
 script = ExtResource("2_mpjyl")
 name = &"SwitchCams"
+block_lower_priority_actions = false
 metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
 [sub_resource type="Resource" id="Resource_pv5e6"]
@@ -38,6 +40,7 @@ input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_i2732"), S
 [sub_resource type="Resource" id="Resource_271p5"]
 script = ExtResource("2_mpjyl")
 name = &"Reset"
+block_lower_priority_actions = false
 metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
 [sub_resource type="Resource" id="Resource_jin7n"]
@@ -61,7 +64,44 @@ script = ExtResource("1_oym5y")
 action = SubResource("Resource_271p5")
 input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_ttwyp"), SubResource("Resource_x6dn8")])
 
+[sub_resource type="Resource" id="Resource_8jhi1"]
+script = ExtResource("2_mpjyl")
+name = &"MainMenu"
+block_lower_priority_actions = false
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_rjmt3"]
+script = ExtResource("4_fucjq")
+button = 6
+
+[sub_resource type="Resource" id="Resource_yjww8"]
+script = ExtResource("8_fucjq")
+hold_treshold = 1.5
+
+[sub_resource type="Resource" id="Resource_s54ar"]
+script = ExtResource("3_cqp6i")
+input = SubResource("Resource_rjmt3")
+triggers = Array[ExtResource("6_qr217")]([SubResource("Resource_yjww8")])
+
+[sub_resource type="Resource" id="Resource_jaksi"]
+script = ExtResource("7_cqp6i")
+key = 82
+
+[sub_resource type="Resource" id="Resource_a5t6j"]
+script = ExtResource("8_fucjq")
+hold_treshold = 1.5
+
+[sub_resource type="Resource" id="Resource_y6kmt"]
+script = ExtResource("3_cqp6i")
+input = SubResource("Resource_jaksi")
+triggers = Array[ExtResource("6_qr217")]([SubResource("Resource_a5t6j")])
+
+[sub_resource type="Resource" id="Resource_vg2rj"]
+script = ExtResource("1_oym5y")
+action = SubResource("Resource_8jhi1")
+input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_s54ar"), SubResource("Resource_y6kmt")])
+
 [resource]
 script = ExtResource("2_x6lwe")
-mappings = Array[ExtResource("1_oym5y")]([SubResource("Resource_ylvsq"), SubResource("Resource_4r6oc")])
+mappings = Array[ExtResource("1_oym5y")]([SubResource("Resource_ylvsq"), SubResource("Resource_4r6oc"), SubResource("Resource_vg2rj")])
 metadata/_custom_type_script = "uid://dsa1dnifd6w32"

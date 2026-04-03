@@ -139,7 +139,6 @@ text = "High Score:
 horizontal_alignment = 1
 
 [node name="RichLabel" type="RichTextLabel" parent="." unique_id=1807816330]
-visible = false
 offset_right = 390.0
 offset_bottom = 478.0
 theme_override_font_sizes/normal_font_size = 24
