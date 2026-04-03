@@ -66,8 +66,8 @@ func reload():
 	get_node("Robot/R/").get_children()[0].intakeArtifacts.clear()
 	$DECODEOverlay.scoreB = 0
 	$DECODEOverlay.scoreR = 0
-	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
-	$DECODEOverlay/CenterContainer3/Label.text = "High Score:\n"+hs.get_as_text()
+	#var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
+	#$DECODEOverlay/CenterContainer3/Label.text = "High Score:\n"+hs.get_as_text()
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:

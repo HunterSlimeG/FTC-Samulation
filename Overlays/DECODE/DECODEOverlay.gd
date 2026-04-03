@@ -36,11 +36,11 @@ func _on_timer_timeout() -> void:
 	$CenterContainer2/Label.text = "Times Up!"
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$CenterContainer/Label.text = "0:00"
-	var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ_WRITE)
-	if scoreB>int(hs.get_as_text()) and scoreB>scoreR:
-		hs.store_string(str(scoreB))
-	if scoreR>int(hs.get_as_text()) and scoreR>scoreB:
-		hs.store_string(str(scoreR))
+	#var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ_WRITE)
+	#if scoreB>int(hs.get_as_text()) and scoreB>scoreR:
+		#hs.store_string(str(scoreB))
+	#if scoreR>int(hs.get_as_text()) and scoreR>scoreB:
+		#hs.store_string(str(scoreR))
 	matchFinished.emit()
 
 func updateArtifacts(B:Array[Artifact], R:Array[Artifact]):

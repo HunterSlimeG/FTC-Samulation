@@ -126,6 +126,7 @@ theme_override_font_sizes/font_size = 104
 text = "5"
 
 [node name="CenterContainer3" type="CenterContainer" parent="." unique_id=1273265139]
+visible = false
 offset_top = 760.0
 offset_right = 1600.0
 offset_bottom = 897.0
