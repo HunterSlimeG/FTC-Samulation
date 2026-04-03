@@ -1,7 +1,7 @@
 extends AIRobot
 
 
-const MAXSPEED = 12
+const MAXSPEED = 10
 var SPEED = 0
 var push_force = 4.0
 var input_dir := Vector2.ZERO
