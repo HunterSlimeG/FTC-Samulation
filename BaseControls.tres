@@ -101,7 +101,33 @@ script = ExtResource("1_oym5y")
 action = SubResource("Resource_8jhi1")
 input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_s54ar"), SubResource("Resource_y6kmt")])
 
+[sub_resource type="Resource" id="Resource_f6lps"]
+script = ExtResource("2_mpjyl")
+name = &"FullScreen"
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_c50qj"]
+script = ExtResource("7_cqp6i")
+key = 4194305
+
+[sub_resource type="Resource" id="Resource_f5b1n"]
+script = ExtResource("3_cqp6i")
+input = SubResource("Resource_c50qj")
+
+[sub_resource type="Resource" id="Resource_hqodi"]
+script = ExtResource("4_fucjq")
+button = 5
+
+[sub_resource type="Resource" id="Resource_eehl7"]
+script = ExtResource("3_cqp6i")
+input = SubResource("Resource_hqodi")
+
+[sub_resource type="Resource" id="Resource_kk2lg"]
+script = ExtResource("1_oym5y")
+action = SubResource("Resource_f6lps")
+input_mappings = Array[ExtResource("3_cqp6i")]([SubResource("Resource_f5b1n"), SubResource("Resource_eehl7")])
+
 [resource]
 script = ExtResource("2_x6lwe")
-mappings = Array[ExtResource("1_oym5y")]([SubResource("Resource_ylvsq"), SubResource("Resource_4r6oc"), SubResource("Resource_vg2rj")])
+mappings = Array[ExtResource("1_oym5y")]([SubResource("Resource_ylvsq"), SubResource("Resource_4r6oc"), SubResource("Resource_vg2rj"), SubResource("Resource_kk2lg")])
 metadata/_custom_type_script = "uid://dsa1dnifd6w32"

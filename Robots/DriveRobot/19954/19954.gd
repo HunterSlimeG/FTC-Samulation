@@ -35,8 +35,6 @@ func _ready() -> void:
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_exited.connect(exitLaunch)
 	if alliance==0:
 		$MeshInstance3D.mesh = load("res://Robots/DriveRobot/19954/Meshes/BodyB.tres")
-func _input(event: InputEvent) -> void:
-	pass
 func _process(delta: float) -> void:
 	super(delta)
 	shooting = driverContexts[1].mappings[2].action.value_bool
