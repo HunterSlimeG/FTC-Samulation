@@ -33,7 +33,12 @@ func _process(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
-	$CenterContainer2/Label.text = "Times Up!"
+	if scoreB>scoreR:
+		$CenterContainer2/Label.text = "Blue Wins!"
+		$CenterContainer2/Label.modulate = "0000e2"
+	else:
+		$CenterContainer2/Label.text = "Red Wins!"
+		$CenterContainer2/Label.modulate = "ec0000"
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$CenterContainer/Label.text = "0:00"
 	#var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ_WRITE)

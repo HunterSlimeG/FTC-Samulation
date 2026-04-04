@@ -66,6 +66,7 @@ func reload():
 	get_node("Robot/R/").get_children()[0].intakeArtifacts.clear()
 	$DECODEOverlay.scoreB = 0
 	$DECODEOverlay.scoreR = 0
+	$DECODEOverlay/CenterContainer2/Label.modulate = "ffffff"
 	#var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
 	#$DECODEOverlay/CenterContainer3/Label.text = "High Score:\n"+hs.get_as_text()
 
@@ -74,14 +75,14 @@ func _on_blue_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play("OpenBlue", -1, 1.5)
 		await $AnimationPlayer.animation_finished
-		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, 3))
+		closestArtifact($"Gates/B").apply_central_impulse(Vector3(0, 0, -3))
 		blueGateOpener = body
 
 func _on_red_g_body_entered(body: Node3D) -> void:
 	if body is Robot:
 		$AnimationPlayer.play("OpenRed", -1, 1.5)
 		await $AnimationPlayer.animation_finished
-		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, 3))
+		closestArtifact($"Gates/R").apply_central_impulse(Vector3(0, 0, -3))
 		redGateOpener = body
 
 func _on_blue_g_body_exited(body: Node3D) -> void:
