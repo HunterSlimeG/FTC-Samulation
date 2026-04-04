@@ -15,8 +15,7 @@ var redDrivers: Array[int] = [0, 0]
 func _ready() -> void:
 	$Season.grab_focus()
 	$CenterContainer/Version.text = "v"+ProjectSettings.get_setting("application/config/version")
-	$"CenterContainer2/Update-Patch".uri = "https://github.com/HunterSlimeG/FTC-Samulation/releases/tag/EXPLORE-Current"
-	#$HTTPRequest.request("https://api.github.com/repos/HunterSlimeG/FTC-Samulation/releases/latest")
+	$HTTPRequest.request("https://api.github.com/repos/HunterSlimeG/FTC-Samulation/releases/latest")
 	print($HTTPRequest.download_file)
 	$Start.disabled = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -79,6 +78,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		$"CenterContainer2/Update-Patch".text = "Update Available!"
 	else:
 		$"CenterContainer2/Update-Patch".text = "Patch Notes"
+	$"CenterContainer2/Update-Patch".uri = "https://github.com/HunterSlimeG/FTC-Samulation/releases/tag/"+response["name"]
 
 
 func _on_robot_blue_item_selected(index: int) -> void:
