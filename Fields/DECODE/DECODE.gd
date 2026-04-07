@@ -1,8 +1,8 @@
 extends Field
 
 var goal = true
-@onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("BlueCam"), get_node("RedCam")]
-var cam = 0
+#@onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("BlueCam"), get_node("RedCam")]
+var splitCam = false
 
 var tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 
@@ -106,6 +106,7 @@ func closestArtifact(gate: Node3D) -> Artifact:
 
 func camSwitch():
 	$SplitCam.visible = not $SplitCam.visible
+	splitCam = not splitCam
 	#cam += 1
 	#cam %= 3
 	#cams[cam-1].current = false
