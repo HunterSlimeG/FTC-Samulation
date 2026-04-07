@@ -115,22 +115,6 @@ mesh = ExtResource("17_5nwg8")
 transform = Transform3D(-2.6226833e-06, -60, 0, 60, -2.6226833e-06, 0, 0, 0, 60, -0.945, 0.287, 0.712)
 mesh = ExtResource("17_5nwg8")
 
-[node name="Far" type="RayCast3D" parent="." unique_id=1291773077]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.04950523, 0)
-target_position = Vector3(0, 0, 0)
-hit_from_inside = true
-hit_back_faces = false
-collide_with_areas = true
-collide_with_bodies = false
-
-[node name="Close" type="RayCast3D" parent="." unique_id=2108900753]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.04950523, 0)
-target_position = Vector3(0, 0, 0)
-hit_from_inside = true
-hit_back_faces = false
-collide_with_areas = true
-collide_with_bodies = false
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1545127915]
 simplify_path = true
 avoidance_enabled = true
