@@ -57,7 +57,29 @@ script = ExtResource("1_8ybm3")
 action = SubResource("Resource_p8dov")
 input_mappings = Array[ExtResource("3_wwbur")]([SubResource("Resource_loq2q")])
 
+[sub_resource type="Resource" id="Resource_8ybm3"]
+script = ExtResource("2_xy3fp")
+name = &"SpeedUp"
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_xy3fp"]
+script = ExtResource("8_60361")
+axis = 5
+
+[sub_resource type="Resource" id="Resource_wwbur"]
+script = ExtResource("6_0m3jb")
+
+[sub_resource type="Resource" id="Resource_ss4wa"]
+script = ExtResource("3_wwbur")
+input = SubResource("Resource_xy3fp")
+modifiers = Array[ExtResource("5_ki6mr")]([SubResource("Resource_wwbur")])
+
+[sub_resource type="Resource" id="Resource_ki6mr"]
+script = ExtResource("1_8ybm3")
+action = SubResource("Resource_8ybm3")
+input_mappings = Array[ExtResource("3_wwbur")]([SubResource("Resource_ss4wa")])
+
 [resource]
 script = ExtResource("9_qwudx")
-mappings = Array[ExtResource("1_8ybm3")]([SubResource("Resource_1nffg"), SubResource("Resource_bgjb0")])
+mappings = Array[ExtResource("1_8ybm3")]([SubResource("Resource_1nffg"), SubResource("Resource_bgjb0"), SubResource("Resource_ki6mr")])
 metadata/_custom_type_script = "uid://dsa1dnifd6w32"

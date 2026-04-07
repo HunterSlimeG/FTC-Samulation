@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
 [sub_resource type="Resource" id="Resource_whgqb"]
 script = ExtResource("4_xfpu6")
-axis = 5
+axis = 4
 
 [sub_resource type="Resource" id="Resource_qe05q"]
 script = ExtResource("3_m1gyt")
@@ -28,28 +28,9 @@ script = ExtResource("1_c2p6q")
 action = SubResource("Resource_laeyr")
 input_mappings = Array[ExtResource("3_m1gyt")]([SubResource("Resource_qe05q")])
 
-[sub_resource type="Resource" id="Resource_u5bep"]
-script = ExtResource("2_3te8h")
-name = &"Outtake"
-is_remappable = true
-metadata/_custom_type_script = "uid://cluhc11vixkf1"
-
-[sub_resource type="Resource" id="Resource_auh3e"]
-script = ExtResource("4_xfpu6")
-axis = 4
-
-[sub_resource type="Resource" id="Resource_uas8w"]
-script = ExtResource("3_m1gyt")
-input = SubResource("Resource_auh3e")
-
-[sub_resource type="Resource" id="Resource_rllkd"]
-script = ExtResource("1_c2p6q")
-action = SubResource("Resource_u5bep")
-input_mappings = Array[ExtResource("3_m1gyt")]([SubResource("Resource_uas8w")])
-
 [sub_resource type="Resource" id="Resource_5jf8y"]
 script = ExtResource("2_3te8h")
-name = &"Launch"
+name = &"CloseLaunch"
 is_remappable = true
 metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
@@ -66,7 +47,25 @@ script = ExtResource("1_c2p6q")
 action = SubResource("Resource_5jf8y")
 input_mappings = Array[ExtResource("3_m1gyt")]([SubResource("Resource_dq1e4")])
 
+[sub_resource type="Resource" id="Resource_ofidp"]
+script = ExtResource("2_3te8h")
+name = &"FarLaunch"
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_b8h27"]
+script = ExtResource("4_xfpu6")
+axis = 5
+
+[sub_resource type="Resource" id="Resource_t87rg"]
+script = ExtResource("3_m1gyt")
+input = SubResource("Resource_b8h27")
+
+[sub_resource type="Resource" id="Resource_ko5in"]
+script = ExtResource("1_c2p6q")
+action = SubResource("Resource_ofidp")
+input_mappings = Array[ExtResource("3_m1gyt")]([SubResource("Resource_t87rg")])
+
 [resource]
 script = ExtResource("8_g1sbc")
-mappings = Array[ExtResource("1_c2p6q")]([SubResource("Resource_elvdg"), SubResource("Resource_rllkd"), SubResource("Resource_a1ob0")])
+mappings = Array[ExtResource("1_c2p6q")]([SubResource("Resource_elvdg"), SubResource("Resource_a1ob0"), SubResource("Resource_ko5in")])
 metadata/_custom_type_script = "uid://dsa1dnifd6w32"

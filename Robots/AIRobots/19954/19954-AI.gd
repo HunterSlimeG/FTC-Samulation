@@ -36,8 +36,6 @@ func _ready() -> void:
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_entered.connect(enterLaunch)
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").body_exited.connect(exitLaunch)
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_exited.connect(exitLaunch)
-	if alliance==0:
-		$MeshInstance3D.mesh = load("res://Robots/DriveRobot/19954/Meshes/BodyB.tres")
 func _process(delta: float) -> void:
 	super(delta)
 	updateTurret()
