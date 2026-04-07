@@ -2,7 +2,8 @@ extends Control
 
 var robotDict: Dictionary[String, Array] = {
 	"DECODE": [
-		"19954"
+		"19954",
+		"14850",
 	]
 }
 
@@ -27,14 +28,14 @@ func _process(delta: float) -> void:
 		var fieldLoaded: Node3D = ResourceLoader.load_threaded_get("res://Fields/"+Global.field+"/"+Global.field+".scn").instantiate()
 		var robotBlue: Robot
 		if blueDrivers[0]>0 and blueDrivers[1]>0:
-			robotBlue = load("res://Robots/DriveRobot/"+robots[0]+"/"+robots[0]+".tscn").instantiate()
+			robotBlue = load("res://Robots/DriveRobots/"+robots[0]+"/"+robots[0]+".tscn").instantiate()
 			robotBlue.driver1 = blueDrivers[0]-1
 			robotBlue.driver2 = blueDrivers[1]-1
 		else:
 			robotBlue = load("res://Robots/AIRobots/"+robots[0]+"/"+robots[0]+"-AI.tscn").instantiate()
 		var robotRed: Robot
 		if redDrivers[0]>0 and redDrivers[1]>0:
-			robotRed = load("res://Robots/DriveRobot/"+robots[1]+"/"+robots[1]+".tscn").instantiate()
+			robotRed = load("res://Robots/DriveRobots/"+robots[1]+"/"+robots[1]+".tscn").instantiate()
 			robotRed.driver1 = redDrivers[0]-1
 			robotRed.driver2 = redDrivers[1]-1
 		else:
