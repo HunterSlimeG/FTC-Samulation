@@ -48,7 +48,6 @@ func _process(delta: float) -> void:
 				launch(18)
 				$ShotCool.start(revTime)
 			else:
-				print(dist)
 				canShoot = false
 				launch(20)
 				$ShotCool.start(revTime)
