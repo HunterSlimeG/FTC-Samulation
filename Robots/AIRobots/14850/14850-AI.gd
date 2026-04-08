@@ -43,11 +43,15 @@ func _process(delta: float) -> void:
 	$Area3D/CollisionShape3D.disabled = not intaking
 	if shooting:
 		if canShoot:
-			canShoot = false
-			launch()
-			$ShotCool.start(revTime)
-		#elif $ShotCool.is_stopped():
-		#	$ShotCool.start(revTime)
+			if dist<=25:
+				canShoot = false
+				launch(18)
+				$ShotCool.start(revTime)
+			else:
+				print(dist)
+				canShoot = false
+				launch(20)
+				$ShotCool.start(revTime)
 		
 	if outtaking and intakeArtifacts.size()>0 and canOuttake:
 		canOuttake = false
@@ -104,29 +108,19 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		intakeArtifacts.append(body)
 		collection.emit(intakeArtifacts)
 
-func launch():
+func launch(v):
 	if not intakeArtifacts.is_empty():
-		if dist>=15:
-			launchAngle = clamp(85*(0.98**dist)-15, 30, 90)
-		else:
-			launchAngle = 70
-		#launchAngle = 90
-		var a = launchAngle
+		launchAngle = 45
 		var arti = intakeArtifacts[0]
 		
 		arti.move_body($Out.global_position)
 		var x = targetPos.distance_to($Out.global_position)
 		var y = targetPos.y-$Out.global_position.y
 		var vel := Vector3.ZERO
-		#var a = rad_to_deg(abs(Vector2.RIGHT.angle_to(Vector2.ZERO.direction_to(Vector2(x, y)))))+50
-		#targetV = sqrt((dist*abs(get_gravity().y))/sin(2*a))/2
-		#    (abs(get_gravity().y)/8)
-		targetV = sqrt((abs(get_gravity().y)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Out.global_position.y))/1.5
-		#targetV = sqrt(((abs(get_gravity().y)/4)*(x**2))/(2*(cos(deg_to_rad(a))**2)*(x*tan(deg_to_rad(a))-y))+($Out.global_position.y))
 		var turretDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Out.global_position.x, $Out.global_position.z))
-		vel.x = targetV*cos(deg_to_rad(a))*sin(-Vector2.DOWN.angle_to(turretDir))
-		vel.y = sin(deg_to_rad(a)) * targetV
-		vel.z = targetV*cos(deg_to_rad(a))*cos(-Vector2.DOWN.angle_to(turretDir))
+		vel.x = v*cos(deg_to_rad(launchAngle))*sin(-Vector2.DOWN.angle_to(turretDir))
+		vel.y = sin(deg_to_rad(launchAngle)) * v
+		vel.z = v*cos(deg_to_rad(launchAngle))*cos(-Vector2.DOWN.angle_to(turretDir))
 		
 		arti.launchSource = self
 		arti.launchZone = inLaunch
