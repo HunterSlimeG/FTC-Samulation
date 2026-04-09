@@ -59,7 +59,7 @@ input_mappings = Array[ExtResource("3_wwbur")]([SubResource("Resource_loq2q")])
 
 [sub_resource type="Resource" id="Resource_8ybm3"]
 script = ExtResource("2_xy3fp")
-name = &"SpeedUp"
+name = &"Speed Boost"
 metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
 [sub_resource type="Resource" id="Resource_xy3fp"]

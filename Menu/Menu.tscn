@@ -96,6 +96,8 @@ offset_bottom = 581.0
 [node name="HSplitContainer" type="HSplitContainer" parent="Red" unique_id=347839935]
 layout_mode = 2
 split_offsets = PackedInt32Array(208)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 208
 
 [node name="Driver1" type="Label" parent="Red/HSplitContainer" unique_id=2020144530]
@@ -125,6 +127,8 @@ popup/item_4/id = 4
 [node name="HSplitContainer2" type="HSplitContainer" parent="Red" unique_id=1899561836]
 layout_mode = 2
 split_offsets = PackedInt32Array(208)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 208
 
 [node name="Driver2" type="Label" parent="Red/HSplitContainer2" unique_id=862684815]
@@ -161,6 +165,8 @@ offset_bottom = 581.0
 [node name="HSplitContainer" type="HSplitContainer" parent="Blue" unique_id=1811480057]
 layout_mode = 2
 split_offsets = PackedInt32Array(208)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 208
 
 [node name="Driver1" type="Label" parent="Blue/HSplitContainer" unique_id=1870507782]
@@ -190,6 +196,8 @@ popup/item_4/id = 4
 [node name="HSplitContainer2" type="HSplitContainer" parent="Blue" unique_id=2005763099]
 layout_mode = 2
 split_offsets = PackedInt32Array(208)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 208
 
 [node name="Driver2" type="Label" parent="Blue/HSplitContainer2" unique_id=1520434451]

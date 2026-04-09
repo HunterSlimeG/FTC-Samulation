@@ -4,6 +4,7 @@ var robotDict: Dictionary[String, Array] = {
 	"DECODE": [
 		"19954",
 		"14850",
+		"18518",
 	]
 }
 

@@ -5,22 +5,40 @@ var artifactsR: Array[Artifact] = []
 var scoreB: int = 0
 var scoreR: int = 0
 var countDown = true
-#var formatter:GUIDEInputFormatter = GUIDEInputFormatter.for_context(Global.drivers[0])
+
+var robotBlue: Robot
+var robotRed: Robot
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
-	#$RichLabel.text = "Driver 1: \n"
-	#$RichLabel.append_text(tr("Use %s to [b]Move[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[0].action)])
-	#$RichLabel.append_text(tr("Use %s to [b]Turn[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[1].action)])
-	#$RichLabel.append_text("\n Driver 2: \n")
-	#$RichLabel.append_text(tr("Hold %s to [b]Intake[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[13].action)])
-	#$RichLabel.append_text(tr("Hold %s to [b]Outtake[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[12].action)])
-	#$RichLabel.append_text(tr("Press %s to [b]Launch[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[11].action)])
-	#$RichLabel.append_text("\n Any: \n")
-	#$RichLabel.append_text(tr("Press %s to [b]Reset Field[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[15].action)])
-	#$RichLabel.append_text(tr("Press %s to [b]Switch Cameras[/b]\n") % [await formatter.action_as_richtext_async(Global.drivers[0].mappings[14].action)])
-
+	
+	robotBlue = get_node("/root/"+Global.field+"/Robot/B").get_child(0)
+	robotRed = get_node("/root/"+Global.field+"/Robot/R").get_child(0)
+	
+	if robotBlue is DriveRobot:
+		var formatBlue1: GUIDEInputFormatter = GUIDEInputFormatter.for_context(robotBlue.driverContexts[0])
+		var formatBlue2: GUIDEInputFormatter = GUIDEInputFormatter.for_context(robotBlue.driverContexts[1])
+		$ControlsB.text = robotBlue.name
+		$ControlsB.append_text("\n[b]Controller "+str(robotBlue.driver1+1)+":[/b]")
+		for m: GUIDEActionMapping in robotBlue.driverContexts[0].mappings:
+			var action_text: String = await formatBlue1.action_as_richtext_async(m.action)
+			$ControlsB.append_text("\n"+m.action.name+" - "+action_text)
+		$ControlsB.append_text("\n[b]Controller "+str(robotBlue.driver2+1)+":[/b]")
+		for m: GUIDEActionMapping in robotBlue.driverContexts[1].mappings:
+			var action_text: String = await formatBlue2.action_as_richtext_async(m.action)
+			$ControlsB.append_text("\n"+m.action.name+" - "+action_text)
+	if robotRed is DriveRobot:
+		var formatRed1: GUIDEInputFormatter = GUIDEInputFormatter.for_context(robotRed.driverContexts[0])
+		var formatRed2: GUIDEInputFormatter = GUIDEInputFormatter.for_context(robotRed.driverContexts[1])
+		$ControlsR.text = robotRed.name
+		$ControlsR.append_text("\n[b]Controller "+str(robotRed.driver1+1)+":[/b]")
+		for m: GUIDEActionMapping in robotRed.driverContexts[0].mappings:
+			var action_text: String = await formatRed1.action_as_richtext_async(m.action)
+			$ControlsR.append_text("\n"+m.action.name+" - "+action_text)
+		$ControlsR.append_text("\n[b]Controller "+str(robotRed.driver2+1)+":[/b]")
+		for m: GUIDEActionMapping in robotRed.driverContexts[1].mappings:
+			var action_text: String = await formatRed2.action_as_richtext_async(m.action)
+			$ControlsR.append_text("\n"+m.action.name+" - "+action_text)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

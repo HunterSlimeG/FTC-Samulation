@@ -214,7 +214,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1640472, -0.21774709)
 transform = Transform3D(1, 0, 0, 0, 0.9848078, -0.17364818, 0, 0.17364818, 0.9848078, 0, 2.5196187, 0.64931005)
 
 [node name="Forward" type="Node3D" parent="." unique_id=30534963]
-transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0.40522292, -1.5958165)
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0.40522292, -1.7509543)
 
 [node name="ShotCool" type="Timer" parent="." unique_id=1166907530]
 wait_time = 0.25

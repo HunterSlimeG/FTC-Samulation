@@ -1,7 +1,7 @@
 extends DriveRobot
 
 
-var MAXSPEED = 8
+const MAXSPEED = 10
 var SPEED = 0
 var push_force = 4.0
 var input_dir := Vector2.ZERO
@@ -13,8 +13,7 @@ var targetPos: Vector3
 var targetV: float
 var dist: float
 
-var closeShooting = false
-var farShooting = false
+var shooting = false
 var canShoot = true
 var revTime = 0.25
 
@@ -27,6 +26,8 @@ var inLaunch = true
 
 func _ready() -> void:
 	super()
+	driverContexts[1].mappings[3].action.completed.connect(intakeUp)
+	driverContexts[1].mappings[4].action.completed.connect(intakeDown)
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").body_entered.connect(enterLaunch)
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").body_entered.connect(enterLaunch)
 	get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").body_exited.connect(exitLaunch)
@@ -35,27 +36,18 @@ func _ready() -> void:
 		#$MeshInstance3D.mesh = load("res://Robots/DriveRobot/19954/Meshes/BodyB.tres")
 func _process(delta: float) -> void:
 	super(delta)
-	closeShooting = driverContexts[1].mappings[1].action.value_bool
-	farShooting = driverContexts[1].mappings[2].action.value_bool
+	shooting = driverContexts[1].mappings[2].action.value_bool
 	dist = global_position.distance_to(targetPos)
-	revTime = (0.3*(dist/40))
-	if driverContexts[0].mappings[2].action.value_axis_1d>0.2:
-		MAXSPEED = 16
-	else:
-		MAXSPEED = 8
+	revTime = 1
 	
 	intaking = driverContexts[1].mappings[0].action.value_bool
+	outtaking = driverContexts[1].mappings[1].action.value_bool
 	
 	$Area3D/CollisionShape3D.disabled = not intaking
-	if closeShooting:
+	if shooting:
 		if canShoot:
 			canShoot = false
 			launch(18)
-			$ShotCool.start(revTime)
-	elif farShooting:
-		if canShoot:
-			canShoot = false
-			launch(20)
 			$ShotCool.start(revTime)
 		
 	if outtaking and intakeArtifacts.size()>0 and canOuttake:
@@ -117,7 +109,7 @@ func launch(v):
 		var x = targetPos.distance_to($Out.global_position)
 		var y = targetPos.y-$Out.global_position.y
 		var vel := Vector3.ZERO
-		var turretDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Out.global_position.x, $Out.global_position.z))
+		var turretDir := Vector2($FlyWheel.global_position.x, $FlyWheel.global_position.z).direction_to(Vector2($Out.global_position.x, $Out.global_position.z))
 		vel.x = v*cos(deg_to_rad(launchAngle))*sin(-Vector2.DOWN.angle_to(turretDir))
 		vel.y = sin(deg_to_rad(launchAngle)) * v
 		vel.z = v*cos(deg_to_rad(launchAngle))*cos(-Vector2.DOWN.angle_to(turretDir))
@@ -130,6 +122,15 @@ func launch(v):
 		arti.visible = true
 		
 		intakeArtifacts.remove_at(0)
+
+func intakeUp():
+	if intakeArtifacts.size()>=2:
+		var lastArt = intakeArtifacts.pop_front()
+		intakeArtifacts.push_back(lastArt)
+func intakeDown():
+	if intakeArtifacts.size()>=2:
+		var lastArt = intakeArtifacts.pop_back()
+		intakeArtifacts.push_front(lastArt)
 
 func _on_shot_cool_timeout() -> void:
 	canShoot = true

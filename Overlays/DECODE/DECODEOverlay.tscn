@@ -139,27 +139,26 @@ text = "High Score:
 0"
 horizontal_alignment = 1
 
-[node name="RichLabel" type="RichTextLabel" parent="." unique_id=1807816330]
+[node name="ControlsB" type="RichTextLabel" parent="." unique_id=1807816330]
 offset_right = 390.0
-offset_bottom = 478.0
-theme_override_font_sizes/normal_font_size = 24
-theme_override_font_sizes/bold_font_size = 24
-theme_override_font_sizes/bold_italics_font_size = 24
-theme_override_font_sizes/italics_font_size = 24
-theme_override_font_sizes/mono_font_size = 24
-text = "Controls:
-Driver 1:
-Left Stick - Movement
-Righ Stick - Turning
+offset_bottom = 600.0
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+horizontal_alignment = 1
 
-Driver 2:
-Right Trigger - Intake
-Left Trigger - Outtake
-Right Bumper - Launch
-
-Both:
-Options - Reset
-Touchpad - Switch View"
+[node name="ControlsR" type="RichTextLabel" parent="." unique_id=719652370]
+offset_left = 1210.0
+offset_right = 1600.0
+offset_bottom = 600.0
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -30,7 +30,7 @@ input_mappings = Array[ExtResource("3_m1gyt")]([SubResource("Resource_qe05q")])
 
 [sub_resource type="Resource" id="Resource_5jf8y"]
 script = ExtResource("2_3te8h")
-name = &"CloseLaunch"
+name = &"Close Launch"
 is_remappable = true
 metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
@@ -49,7 +49,7 @@ input_mappings = Array[ExtResource("3_m1gyt")]([SubResource("Resource_dq1e4")])
 
 [sub_resource type="Resource" id="Resource_ofidp"]
 script = ExtResource("2_3te8h")
-name = &"FarLaunch"
+name = &"Far Launch"
 metadata/_custom_type_script = "uid://cluhc11vixkf1"
 
 [sub_resource type="Resource" id="Resource_b8h27"]
