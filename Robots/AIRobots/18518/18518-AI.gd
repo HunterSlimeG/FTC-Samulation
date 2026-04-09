@@ -38,19 +38,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 	dist = global_position.distance_to(targetPos)
-	revTime = (0.3*(dist/40))
+	revTime = 1
 	
 	$Area3D/CollisionShape3D.disabled = not intaking
 	if shooting:
 		if canShoot:
-			if dist<=25:
-				canShoot = false
-				launch(18)
-				$ShotCool.start(revTime)
-			else:
-				canShoot = false
-				launch(20)
-				$ShotCool.start(revTime)
+			canShoot = false
+			launch(18)
+			$ShotCool.start(revTime)
 		
 	if outtaking and intakeArtifacts.size()>0 and canOuttake:
 		canOuttake = false
@@ -73,7 +68,7 @@ func _physics_process(delta: float) -> void:
 			input_dir = Vector2(global_position.direction_to(navAgent.get_next_path_position()).x, global_position.direction_to(navAgent.get_next_path_position()).z)
 			global_rotation.y = -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90)
 		else:
-			global_rotation.y = -Vector2(global_position.x, global_position.z).angle_to_point(Vector2(targetPos.x, targetPos.z))-deg_to_rad(90)
+			global_rotation.y = Vector2($Out.global_position.x, $Out.global_position.z).angle_to_point(Vector2(targetPos.x, targetPos.z))
 	else:
 		input_dir = Vector2.ZERO
 	if intakeArtifacts.is_empty() and not nav:
@@ -116,7 +111,7 @@ func launch(v):
 		var x = targetPos.distance_to($Out.global_position)
 		var y = targetPos.y-$Out.global_position.y
 		var vel := Vector3.ZERO
-		var turretDir := Vector2(global_position.x, global_position.z).direction_to(Vector2($Out.global_position.x, $Out.global_position.z))
+		var turretDir := Vector2($FlyWheel.global_position.x, $FlyWheel.global_position.z).direction_to(Vector2($Out.global_position.x, $Out.global_position.z))
 		vel.x = v*cos(deg_to_rad(launchAngle))*sin(-Vector2.DOWN.angle_to(turretDir))
 		vel.y = sin(deg_to_rad(launchAngle)) * v
 		vel.z = v*cos(deg_to_rad(launchAngle))*cos(-Vector2.DOWN.angle_to(turretDir))
