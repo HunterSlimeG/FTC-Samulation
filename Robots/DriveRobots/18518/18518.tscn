@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://c40do2e6vno6s"]
+
+[ext_resource type="Script" uid="uid://bi75f61eq38xe" path="res://Robots/DriveRobots/18518/18518.gd" id="1_cj7hn"]
+[ext_resource type="ArrayMesh" uid="uid://eea5um5kxyu7" path="res://Robots/DriveRobots/18518/Meshes/Intake.tres" id="5_0hx72"]
+[ext_resource type="ArrayMesh" uid="uid://b3rysad46dtyr" path="res://Robots/DriveRobots/18518/Meshes/Drivetrain.tres" id="5_cj7hn"]
+[ext_resource type="ArrayMesh" uid="uid://c5hgb52voj4v0" path="res://Robots/DriveRobots/18518/Meshes/Ramp.tres" id="7_tme3p"]
+[ext_resource type="ArrayMesh" uid="uid://bikl170ffum7t" path="res://Robots/DriveRobots/18518/Meshes/Spin.tres" id="8_xbgeo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
+size = Vector3(2.2, 2, 2.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
+size = Vector3(1.2827148, 1, 1)
+
+[node name="18518" type="CharacterBody3D" unique_id=1724793012]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_cj7hn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.99999994, -0.06555775)
+shape = SubResource("BoxShape3D_axnu4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=48674521]
+transform = Transform3D(4.9999986, 0, 0, 0, 4.9999986, 0, 0, 0, 4.9999986, 0.58452886, 1.4860077, 0.7775384)
+mesh = ExtResource("5_0hx72")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1937931118]
+transform = Transform3D(-2.1855686e-07, 0, 4.9999986, 0, 4.9999986, 0, -4.9999986, 0, -2.1855686e-07, 0.9145489, 0.06129654, -1.0559998)
+mesh = ExtResource("5_cj7hn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1711661210]
+transform = Transform3D(-4.371139e-08, 0, 0.9999999, 0, 0.9999999, 0, -0.9999999, 0, -4.371139e-08, -0.18785045, 0, -0.22170681)
+mesh = ExtResource("7_tme3p")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=973410427]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2016903743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1)
+shape = SubResource("BoxShape3D_ug82c")
+disabled = true
+
+[node name="Forward" type="Node3D" parent="." unique_id=30534963]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0.40522292, -1.5958165)
+
+[node name="ShotCool" type="Timer" parent="." unique_id=1166907530]
+wait_time = 0.25
+
+[node name="OutCool" type="Timer" parent="." unique_id=372660273]
+wait_time = 0.25
+
+[node name="Out" type="Node3D" parent="." unique_id=1576213373]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 1.5787045, -0.26860708)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=201382880]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+pixel_size = 0.015
+text = "14850"
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=628727019]
+transform = Transform3D(-4.5365346e-07, 1.7559967e-07, 5.999999, -4.0563974, -4.4210453, -1.7731078e-07, 4.4210453, -4.0563974, 4.5298734e-07, -0.66966563, 0.81320554, 0.028206132)
+mesh = ExtResource("8_xbgeo")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="ShotCool" to="." method="_on_shot_cool_timeout"]
+[connection signal="timeout" from="OutCool" to="." method="_on_out_cool_timeout"]
