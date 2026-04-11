@@ -38,10 +38,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 	dist = global_position.distance_to(targetPos)
-	revTime = (0.3*(dist/40))
+	revTime = 0.8
 	
 	$Area3D/CollisionShape3D.disabled = not intaking
-	if shooting:
+	if shooting and nearRotation:
 		if canShoot:
 			if dist<=25:
 				canShoot = false
@@ -49,7 +49,7 @@ func _process(delta: float) -> void:
 				$ShotCool.start(revTime)
 			else:
 				canShoot = false
-				launch(20)
+				launch(21)
 				$ShotCool.start(revTime)
 		
 	if outtaking and intakeArtifacts.size()>0 and canOuttake:
@@ -66,14 +66,16 @@ func _process(delta: float) -> void:
 		arti.apply_central_impulse(fdir*5)
 		intakeArtifacts.remove_at(0)
 func _physics_process(delta: float) -> void:
+	super(delta)
 	if nav:
 		navPosition = navLoop()
 		navAgent.set_target_position(navPosition)
 		if not shooting:
 			input_dir = Vector2(global_position.direction_to(navAgent.get_next_path_position()).x, global_position.direction_to(navAgent.get_next_path_position()).z)
-			global_rotation.y = -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90)
-		else:
-			global_rotation.y = -Vector2(global_position.x, global_position.z).angle_to_point(Vector2(targetPos.x, targetPos.z))-deg_to_rad(90)
+			if navCase==navCases.COLLECT:
+				navRotation = -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90)
+			else:
+				navRotation = -Vector2(global_position.x, global_position.z).angle_to_point(Vector2(targetPos.x, targetPos.z))-deg_to_rad(90)
 	else:
 		input_dir = Vector2.ZERO
 	if intakeArtifacts.is_empty() and not nav:
@@ -146,26 +148,31 @@ func navLoop() -> Vector3:
 	shooting = false
 	intaking = false
 	if inLaunch and not intakeArtifacts.is_empty():
+		navCase = navCases.DELIVER
 		nav = false
 		shooting = true
 		return global_position
 	elif intakeArtifacts.size()==3:
+		navCase = navCases.DELIVER
 		intaking = false
 		return getNearestLaunch()
 	elif getNearestArtifact()!=null and global_position.distance_to(getNearestLaunch())<global_position.distance_to(getNearestArtifact().global_position) and not intakeArtifacts.is_empty():
+		navCase = navCases.DELIVER
 		intaking = false
 		return getNearestLaunch()
 	elif intakeArtifacts.size()<3:
+		navCase = navCases.COLLECT
 		intaking = true
 		if getNearestArtifact()!=null:
 			return getNearestArtifact().global_position
 		else:
 			return Vector3(gatePosition.x*.9, gatePosition.y, gatePosition.z)
+	navCase = navCases.NONE
 	nav = false
 	return global_position
 
 func getNearestArtifact() -> Artifact:
-	var arti
+	var arti = null
 	for i: Node3D in get_tree().root.get_node("/root/"+Global.field+"/Artifacts").get_children():
 		if not i.get_node("Artifact").freeze and i.get_node("Artifact").visible and i.get_node("Artifact").position.y<0.7:
 			if arti==null or i.get_node("Artifact").global_position.distance_to(global_position)<arti.global_position.distance_to(global_position):
@@ -175,7 +182,8 @@ func getNearestArtifact() -> Artifact:
 func getNearestLaunch() -> Vector3:
 	if global_position.distance_to(get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").global_position)<global_position.distance_to(get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").global_position):
 		nearestLaunch = get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").global_position
-		return get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Far").global_position
+		nearestLaunch.z -= 0.4
+		return nearestLaunch
 	else:
 		nearestLaunch = get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").global_position
-		return get_tree().root.get_node("/root/"+Global.field+"/LaunchZones/Close").global_position
+		return nearestLaunch

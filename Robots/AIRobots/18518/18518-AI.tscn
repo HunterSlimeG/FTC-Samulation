@@ -10,7 +10,7 @@
 [ext_resource type="ArrayMesh" uid="uid://oy16farggjxn" path="res://Robots/DriveRobots/19954/Meshes/Axle.tres" id="11_mjone"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
-size = Vector3(2.2, 2, 2.3)
+size = Vector3(2, 2, 2.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ug82c"]
 size = Vector3(1.2827148, 1, 1)
@@ -23,7 +23,7 @@ axis_lock_angular_z = true
 script = ExtResource("1_d5ba2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=384010513]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.99999994, -0.06555775)
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0.9999998, -0.06555775)
 shape = SubResource("BoxShape3D_axnu4")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=628727019]
@@ -91,7 +91,7 @@ pixel_size = 0.015
 text = "18518"
 
 [node name="FlyWheel" type="Node3D" parent="." unique_id=611345722]
-transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0.54879403, 1.8864998, 0.103226595)
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0.549, 1.886, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=2735299]
 simplify_path = true

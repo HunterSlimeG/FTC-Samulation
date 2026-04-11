@@ -68,6 +68,7 @@ func _process(delta: float) -> void:
 		arti.apply_central_impulse(fdir*3.5)
 		intakeArtifacts.remove_at(0)
 func _physics_process(delta: float) -> void:
+	super(delta)
 	if nav:
 		navPosition = navLoop()
 		navAgent.set_target_position(navPosition)
@@ -77,7 +78,8 @@ func _physics_process(delta: float) -> void:
 				#global_rotation.y = move_toward(global_rotation.y, -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90), 0.1)
 			#else:
 				#global_rotation.y = move_toward(global_rotation.y, -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90), -0.1)
-			global_rotation.y = -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90)
+			if navCase==navCases.COLLECT:
+				navRotation = -Vector2.ZERO.angle_to_point(input_dir)-deg_to_rad(90)
 	else:
 		input_dir = Vector2.ZERO
 	if intakeArtifacts.is_empty() and not nav:
@@ -165,26 +167,31 @@ func navLoop() -> Vector3:
 	shooting = false
 	intaking = false
 	if inLaunch and not intakeArtifacts.is_empty():
+		navCase = navCases.DELIVER
 		nav = false
 		shooting = true
 		return global_position
 	elif intakeArtifacts.size()==3:
+		navCase = navCases.DELIVER
 		intaking = false
 		return getNearestLaunch()
 	elif getNearestArtifact()!=null and global_position.distance_to(getNearestLaunch())<global_position.distance_to(getNearestArtifact().global_position) and not intakeArtifacts.is_empty():
+		navCase = navCases.DELIVER
 		intaking = false
 		return getNearestLaunch()
 	elif intakeArtifacts.size()<3:
+		navCase = navCases.COLLECT
 		intaking = true
 		if getNearestArtifact()!=null:
 			return getNearestArtifact().global_position
 		else:
 			return Vector3(gatePosition.x*.9, gatePosition.y, gatePosition.z)
+	navCase = navCases.NONE
 	nav = false
 	return global_position
 
 func getNearestArtifact() -> Artifact:
-	var arti
+	var arti = null
 	for i: Node3D in get_tree().root.get_node("/root/"+Global.field+"/Artifacts").get_children():
 		if not i.get_node("Artifact").freeze and i.get_node("Artifact").visible and i.get_node("Artifact").position.y<0.7:
 			if arti==null or i.get_node("Artifact").global_position.distance_to(global_position)<arti.global_position.distance_to(global_position):

@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 	closeShooting = driverContexts[1].mappings[1].action.value_bool
 	farShooting = driverContexts[1].mappings[2].action.value_bool
 	dist = global_position.distance_to(targetPos)
-	revTime = 1
+	revTime = 0.8
 	if driverContexts[0].mappings[2].action.value_axis_1d>0.2:
 		MAXSPEED = 16
 	else:
@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 	elif farShooting:
 		if canShoot:
 			canShoot = false
-			launch(20)
+			launch(21)
 			$ShotCool.start(revTime)
 		
 	if outtaking and intakeArtifacts.size()>0 and canOuttake:
