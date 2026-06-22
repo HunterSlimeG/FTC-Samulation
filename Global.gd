@@ -4,6 +4,7 @@ var field = ""
 
 var fullscreen = false
 var baseControls = preload("res://BaseControls.tres")
+var alliance = ""
 
 func _process(delta: float) -> void:
 	if not GUIDE.is_mapping_context_enabled(baseControls):

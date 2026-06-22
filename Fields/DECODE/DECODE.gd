@@ -1,5 +1,7 @@
 extends Field
 
+var xr_interface: XRInterface
+
 var goal = true
 #@onready var cams: Array[Camera3D] = [get_node("Camera3D"), get_node("BlueCam"), get_node("RedCam")]
 var splitCam = false
@@ -10,6 +12,17 @@ var blueGateOpener: Robot
 var redGateOpener: Robot
 
 func _ready() -> void:
+	xr_interface = XRServer.find_interface("OpenXR")
+	if xr_interface and xr_interface.is_initialized():
+		print("OpenXR initialized successfully")
+
+		# Turn off v-sync!
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+
+		# Change our main viewport to output to the HMD
+		get_viewport().use_xr = true
+	else:
+		print("OpenXR not initialized, please check if your headset is connected")
 	super()
 	blueGateOpener = get_node("Robot/B/").get_children()[0]
 	redGateOpener = get_node("Robot/R/").get_children()[0]
@@ -28,7 +41,7 @@ func _process(delta: float) -> void:
 	#$DirectionalLight3D.rotation_degrees.x -= 1*delta #0.5
 	#if $DirectionalLight3D.rotation_degrees.x%360<-140:
 		#pass
-	$DECODEOverlay.updateArtifacts(get_node("Robot/B/").get_children()[0].intakeArtifacts, get_node("Robot/R/").get_children()[0].intakeArtifacts)
+	$SubViewport/DECODEOverlay.updateArtifacts(get_node("Robot/B/").get_children()[0].intakeArtifacts, get_node("Robot/R/").get_children()[0].intakeArtifacts)
 
 func _input(event: InputEvent) -> void:
 	pass
@@ -47,13 +60,13 @@ func reload():
 	#super()
 	$Robot.process_mode = Node.PROCESS_MODE_DISABLED
 	$Timer.process_mode = Node.PROCESS_MODE_INHERIT
-	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_DISABLED
+	$SubViewport/DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_DISABLED
 	$Timer.start()
-	$DECODEOverlay.countDown = true
-	$DECODEOverlay/CenterContainer/Label.text = "1:30"
+	$SubViewport/DECODEOverlay.countDown = true
+	$SubViewport/DECODEOverlay/CenterContainer/Label.text = "1:30"
 	tag = "res://Fields/DECODE/AprilTags/AprilTag ("+str(randi_range(1, 3))+").png"
 	$AprilTags/Obelisk.texture = load(tag)
-	$DECODEOverlay/Sprite2D.texture = load(tag)
+	$SubViewport/DECODEOverlay/Sprite2D.texture = load(tag)
 	get_node("Robot/B/").get_children()[0].transform = transform
 	get_node("Robot/R/").get_children()[0].transform = transform
 	for a in $Artifacts.get_children():
@@ -67,11 +80,11 @@ func reload():
 		art.visible = true
 	get_node("Robot/B/").get_children()[0].intakeArtifacts.clear()
 	get_node("Robot/R/").get_children()[0].intakeArtifacts.clear()
-	$DECODEOverlay.scoreB = 0
-	$DECODEOverlay.scoreR = 0
-	$DECODEOverlay/CenterContainer2/Label.modulate = "ffffff"
+	$SubViewport/DECODEOverlay.scoreB = 0
+	$SubViewport/DECODEOverlay.scoreR = 0
+	$SubViewport/DECODEOverlay/CenterContainer2/Label.modulate = "ffffff"
 	#var hs := FileAccess.open("res://Fields/DECODE/HS.txt", FileAccess.READ)
-	#$DECODEOverlay/CenterContainer3/Label.text = "High Score:\n"+hs.get_as_text()
+	#$SubViewport/DECODEOverlay/CenterContainer3/Label.text = "High Score:\n"+hs.get_as_text()
 
 
 func _on_blue_g_body_entered(body: Node3D) -> void:
@@ -108,13 +121,35 @@ func closestArtifact(gate: Node3D) -> Artifact:
 	return closest
 
 func camSwitch():
-	$SplitCam.visible = not $SplitCam.visible
-	splitCam = not splitCam
-	#cam += 1
-	#cam %= 3
-	#cams[cam-1].current = false
-	#cams[cam].current = true
-	#cams[(cam+1)%3].current = false
+	if $XROrigin3D.current:
+		if Global.alliance=="blue":
+			$XROrigin3D.current = false
+			$XROrigin3D/XRCamera3D.current = false
+			$XROrigin3DBlue.current = true
+			$XROrigin3DBlue/XRCamera3D.current = true
+		elif Global.alliance=="red":
+			$XROrigin3D.current = false
+			$XROrigin3D/XRCamera3D.current = false
+			$XROrigin3DRed.current = true
+			$XROrigin3DRed/XRCamera3D.current = true
+	else:
+		if Global.alliance=="blue":
+			$XROrigin3D.current = true
+			$XROrigin3D/XRCamera3D.current = true
+			$XROrigin3DBlue.current = false
+			$XROrigin3DBlue/XRCamera3D.current = false
+		elif Global.alliance=="red":
+			$XROrigin3D.current = true
+			$XROrigin3D/XRCamera3D.current = true
+			$XROrigin3DRed.current = false
+			$XROrigin3DRed/XRCamera3D.current = false
+	#$SplitCam.visible = not $SplitCam.visible
+	#splitCam = not splitCam
+	##cam += 1
+	##cam %= 3
+	##cams[cam-1].current = false
+	##cams[cam].current = true
+	##cams[(cam+1)%3].current = false
 
 func updateCurve():
 	pass
@@ -131,17 +166,17 @@ func updateCurve():
 func _on_blue_over_body_entered(body: Node3D) -> void:
 	if body is Artifact:
 		if body.launchZone and body.launchSource.alliance==0:
-			$DECODEOverlay.scoreB += 1
+			$SubViewport/DECODEOverlay.scoreB += 1
 		else:
-			$DECODEOverlay.scoreR += 15
+			$SubViewport/DECODEOverlay.scoreR += 15
 
 
 func _on_red_over_body_entered(body: Node3D) -> void:
 	if body is Artifact:
 		if body.launchZone and body.launchSource.alliance==1:
-			$DECODEOverlay.scoreR += 1
+			$SubViewport/DECODEOverlay.scoreR += 1
 		else:
-			$DECODEOverlay.scoreB += 15
+			$SubViewport/DECODEOverlay.scoreB += 15
 
 
 func _on_timer_timeout() -> void:
@@ -151,10 +186,10 @@ func _on_timer_timeout() -> void:
 	$Goals/Blue/Class/CollisionShape3D.disabled = false
 	$Goals/Red/Class/CollisionShape3D.disabled = false
 	$Timer.process_mode = Node.PROCESS_MODE_DISABLED
-	$DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_INHERIT
-	$DECODEOverlay/Timer.start()
-	$DECODEOverlay.countDown = false
-	$DECODEOverlay/CenterContainer2/Label.text = ""
+	$SubViewport/DECODEOverlay/Timer.process_mode = Node.PROCESS_MODE_INHERIT
+	$SubViewport/DECODEOverlay/Timer.start()
+	$SubViewport/DECODEOverlay.countDown = false
+	$SubViewport/DECODEOverlay/CenterContainer2/Label.text = ""
 
 
 func _on_decode_overlay_match_finished() -> void:
@@ -168,24 +203,24 @@ func _on_decode_overlay_match_finished() -> void:
 func _on_blue_class_body_entered(body: Node3D) -> void:
 	if body is Artifact and body.launchSource!=null:
 		if body.launchZone and body.launchSource.alliance==0:
-			$DECODEOverlay.scoreB += 2
+			$SubViewport/DECODEOverlay.scoreB += 2
 		body.launchSource = null
 
 
 func _on_red_class_body_entered(body: Node3D) -> void:
 	if body is Artifact and body.launchSource!=null:
 		if body.launchZone and body.launchSource.alliance==1:
-			$DECODEOverlay.scoreR += 2
+			$SubViewport/DECODEOverlay.scoreR += 2
 		body.launchSource = null
 
 
 func _on_blue_gate_body_exited(body: Node3D) -> void:
 	if body is Artifact:
 		if blueGateOpener.alliance!=0:
-			$DECODEOverlay.scoreB += 15
+			$SubViewport/DECODEOverlay.scoreB += 15
 
 
 func _on_red_gate_body_exited(body: Node3D) -> void:
 	if body is Artifact:
 		if redGateOpener.alliance!=1:
-			$DECODEOverlay.scoreR += 15
+			$SubViewport/DECODEOverlay.scoreR += 15
