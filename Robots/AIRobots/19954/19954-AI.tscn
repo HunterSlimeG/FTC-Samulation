@@ -116,6 +116,8 @@ transform = Transform3D(-2.6226833e-06, -60, 0, 60, -2.6226833e-06, 0, 0, 0, 60,
 mesh = ExtResource("17_5nwg8")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1545127915]
+path_desired_distance = 3.0
+target_desired_distance = 3.0
 simplify_path = true
 avoidance_enabled = true
 radius = 1.0

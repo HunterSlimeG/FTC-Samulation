@@ -94,6 +94,8 @@ text = "18518"
 transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0.549, 1.886, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=2735299]
+path_desired_distance = 3.0
+target_desired_distance = 3.0
 simplify_path = true
 avoidance_enabled = true
 radius = 1.0

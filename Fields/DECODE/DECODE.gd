@@ -25,6 +25,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	#updateCurve()
+	#$DirectionalLight3D.rotation_degrees.x -= 1*delta #0.5
+	#if $DirectionalLight3D.rotation_degrees.x%360<-140:
+		#pass
 	$DECODEOverlay.updateArtifacts(get_node("Robot/B/").get_children()[0].intakeArtifacts, get_node("Robot/R/").get_children()[0].intakeArtifacts)
 
 func _input(event: InputEvent) -> void:
