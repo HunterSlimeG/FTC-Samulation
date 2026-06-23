@@ -4,12 +4,12 @@
 [ext_resource type="Script" uid="uid://dsa1dnifd6w32" path="res://addons/guide/guide_mapping_context.gd" id="2_4uv71"]
 [ext_resource type="Resource" uid="uid://bypeccxh0iww2" path="res://Robots/DriveRobots/14850/Drivers/14850-1.tres" id="3_xgo6s"]
 [ext_resource type="Resource" uid="uid://7qrlgf3rwchm" path="res://Robots/DriveRobots/14850/Drivers/14850-2.tres" id="4_1d1ld"]
-[ext_resource type="ArrayMesh" uid="uid://h6l2fprpr0w1" path="res://Robots/DriveRobots/19954/Meshes/Wheel.tres" id="9_1d1ld"]
-[ext_resource type="ArrayMesh" uid="uid://bxxofmsl2wlx0" path="res://Robots/DriveRobots/14850/Meshes/Intake.tres" id="12_lolat"]
-[ext_resource type="ArrayMesh" uid="uid://cjt5n1ob1atxu" path="res://Robots/DriveRobots/14850/Meshes/Plates.tres" id="13_8e745"]
-[ext_resource type="ArrayMesh" uid="uid://d4ley4kpitf8j" path="res://Robots/DriveRobots/14850/Meshes/Drivetrain.tres" id="14_xdw2e"]
-[ext_resource type="ArrayMesh" uid="uid://nwek3pgqduui" path="res://Robots/DriveRobots/14850/Meshes/Launcher.tres" id="15_wcn4k"]
-[ext_resource type="ArrayMesh" uid="uid://ndl5c5tijw48" path="res://Robots/DriveRobots/19954/Meshes/Mecanum.tres" id="16_4uv71"]
+[ext_resource type="ArrayMesh" uid="uid://gmdihikv75aq" path="res://Robots/DriveRobots/19954/Meshes/Wheel.res" id="9_1d1ld"]
+[ext_resource type="ArrayMesh" uid="uid://dvfnctsmp4xgs" path="res://Robots/DriveRobots/14850/Meshes/Intake.res" id="12_lolat"]
+[ext_resource type="ArrayMesh" uid="uid://v5ivkvmbgii0" path="res://Robots/DriveRobots/14850/Meshes/Plates.res" id="13_8e745"]
+[ext_resource type="ArrayMesh" uid="uid://30u3qta4wgoy" path="res://Robots/DriveRobots/14850/Meshes/Drivetrain.res" id="14_xdw2e"]
+[ext_resource type="ArrayMesh" uid="uid://1ba7eqe6jowm" path="res://Robots/DriveRobots/14850/Meshes/Launcher.res" id="15_wcn4k"]
+[ext_resource type="ArrayMesh" uid="uid://ca2qeq54x0ri7" path="res://Robots/DriveRobots/19954/Meshes/Mecanum.res" id="16_4uv71"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
 size = Vector3(2.2, 2, 2.3)

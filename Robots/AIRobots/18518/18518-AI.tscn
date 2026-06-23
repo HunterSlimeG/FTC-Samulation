@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://858b3cj7wins"]
 
 [ext_resource type="Script" uid="uid://crnsof8iam66p" path="res://Robots/AIRobots/18518/18518-AI.gd" id="1_d5ba2"]
-[ext_resource type="ArrayMesh" uid="uid://bikl170ffum7t" path="res://Robots/DriveRobots/18518/Meshes/Spin.tres" id="5_b345e"]
-[ext_resource type="ArrayMesh" uid="uid://eea5um5kxyu7" path="res://Robots/DriveRobots/18518/Meshes/Intake.tres" id="6_f5qg7"]
-[ext_resource type="ArrayMesh" uid="uid://b3rysad46dtyr" path="res://Robots/DriveRobots/18518/Meshes/Drivetrain.tres" id="7_1xck2"]
-[ext_resource type="ArrayMesh" uid="uid://c5hgb52voj4v0" path="res://Robots/DriveRobots/18518/Meshes/Ramp.tres" id="8_ajehp"]
-[ext_resource type="ArrayMesh" uid="uid://ndl5c5tijw48" path="res://Robots/DriveRobots/19954/Meshes/Mecanum.tres" id="9_3h0r7"]
-[ext_resource type="ArrayMesh" uid="uid://h6l2fprpr0w1" path="res://Robots/DriveRobots/19954/Meshes/Wheel.tres" id="10_g3h1s"]
-[ext_resource type="ArrayMesh" uid="uid://oy16farggjxn" path="res://Robots/DriveRobots/19954/Meshes/Axle.tres" id="11_mjone"]
+[ext_resource type="ArrayMesh" uid="uid://meac3rlmvc0u" path="res://Robots/DriveRobots/18518/Meshes/Spin.res" id="5_b345e"]
+[ext_resource type="ArrayMesh" uid="uid://blc8xfcsm0isn" path="res://Robots/DriveRobots/18518/Meshes/Intake.res" id="6_f5qg7"]
+[ext_resource type="ArrayMesh" uid="uid://bqb8cj66jwdax" path="res://Robots/DriveRobots/18518/Meshes/Drivetrain.res" id="7_1xck2"]
+[ext_resource type="ArrayMesh" uid="uid://bdt3njrpg4bh0" path="res://Robots/DriveRobots/18518/Meshes/Ramp.res" id="8_ajehp"]
+[ext_resource type="ArrayMesh" uid="uid://ca2qeq54x0ri7" path="res://Robots/DriveRobots/19954/Meshes/Mecanum.res" id="9_3h0r7"]
+[ext_resource type="ArrayMesh" uid="uid://gmdihikv75aq" path="res://Robots/DriveRobots/19954/Meshes/Wheel.res" id="10_g3h1s"]
+[ext_resource type="ArrayMesh" uid="uid://vvf56pavt0xb" path="res://Robots/DriveRobots/19954/Meshes/Axle.res" id="11_mjone"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_axnu4"]
 size = Vector3(2, 2, 2.2)
