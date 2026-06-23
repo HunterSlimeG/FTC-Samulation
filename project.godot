@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FTC-Samulation"
-config/version="1.2.0"
+config/version="1.2.1"
 config/tags=PackedStringArray("ftc", "hsg_studios")
 run/main_scene="uid://buoe7bly42j2y"
 config/features=PackedStringArray("4.7", "Forward Plus")
