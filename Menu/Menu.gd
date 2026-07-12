@@ -13,11 +13,12 @@ var robots: Array[String] = ["", ""]
 var blueDrivers: Array[int] = [0, 0]
 var redDrivers: Array[int] = [0, 0]
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	for c in Global.cursorContexts:
+		GUIDE.enable_mapping_context(c)
 	
-	$TabContainer/Local/Season.grab_focus()
 	$CenterContainer/Version.text = "v"+ProjectSettings.get_setting("application/config/version")
 	$HTTPRequest.request("https://api.github.com/repos/HunterSlimeG/FTC-Samulation/releases/latest")
 	print($HTTPRequest.download_file)
@@ -49,6 +50,8 @@ func _process(delta: float) -> void:
 		fieldLoaded.get_node("Robot/B").add_child(robotBlue)
 		fieldLoaded.get_node("Robot/R").add_child(robotRed)
 		get_tree().change_scene_to_node(fieldLoaded)
+		for c in Global.cursorContexts:
+			GUIDE.disable_mapping_context(c)
 	$TabContainer/Local/ProgressBar.value = move_toward($TabContainer/Local/ProgressBar.value, progress[0]*100, delta * 20)
 
 func _on_season_item_selected(index: int) -> void:

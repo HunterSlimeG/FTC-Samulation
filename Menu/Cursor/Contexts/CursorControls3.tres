@@ -1,0 +1,83 @@
+[gd_resource type="Resource" script_class="GUIDEMappingContext" format=3 uid="uid://bv7q4s6wwqov3"]
+
+[ext_resource type="Script" uid="uid://cpplm41b5bt6m" path="res://addons/guide/guide_action_mapping.gd" id="1_qtbmg"]
+[ext_resource type="Script" uid="uid://cluhc11vixkf1" path="res://addons/guide/guide_action.gd" id="2_aepyg"]
+[ext_resource type="Script" uid="uid://mtx1unc2aqn7" path="res://addons/guide/guide_input_mapping.gd" id="3_udsvf"]
+[ext_resource type="Script" uid="uid://rvttn472ix6v" path="res://addons/guide/inputs/guide_input_joy_button.gd" id="4_hq6sy"]
+[ext_resource type="Script" uid="uid://bl8rjl4oaldje" path="res://addons/guide/modifiers/guide_modifier.gd" id="5_ovr6c"]
+[ext_resource type="Script" uid="uid://x74mnwgr08a7" path="res://addons/guide/triggers/guide_trigger.gd" id="6_5vij3"]
+[ext_resource type="Script" uid="uid://doauobik3xyea" path="res://addons/guide/inputs/guide_input_joy_axis_2d.gd" id="7_bymjt"]
+[ext_resource type="Script" uid="uid://bbhoxsiqwo07l" path="res://addons/guide/inputs/guide_input_joy_axis_1d.gd" id="7_gymw8"]
+[ext_resource type="Script" uid="uid://c47lkb48itd6l" path="res://addons/guide/modifiers/guide_modifier_deadzone.gd" id="8_10u1l"]
+[ext_resource type="Script" uid="uid://dsa1dnifd6w32" path="res://addons/guide/guide_mapping_context.gd" id="8_mpswn"]
+
+[sub_resource type="Resource" id="Resource_57dt0"]
+script = ExtResource("2_aepyg")
+name = &"Select"
+block_lower_priority_actions = false
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_f2lu6"]
+script = ExtResource("4_hq6sy")
+joy_index = 2
+
+[sub_resource type="Resource" id="Resource_0544d"]
+script = ExtResource("3_udsvf")
+input = SubResource("Resource_f2lu6")
+
+[sub_resource type="Resource" id="Resource_2j80c"]
+script = ExtResource("7_gymw8")
+axis = 5
+joy_index = 2
+
+[sub_resource type="Resource" id="Resource_pnsde"]
+script = ExtResource("3_udsvf")
+input = SubResource("Resource_2j80c")
+
+[sub_resource type="Resource" id="Resource_ylvsq"]
+script = ExtResource("1_qtbmg")
+action = SubResource("Resource_57dt0")
+input_mappings = Array[ExtResource("3_udsvf")]([SubResource("Resource_0544d"), SubResource("Resource_pnsde")])
+
+[sub_resource type="Resource" id="Resource_271p5"]
+script = ExtResource("2_aepyg")
+name = &"Move"
+action_value_type = 2
+block_lower_priority_actions = false
+metadata/_custom_type_script = "uid://cluhc11vixkf1"
+
+[sub_resource type="Resource" id="Resource_6pnv1"]
+script = ExtResource("7_bymjt")
+joy_index = 2
+
+[sub_resource type="Resource" id="Resource_10u1l"]
+script = ExtResource("8_10u1l")
+
+[sub_resource type="Resource" id="Resource_py4aj"]
+script = ExtResource("3_udsvf")
+input = SubResource("Resource_6pnv1")
+modifiers = Array[ExtResource("5_ovr6c")]([SubResource("Resource_10u1l")])
+
+[sub_resource type="Resource" id="Resource_bg3um"]
+script = ExtResource("7_bymjt")
+x = 2
+y = 3
+joy_index = 2
+
+[sub_resource type="Resource" id="Resource_gymw8"]
+script = ExtResource("8_10u1l")
+
+[sub_resource type="Resource" id="Resource_rohob"]
+script = ExtResource("3_udsvf")
+input = SubResource("Resource_bg3um")
+modifiers = Array[ExtResource("5_ovr6c")]([SubResource("Resource_gymw8")])
+
+[sub_resource type="Resource" id="Resource_4r6oc"]
+script = ExtResource("1_qtbmg")
+action = SubResource("Resource_271p5")
+input_mappings = Array[ExtResource("3_udsvf")]([SubResource("Resource_py4aj"), SubResource("Resource_rohob")])
+
+[resource]
+script = ExtResource("8_mpswn")
+mappings = Array[ExtResource("1_qtbmg")]([SubResource("Resource_ylvsq"), SubResource("Resource_4r6oc")])
+metadata/_custom_type_script = "uid://dsa1dnifd6w32"

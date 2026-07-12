@@ -5,6 +5,9 @@ var field = ""
 var fullscreen = false
 var baseControls = preload("res://BaseControls.tres")
 
+var cursorContexts = [preload("res://Menu/Cursor/Contexts/CursorControls1.tres"), preload("res://Menu/Cursor/Contexts/CursorControls2.tres"), preload("res://Menu/Cursor/Contexts/CursorControls3.tres"), preload("res://Menu/Cursor/Contexts/CursorControls4.tres")]
+
+
 func _process(delta: float) -> void:
 	if not GUIDE.is_mapping_context_enabled(baseControls):
 		GUIDE.enable_mapping_context(baseControls)

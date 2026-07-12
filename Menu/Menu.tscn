@@ -13,7 +13,8 @@ grow_vertical = 2
 script = ExtResource("1_jf1j2")
 
 [node name="Cursor" parent="." unique_id=1747232460 instance=ExtResource("2_e56cd")]
-visible = false
+position = Vector2(637, 351)
+device = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=445955701]
 layout_mode = 0
@@ -71,9 +72,6 @@ offset_left = 8.0
 offset_top = 60.0
 offset_right = 508.0
 offset_bottom = 603.0
-focus_neighbor_left = NodePath("../RobotRed")
-focus_neighbor_right = NodePath("../RobotBlue")
-focus_neighbor_bottom = NodePath("../Start")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -107,9 +105,6 @@ offset_left = 518.0
 offset_top = 60.0
 offset_right = 1048.0
 offset_bottom = 369.0
-focus_neighbor_left = NodePath("../Season")
-focus_neighbor_right = NodePath("../RobotRed")
-focus_neighbor_bottom = NodePath("../Blue/HSplitContainer/BDr1")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -120,9 +115,6 @@ offset_left = 1058.0
 offset_top = 60.0
 offset_right = 1588.0
 offset_bottom = 369.0
-focus_neighbor_left = NodePath("../RobotBlue")
-focus_neighbor_right = NodePath("../Season")
-focus_neighbor_bottom = NodePath("../Red/HSplitContainer/RDr1")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -152,9 +144,6 @@ text = "Driver 1: "
 
 [node name="RDr1" type="OptionButton" parent="TabContainer/Local/Red/HSplitContainer" unique_id=1107387513]
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Blue/HSplitContainer/BDr1")
-focus_neighbor_top = NodePath("../../../RobotRed")
-focus_neighbor_bottom = NodePath("../../HSplitContainer2/RDr2")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 32
@@ -188,9 +177,6 @@ text = "Driver 2: "
 
 [node name="RDr2" type="OptionButton" parent="TabContainer/Local/Red/HSplitContainer2" unique_id=496195291]
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Blue/HSplitContainer2/BDr2")
-focus_neighbor_top = NodePath("../../HSplitContainer/RDr1")
-focus_neighbor_bottom = NodePath("../../../Start")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 32
@@ -232,9 +218,6 @@ text = "Driver 1: "
 
 [node name="BDr1" type="OptionButton" parent="TabContainer/Local/Blue/HSplitContainer" unique_id=662920304]
 layout_mode = 2
-focus_neighbor_top = NodePath("../../../RobotBlue")
-focus_neighbor_right = NodePath("../../../Red/HSplitContainer/RDr1")
-focus_neighbor_bottom = NodePath("../../HSplitContainer2/BDr2")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 32
@@ -268,9 +251,6 @@ text = "Driver 2: "
 
 [node name="BDr2" type="OptionButton" parent="TabContainer/Local/Blue/HSplitContainer2" unique_id=1157174193]
 layout_mode = 2
-focus_neighbor_top = NodePath("../../HSplitContainer/BDr1")
-focus_neighbor_right = NodePath("../../../Red/HSplitContainer2/RDr2")
-focus_neighbor_bottom = NodePath("../../../Start")
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 32
