@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://deg5jhjg6uw1h"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_5m6gr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ecyfs"]
+radius = 0.59999996
+
+[node name="Cursor" type="Node2D" unique_id=1747232460]
+scale = Vector2(12, 12)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1033359444]
+position = Vector2(1.2578884, 1.2578884)
+rotation = 2.3561945
+scale = Vector2(5, 5.7294183)
+mesh = SubResource("PrismMesh_5m6gr")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=111906025]
+scale = Vector2(5, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=259331825]
+shape = SubResource("CircleShape2D_ecyfs")

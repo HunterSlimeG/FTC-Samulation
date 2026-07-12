@@ -15,16 +15,19 @@ var redDrivers: Array[int] = [0, 0]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$Season.grab_focus()
+	$Local.visible = false
+	$Switcher.visible = true
+	
+	$Local/Season.grab_focus()
 	$CenterContainer/Version.text = "v"+ProjectSettings.get_setting("application/config/version")
 	$HTTPRequest.request("https://api.github.com/repos/HunterSlimeG/FTC-Samulation/releases/latest")
 	print($HTTPRequest.download_file)
-	$Start.disabled = true
+	$Local/Start.disabled = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var progress = []
 	if robots[0]!="" and robots[1]!="":
-		$Start.disabled = false
+		$Local/Start.disabled = false
 	if ResourceLoader.load_threaded_get_status("res://Fields/"+Global.field+"/"+Global.field+".scn", progress)==3:
 		var fieldLoaded: Node3D = ResourceLoader.load_threaded_get("res://Fields/"+Global.field+"/"+Global.field+".scn").instantiate()
 		var robotBlue: Robot
@@ -47,14 +50,14 @@ func _process(delta: float) -> void:
 		fieldLoaded.get_node("Robot/B").add_child(robotBlue)
 		fieldLoaded.get_node("Robot/R").add_child(robotRed)
 		get_tree().change_scene_to_node(fieldLoaded)
-	$ProgressBar.value = move_toward($ProgressBar.value, progress[0]*100, delta * 20)
+	$Local/ProgressBar.value = move_toward($Local/ProgressBar.value, progress[0]*100, delta * 20)
 
 func _on_season_item_selected(index: int) -> void:
-	var text = $Season.get_item_text(index)
+	var text = $Local/Season.get_item_text(index)
 	Global.field = text
 	for i in robotDict[text]:
-		$RobotBlue.add_item(i)
-		$RobotRed.add_item(i)
+		$Local/RobotBlue.add_item(i)
+		$Local/RobotRed.add_item(i)
 	
 
 func _on_start_pressed() -> void:
@@ -62,32 +65,35 @@ func _on_start_pressed() -> void:
 
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	var currentVers = []
-	for i in ProjectSettings.get_setting("application/config/version").split("."):
-		currentVers.append(int(i))
-	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	var response = json.get_data()
-	var latestVers = []
-	for i in response["name"].split("."):
-		latestVers.append(int(i))
-	
-	if currentVers[0]<latestVers[0]:
-		$"CenterContainer2/Update-Patch".text = "Update Available!"
-	elif currentVers[0]==latestVers[0] and currentVers[1]<latestVers[1]:
-		$"CenterContainer2/Update-Patch".text = "Update Available!"
-	elif currentVers[0]==latestVers[0] and currentVers[1]==latestVers[1] and currentVers[2]<latestVers[2]:
-		$"CenterContainer2/Update-Patch".text = "Update Available!"
+	if not body.is_empty():
+		var currentVers = []
+		for i in ProjectSettings.get_setting("application/config/version").split("."):
+			currentVers.append(int(i))
+		var json = JSON.new()
+		json.parse(body.get_string_from_utf8())
+		var response = json.get_data()
+		var latestVers = []
+		for i in response["name"].split("."):
+			latestVers.append(int(i))
+		
+		if currentVers[0]<latestVers[0]:
+			$"CenterContainer2/Update-Patch".text = "Update Available!"
+		elif currentVers[0]==latestVers[0] and currentVers[1]<latestVers[1]:
+			$"CenterContainer2/Update-Patch".text = "Update Available!"
+		elif currentVers[0]==latestVers[0] and currentVers[1]==latestVers[1] and currentVers[2]<latestVers[2]:
+			$"CenterContainer2/Update-Patch".text = "Update Available!"
+		else:
+			$"CenterContainer2/Update-Patch".text = "Patch Notes"
+		$"CenterContainer2/Update-Patch".uri = "https://github.com/HunterSlimeG/FTC-Samulation/releases/tag/"+response["name"]
 	else:
-		$"CenterContainer2/Update-Patch".text = "Patch Notes"
-	$"CenterContainer2/Update-Patch".uri = "https://github.com/HunterSlimeG/FTC-Samulation/releases/tag/"+response["name"]
-
+		$"CenterContainer2/Update-Patch".text = "No Internet!"
+		$"CenterContainer2/Update-Patch".uri = ""
 
 func _on_robot_blue_item_selected(index: int) -> void:
-	robots[0] = $RobotBlue.get_item_text(index)
+	robots[0] = $Local/RobotBlue.get_item_text(index)
 
 func _on_robot_red_item_selected(index: int) -> void:
-	robots[1] = $RobotRed.get_item_text(index)
+	robots[1] = $Local/RobotRed.get_item_text(index)
 
 
 func _on_r_dr_1_item_selected(index: int) -> void:
@@ -101,3 +107,11 @@ func _on_b_dr_1_item_selected(index: int) -> void:
 
 func _on_b_dr_2_item_selected(index: int) -> void:
 	blueDrivers[1] = index
+
+
+func _on_local_pressed() -> void:
+	$Switcher.visible = false
+	$Local.visible = true
+func _on_back_pressed() -> void:
+	$Local.visible = false
+	$Switcher.visible = true
