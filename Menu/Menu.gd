@@ -15,19 +15,18 @@ var redDrivers: Array[int] = [0, 0]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$Local.visible = false
-	$Switcher.visible = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
-	$Local/Season.grab_focus()
+	$TabContainer/Local/Season.grab_focus()
 	$CenterContainer/Version.text = "v"+ProjectSettings.get_setting("application/config/version")
 	$HTTPRequest.request("https://api.github.com/repos/HunterSlimeG/FTC-Samulation/releases/latest")
 	print($HTTPRequest.download_file)
-	$Local/Start.disabled = true
+	$TabContainer/Local/Start.disabled = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var progress = []
 	if robots[0]!="" and robots[1]!="":
-		$Local/Start.disabled = false
+		$TabContainer/Local/Start.disabled = false
 	if ResourceLoader.load_threaded_get_status("res://Fields/"+Global.field+"/"+Global.field+".scn", progress)==3:
 		var fieldLoaded: Node3D = ResourceLoader.load_threaded_get("res://Fields/"+Global.field+"/"+Global.field+".scn").instantiate()
 		var robotBlue: Robot
@@ -50,14 +49,14 @@ func _process(delta: float) -> void:
 		fieldLoaded.get_node("Robot/B").add_child(robotBlue)
 		fieldLoaded.get_node("Robot/R").add_child(robotRed)
 		get_tree().change_scene_to_node(fieldLoaded)
-	$Local/ProgressBar.value = move_toward($Local/ProgressBar.value, progress[0]*100, delta * 20)
+	$TabContainer/Local/ProgressBar.value = move_toward($TabContainer/Local/ProgressBar.value, progress[0]*100, delta * 20)
 
 func _on_season_item_selected(index: int) -> void:
-	var text = $Local/Season.get_item_text(index)
+	var text = $TabContainer/Local/Season.get_item_text(index)
 	Global.field = text
 	for i in robotDict[text]:
-		$Local/RobotBlue.add_item(i)
-		$Local/RobotRed.add_item(i)
+		$TabContainer/Local/RobotBlue.add_item(i)
+		$TabContainer/Local/RobotRed.add_item(i)
 	
 
 func _on_start_pressed() -> void:
@@ -90,10 +89,10 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		$"CenterContainer2/Update-Patch".uri = ""
 
 func _on_robot_blue_item_selected(index: int) -> void:
-	robots[0] = $Local/RobotBlue.get_item_text(index)
+	robots[0] = $TabContainer/Local/RobotBlue.get_item_text(index)
 
 func _on_robot_red_item_selected(index: int) -> void:
-	robots[1] = $Local/RobotRed.get_item_text(index)
+	robots[1] = $TabContainer/Local/RobotRed.get_item_text(index)
 
 
 func _on_r_dr_1_item_selected(index: int) -> void:
@@ -107,11 +106,3 @@ func _on_b_dr_1_item_selected(index: int) -> void:
 
 func _on_b_dr_2_item_selected(index: int) -> void:
 	blueDrivers[1] = index
-
-
-func _on_local_pressed() -> void:
-	$Switcher.visible = false
-	$Local.visible = true
-func _on_back_pressed() -> void:
-	$Local.visible = false
-	$Switcher.visible = true
