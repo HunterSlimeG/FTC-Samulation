@@ -59,6 +59,7 @@ func _input(event: InputEvent) -> void:
 					con.item_selected.emit(it)
 			elif con is OptionButton:
 				con.show_popup()
+				await con.item_selected
 			elif con is Button:
 				con.pressed.emit()
 			elif con is TabContainer:

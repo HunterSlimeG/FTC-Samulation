@@ -13,6 +13,7 @@ var robots: Array[String] = ["", ""]
 var blueDrivers: Array[int] = [0, 0]
 var redDrivers: Array[int] = [0, 0]
 
+var loading = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,23 +29,23 @@ func _process(delta: float) -> void:
 	var progress = []
 	if robots[0]!="" and robots[1]!="":
 		$TabContainer/Local/Start.disabled = false
-	if ResourceLoader.load_threaded_get_status("res://Fields/"+Global.field+"/"+Global.field+".scn", progress)==3:
+	if ResourceLoader.load_threaded_get_status("res://Fields/"+Global.field+"/"+Global.field+".scn", progress)==3 and loading:
+		loading = false
 		var fieldLoaded: Node3D = ResourceLoader.load_threaded_get("res://Fields/"+Global.field+"/"+Global.field+".scn").instantiate()
 		var robotBlue: Robot
 		if blueDrivers[0]>0 and blueDrivers[1]>0:
-			robotBlue = load("res://Robots/DriveRobots/"+robots[0]+"/"+robots[0]+".tscn").instantiate()
+			robotBlue = load("res://Robots/DriveRobots/"+robots[0]+"/"+robots[0]+".scn").instantiate()
 			robotBlue.driver1 = blueDrivers[0]-1
 			robotBlue.driver2 = blueDrivers[1]-1
 		else:
-			robotBlue = load("res://Robots/AIRobots/"+robots[0]+"/"+robots[0]+"-AI.tscn").instantiate()
+			robotBlue = load("res://Robots/AIRobots/"+robots[0]+"/"+robots[0]+"-AI.scn").instantiate()
 		var robotRed: Robot
 		if redDrivers[0]>0 and redDrivers[1]>0:
-			robotRed = load("res://Robots/DriveRobots/"+robots[1]+"/"+robots[1]+".tscn").instantiate()
+			robotRed = load("res://Robots/DriveRobots/"+robots[1]+"/"+robots[1]+".scn").instantiate()
 			robotRed.driver1 = redDrivers[0]-1
 			robotRed.driver2 = redDrivers[1]-1
 		else:
-			robotRed = load("res://Robots/AIRobots/"+robots[1]+"/"+robots[1]+"-AI.tscn").instantiate()
-		
+			robotRed = load("res://Robots/AIRobots/"+robots[1]+"/"+robots[1]+"-AI.scn").instantiate()
 		robotBlue.alliance = 0
 		robotRed.alliance = 1
 		fieldLoaded.get_node("Robot/B").add_child(robotBlue)
@@ -52,7 +53,8 @@ func _process(delta: float) -> void:
 		get_tree().change_scene_to_node(fieldLoaded)
 		for c in Global.cursorContexts:
 			GUIDE.disable_mapping_context(c)
-	$TabContainer/Local/ProgressBar.value = move_toward($TabContainer/Local/ProgressBar.value, progress[0]*100, delta * 20)
+	if loading:
+		$TabContainer/Local/ProgressBar.value = move_toward($TabContainer/Local/ProgressBar.value, progress[0]*100, delta * 20)
 
 func _on_season_item_selected(index: int) -> void:
 	var text = $TabContainer/Local/Season.get_item_text(index)
@@ -64,6 +66,7 @@ func _on_season_item_selected(index: int) -> void:
 
 func _on_start_pressed() -> void:
 	ResourceLoader.load_threaded_request("res://Fields/"+Global.field+"/"+Global.field+".scn", "", true)
+	loading = true
 
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
