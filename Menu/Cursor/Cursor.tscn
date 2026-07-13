@@ -4,11 +4,17 @@
 
 [sub_resource type="PrismMesh" id="PrismMesh_5m6gr"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ecyfs"]
-radius = 1.5999999
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcf8q"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_blend = true
 
 [node name="Cursor" type="Node2D" unique_id=1747232460]
-z_index = 5
+z_index = 10
+position = Vector2(6, 6)
 scale = Vector2(8, 8)
 script = ExtResource("1_yippd")
 
@@ -17,12 +23,6 @@ position = Vector2(1.2578884, 1.2578884)
 rotation = 2.3561945
 scale = Vector2(5, 5.7294183)
 mesh = SubResource("PrismMesh_5m6gr")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1292525661]
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=784163858]
-shape = SubResource("CircleShape2D_ecyfs")
 
 [node name="Label" type="Label" parent="." unique_id=1103060485]
 offset_left = 0.5
@@ -34,5 +34,10 @@ theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 24
 text = "0"
 
-[connection signal="area_entered" from="Area2D" to="." method="enter"]
-[connection signal="area_exited" from="Area2D" to="." method="exit"]
+[node name="Panel" type="Panel" parent="." unique_id=1875218739]
+visible = false
+top_level = true
+offset_top = -0.125
+offset_right = 40.0
+offset_bottom = 39.875
+theme_override_styles/panel = SubResource("StyleBoxFlat_vcf8q")

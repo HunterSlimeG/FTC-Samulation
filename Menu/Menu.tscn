@@ -12,9 +12,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jf1j2")
 
-[node name="Cursor" parent="." unique_id=1747232460 instance=ExtResource("2_e56cd")]
-position = Vector2(637, 351)
+[node name="Cursor1" parent="." unique_id=1747232460 instance=ExtResource("2_e56cd")]
+visible = false
+position = Vector2(800, 450)
 device = 1
+
+[node name="Cursor2" parent="." unique_id=884845107 instance=ExtResource("2_e56cd")]
+visible = false
+position = Vector2(800, 450)
+device = 2
+
+[node name="Cursor3" parent="." unique_id=1578980713 instance=ExtResource("2_e56cd")]
+visible = false
+position = Vector2(800, 450)
+device = 3
+
+[node name="Cursor4" parent="." unique_id=637654028 instance=ExtResource("2_e56cd")]
+visible = false
+position = Vector2(800, 450)
+device = 4
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=445955701]
 layout_mode = 0
@@ -42,27 +58,14 @@ text = "Link Text"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1507173816]
 
-[node name="Local" type="Control" parent="." unique_id=940700238]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 1
-
-[node name="Switcher" type="Control" parent="." unique_id=1188681921]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 1
-
 [node name="TabContainer" type="TabContainer" parent="." unique_id=784369853]
 layout_mode = 0
-offset_right = 422.0
+offset_right = 233.0
 offset_bottom = 53.0
 theme_override_font_sizes/font_size = 32
 current_tab = 0
 
-[node name="Local" type="TabBar" parent="TabContainer" unique_id=1757846393]
+[node name="Local" type="Control" parent="TabContainer" unique_id=331748023]
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -302,10 +305,19 @@ mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
 text = "Seasons"
 
-[node name="Online" type="TabBar" parent="TabContainer" unique_id=1391951211]
+[node name="Online" type="Control" parent="TabContainer" unique_id=1365124214]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
+
+[node name="Label" type="Label" parent="TabContainer/Online" unique_id=2063549546]
+layout_mode = 0
+offset_left = 339.0
+offset_top = 260.0
+offset_right = 1184.0
+offset_bottom = 435.0
+theme_override_font_sizes/font_size = 128
+text = "Coming Soon!"
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="item_selected" from="TabContainer/Local/Season" to="." method="_on_season_item_selected"]
