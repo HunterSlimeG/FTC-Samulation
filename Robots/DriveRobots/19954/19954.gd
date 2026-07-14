@@ -79,7 +79,7 @@ func _physics_process(delta: float) -> void:
 	input_dir = driverContexts[0].mappings[0].action.value_axis_2d
 	turn = -driverContexts[0].mappings[1].action.value_axis_1d
 	
-	var direction := (Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction := (transform.basis*Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	rotate(Vector3.UP, turn/14)
 	if direction:

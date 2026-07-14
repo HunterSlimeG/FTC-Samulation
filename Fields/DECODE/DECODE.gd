@@ -163,6 +163,20 @@ func _on_decode_overlay_match_finished() -> void:
 	$Goals/Red/Over/CollisionShape3D.disabled = true
 	$Goals/Blue/Class/CollisionShape3D.disabled = true
 	$Goals/Red/Class/CollisionShape3D.disabled = true
+	var inBounds = $Robot/B.get_child(0) in $Park/ParkBlue.get_overlapping_bodies()
+	var dist = $Robot/B.get_child(0).global_position.distance_to($Park/ParkBlue.global_position)
+	var avgLen = ($Robot/B.get_child(0).get_node("CollisionShape3D").shape.size.x+$Robot/B.get_child(0).get_node("CollisionShape3D").shape.size.z)/2
+	if inBounds:
+		$DECODEOverlay.scoreB += 5
+		if dist<avgLen/2:
+			$DECODEOverlay.scoreB += 5
+	inBounds = $Robot/R.get_child(0) in $Park/ParkRed.get_overlapping_bodies()
+	dist = $Robot/R.get_child(0).global_position.distance_to($Park/ParkBlue.global_position)
+	avgLen = ($Robot/R.get_child(0).get_node("CollisionShape3D").shape.size.x+$Robot/R.get_child(0).get_node("CollisionShape3D").shape.size.z)/2
+	if inBounds:
+		$DECODEOverlay.scoreR += 5
+		if dist<avgLen/2:
+			$DECODEOverlay.scoreR += 5
 
 
 func _on_blue_class_body_entered(body: Node3D) -> void:
