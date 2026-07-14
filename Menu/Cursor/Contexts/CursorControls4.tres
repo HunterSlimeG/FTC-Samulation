@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://rvttn472ix6v" path="res://addons/guide/inputs/guide_input_joy_button.gd" id="4_22uhl"]
 [ext_resource type="Script" uid="uid://bl8rjl4oaldje" path="res://addons/guide/modifiers/guide_modifier.gd" id="5_078e6"]
 [ext_resource type="Script" uid="uid://x74mnwgr08a7" path="res://addons/guide/triggers/guide_trigger.gd" id="6_vipco"]
+[ext_resource type="Script" uid="uid://b52rqq28tuqpg" path="res://addons/guide/triggers/guide_trigger_pressed.gd" id="7_5258u"]
 [ext_resource type="Script" uid="uid://doauobik3xyea" path="res://addons/guide/inputs/guide_input_joy_axis_2d.gd" id="7_ohddi"]
 [ext_resource type="Script" uid="uid://bbhoxsiqwo07l" path="res://addons/guide/inputs/guide_input_joy_axis_1d.gd" id="7_su8ei"]
 [ext_resource type="Script" uid="uid://dsa1dnifd6w32" path="res://addons/guide/guide_mapping_context.gd" id="8_5evtq"]
@@ -21,18 +22,26 @@ metadata/_custom_type_script = "uid://cluhc11vixkf1"
 script = ExtResource("4_22uhl")
 joy_index = 3
 
+[sub_resource type="Resource" id="Resource_dk2nv"]
+script = ExtResource("7_5258u")
+
 [sub_resource type="Resource" id="Resource_0544d"]
 script = ExtResource("3_fo1ts")
 input = SubResource("Resource_f2lu6")
+triggers = Array[ExtResource("6_vipco")]([SubResource("Resource_dk2nv")])
 
 [sub_resource type="Resource" id="Resource_5258u"]
 script = ExtResource("7_su8ei")
 axis = 5
 joy_index = 3
 
+[sub_resource type="Resource" id="Resource_0k7x1"]
+script = ExtResource("7_5258u")
+
 [sub_resource type="Resource" id="Resource_o64k4"]
 script = ExtResource("3_fo1ts")
 input = SubResource("Resource_5258u")
+triggers = Array[ExtResource("6_vipco")]([SubResource("Resource_0k7x1")])
 
 [sub_resource type="Resource" id="Resource_ylvsq"]
 script = ExtResource("1_2ot40")

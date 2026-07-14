@@ -25,7 +25,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	position+=Global.cursorContexts[device-1].mappings[1].action.value_axis_2d*500*delta
 	frames += 1
-	if frames%60==0:
+	if frames%30==0:
 		con = self
 		for i in get_all_selectables(owner):
 			if i.get_global_rect().has_point(global_position) and i.visible and i.get_parent().visible and (not i is Panel and not i is Label and (not i is Container or i is TabContainer)):
@@ -42,7 +42,7 @@ func _input(event: InputEvent) -> void:
 		active = true
 		visible = true
 		
-	if Global.cursorContexts[device-1].mappings[0].action.value_bool and active:
+	if Global.cursorContexts[device-1].mappings[0].action.is_triggered() and active:
 		if con!=self:
 			if con is CheckBox:
 				if con.button_pressed:
@@ -51,20 +51,25 @@ func _input(event: InputEvent) -> void:
 				else:
 					con.pressed.emit()
 					con.button_pressed = true
+				con = self
 			elif con is ItemList:
 				var pos = Vector2(position.x, position.y-40)-con.position
 				var it: int = con.get_item_at_position(pos, false)
 				if not con.is_selected(it) and it>-1:
 					con.select(it)
 					con.item_selected.emit(it)
-			elif con is OptionButton:
+				con = self
+			elif con is OptionButton and not con.get_popup().visible:
 				con.show_popup()
 				await con.item_selected
+				con = self
 			elif con is Button:
 				con.pressed.emit()
+				con = self
 			elif con is TabContainer:
 				print(con.current_tab)
 				con.current_tab = con.get_tab_idx_at_point(global_position)
+				con = self
 
 func get_all_selectables(node: Node):
 	var nodes : Array = []

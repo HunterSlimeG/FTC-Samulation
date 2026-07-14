@@ -140,24 +140,28 @@ text = "High Score:
 horizontal_alignment = 1
 
 [node name="ControlsB" type="RichTextLabel" parent="." unique_id=1807816330]
-offset_right = 390.0
-offset_bottom = 600.0
-theme_override_font_sizes/normal_font_size = 48
-theme_override_font_sizes/bold_font_size = 48
-theme_override_font_sizes/bold_italics_font_size = 48
-theme_override_font_sizes/italics_font_size = 48
-theme_override_font_sizes/mono_font_size = 48
+offset_right = 195.0
+offset_bottom = 300.0
+scale = Vector2(2, 2)
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+bbcode_enabled = true
 horizontal_alignment = 1
 
 [node name="ControlsR" type="RichTextLabel" parent="." unique_id=719652370]
 offset_left = 1210.0
-offset_right = 1600.0
-offset_bottom = 600.0
-theme_override_font_sizes/normal_font_size = 48
-theme_override_font_sizes/bold_font_size = 48
-theme_override_font_sizes/bold_italics_font_size = 48
-theme_override_font_sizes/italics_font_size = 48
-theme_override_font_sizes/mono_font_size = 48
+offset_right = 1405.0
+offset_bottom = 300.0
+scale = Vector2(2, 2)
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+bbcode_enabled = true
 horizontal_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
