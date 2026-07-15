@@ -13,7 +13,8 @@ border_width_bottom = 8
 border_blend = true
 
 [node name="Cursor" type="Node2D" unique_id=1747232460]
-z_index = 10
+top_level = true
+z_index = 20
 position = Vector2(6, 6)
 scale = Vector2(8, 8)
 script = ExtResource("1_yippd")

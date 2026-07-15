@@ -23,6 +23,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	#if not con is PopupMenu:
 	position+=Global.cursorContexts[device-1].mappings[1].action.value_axis_2d*500*delta
 	frames += 1
 	if frames%30==0:
@@ -45,12 +46,8 @@ func _input(event: InputEvent) -> void:
 	if Global.cursorContexts[device-1].mappings[0].action.is_triggered() and active:
 		if con!=self:
 			if con is CheckBox:
-				if con.button_pressed:
-					con.pressed.emit()
-					con.button_pressed = false
-				else:
-					con.pressed.emit()
-					con.button_pressed = true
+				con.pressed.emit()
+				con.button_pressed = not con.button_pressed
 				con = self
 			elif con is ItemList:
 				var pos = Vector2(position.x, position.y-40)-con.position
@@ -59,10 +56,9 @@ func _input(event: InputEvent) -> void:
 					con.select(it)
 					con.item_selected.emit(it)
 				con = self
-			elif con is OptionButton and not con.get_popup().visible:
-				con.show_popup()
-				await con.item_selected
-				con = self
+			#elif con is OptionButton and not con.get_popup().visible:
+				#con.show_popup()
+				#con = con.get_popup()
 			elif con is Button:
 				con.pressed.emit()
 				con = self

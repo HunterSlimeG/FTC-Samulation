@@ -37,6 +37,7 @@ layout_mode = 0
 offset_top = 788.0
 offset_right = 1600.0
 offset_bottom = 855.0
+focus_behavior_recursive = 1
 
 [node name="Version" type="Label" parent="CenterContainer" unique_id=1636745160]
 layout_mode = 2
@@ -49,6 +50,7 @@ layout_mode = 0
 offset_top = 850.0
 offset_right = 1600.0
 offset_bottom = 895.0
+focus_behavior_recursive = 1
 
 [node name="Update-Patch" type="LinkButton" parent="CenterContainer2" unique_id=154865590]
 layout_mode = 2
@@ -62,11 +64,13 @@ text = "Link Text"
 layout_mode = 0
 offset_right = 233.0
 offset_bottom = 53.0
+focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 32
 current_tab = 0
 
 [node name="Local" type="Control" parent="TabContainer" unique_id=331748023]
 layout_mode = 2
+focus_behavior_recursive = 1
 metadata/_tab_index = 0
 
 [node name="Season" type="ItemList" parent="TabContainer/Local" unique_id=1553098553]
@@ -76,6 +80,7 @@ offset_top = 60.0
 offset_right = 508.0
 offset_bottom = 603.0
 focus_mode = 0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -88,6 +93,7 @@ offset_left = 58.0
 offset_top = 663.0
 offset_right = 1078.0
 offset_bottom = 734.0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -99,6 +105,7 @@ offset_top = 648.0
 offset_right = 1274.0
 offset_bottom = 744.0
 focus_mode = 0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 64
@@ -111,6 +118,7 @@ offset_top = 60.0
 offset_right = 1048.0
 offset_bottom = 369.0
 focus_mode = 0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -122,6 +130,7 @@ offset_top = 60.0
 offset_right = 1588.0
 offset_bottom = 369.0
 focus_mode = 0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -132,10 +141,12 @@ offset_left = 1208.0
 offset_top = 396.0
 offset_right = 1491.0
 offset_bottom = 534.0
+focus_behavior_recursive = 1
 mouse_default_cursor_shape = 2
 
 [node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/Local/Red" unique_id=347839935]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_default_cursor_shape = 2
 split_offsets = PackedInt32Array(208)
 dragging_enabled = false
@@ -144,31 +155,22 @@ split_offset = 208
 
 [node name="Driver1" type="Label" parent="TabContainer/Local/Red/HSplitContainer" unique_id=2020144530]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
 text = "Driver 1: "
 
-[node name="RDr1" type="OptionButton" parent="TabContainer/Local/Red/HSplitContainer" unique_id=1107387513]
+[node name="RDr1" type="Button" parent="TabContainer/Local/Red/HSplitContainer" unique_id=295874664]
 layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 2
+focus_mode = 0
+focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 32
-selected = 0
-item_count = 5
-popup/item_0/text = "AI"
-popup/item_0/id = 0
-popup/item_1/text = "1"
-popup/item_1/id = 1
-popup/item_2/text = "2"
-popup/item_2/id = 2
-popup/item_3/text = "3"
-popup/item_3/id = 3
-popup/item_4/text = "4"
-popup/item_4/id = 4
+text = "AI"
 
 [node name="HSplitContainer2" type="HSplitContainer" parent="TabContainer/Local/Red" unique_id=1899561836]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_default_cursor_shape = 2
 split_offsets = PackedInt32Array(208)
 dragging_enabled = false
@@ -177,28 +179,18 @@ split_offset = 208
 
 [node name="Driver2" type="Label" parent="TabContainer/Local/Red/HSplitContainer2" unique_id=862684815]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
 text = "Driver 2: "
 
-[node name="RDr2" type="OptionButton" parent="TabContainer/Local/Red/HSplitContainer2" unique_id=496195291]
+[node name="RDr2" type="Button" parent="TabContainer/Local/Red/HSplitContainer2" unique_id=2114256383]
 layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 2
+focus_mode = 0
+focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 32
-selected = 0
-item_count = 5
-popup/item_0/text = "AI"
-popup/item_0/id = 0
-popup/item_1/text = "1"
-popup/item_1/id = 1
-popup/item_2/text = "2"
-popup/item_2/id = 2
-popup/item_3/text = "3"
-popup/item_3/id = 3
-popup/item_4/text = "4"
-popup/item_4/id = 4
+text = "AI"
 
 [node name="Blue" type="VBoxContainer" parent="TabContainer/Local" unique_id=2001932430]
 layout_mode = 0
@@ -206,10 +198,12 @@ offset_left = 668.0
 offset_top = 396.0
 offset_right = 951.0
 offset_bottom = 534.0
+focus_behavior_recursive = 1
 mouse_default_cursor_shape = 2
 
 [node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/Local/Blue" unique_id=1811480057]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_default_cursor_shape = 2
 split_offsets = PackedInt32Array(208)
 dragging_enabled = false
@@ -218,31 +212,22 @@ split_offset = 208
 
 [node name="Driver1" type="Label" parent="TabContainer/Local/Blue/HSplitContainer" unique_id=1870507782]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
 text = "Driver 1: "
 
-[node name="BDr1" type="OptionButton" parent="TabContainer/Local/Blue/HSplitContainer" unique_id=662920304]
+[node name="BDr1" type="Button" parent="TabContainer/Local/Blue/HSplitContainer" unique_id=1535344809]
 layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 2
+focus_mode = 0
+focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 32
-selected = 0
-item_count = 5
-popup/item_0/text = "AI"
-popup/item_0/id = 0
-popup/item_1/text = "1"
-popup/item_1/id = 1
-popup/item_2/text = "2"
-popup/item_2/id = 2
-popup/item_3/text = "3"
-popup/item_3/id = 3
-popup/item_4/text = "4"
-popup/item_4/id = 4
+text = "AI"
 
 [node name="HSplitContainer2" type="HSplitContainer" parent="TabContainer/Local/Blue" unique_id=2005763099]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_default_cursor_shape = 2
 split_offsets = PackedInt32Array(208)
 dragging_enabled = false
@@ -251,28 +236,18 @@ split_offset = 208
 
 [node name="Driver2" type="Label" parent="TabContainer/Local/Blue/HSplitContainer2" unique_id=1520434451]
 layout_mode = 2
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
 text = "Driver 2: "
 
-[node name="BDr2" type="OptionButton" parent="TabContainer/Local/Blue/HSplitContainer2" unique_id=1157174193]
+[node name="BDr2" type="Button" parent="TabContainer/Local/Blue/HSplitContainer2" unique_id=1944609585]
 layout_mode = 2
-mouse_filter = 1
-mouse_default_cursor_shape = 2
+focus_mode = 0
+focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 32
-selected = 0
-item_count = 5
-popup/item_0/text = "AI"
-popup/item_0/id = 0
-popup/item_1/text = "1"
-popup/item_1/id = 1
-popup/item_2/text = "2"
-popup/item_2/id = 2
-popup/item_3/text = "3"
-popup/item_3/id = 3
-popup/item_4/text = "4"
-popup/item_4/id = 4
+text = "AI"
 
 [node name="BlueLabel" type="Label" parent="TabContainer/Local" unique_id=2017219816]
 layout_mode = 0
@@ -280,6 +255,7 @@ offset_left = 668.0
 offset_top = -15.0
 offset_right = 922.0
 offset_bottom = 52.0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -292,6 +268,7 @@ offset_left = 1208.0
 offset_top = -15.0
 offset_right = 1447.0
 offset_bottom = 52.0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -304,6 +281,7 @@ offset_left = 154.0
 offset_top = -1.0
 offset_right = 342.0
 offset_bottom = 66.0
+focus_behavior_recursive = 1
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 48
@@ -312,6 +290,7 @@ text = "Seasons"
 [node name="Online" type="Control" parent="TabContainer" unique_id=1365124214]
 visible = false
 layout_mode = 2
+focus_behavior_recursive = 1
 metadata/_tab_index = 1
 
 [node name="Label" type="Label" parent="TabContainer/Online" unique_id=2063549546]
@@ -320,15 +299,18 @@ offset_left = 339.0
 offset_top = 260.0
 offset_right = 1184.0
 offset_bottom = 435.0
+focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 128
 text = "Coming Soon!"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=974231013]
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="item_selected" from="TabContainer/Local/Season" to="." method="_on_season_item_selected"]
 [connection signal="pressed" from="TabContainer/Local/Start" to="." method="_on_start_pressed"]
 [connection signal="item_selected" from="TabContainer/Local/RobotBlue" to="." method="_on_robot_blue_item_selected"]
 [connection signal="item_selected" from="TabContainer/Local/RobotRed" to="." method="_on_robot_red_item_selected"]
-[connection signal="item_selected" from="TabContainer/Local/Red/HSplitContainer/RDr1" to="." method="_on_r_dr_1_item_selected"]
-[connection signal="item_selected" from="TabContainer/Local/Red/HSplitContainer2/RDr2" to="." method="_on_r_dr_2_item_selected"]
-[connection signal="item_selected" from="TabContainer/Local/Blue/HSplitContainer/BDr1" to="." method="_on_b_dr_1_item_selected"]
-[connection signal="item_selected" from="TabContainer/Local/Blue/HSplitContainer2/BDr2" to="." method="_on_b_dr_2_item_selected"]
+[connection signal="pressed" from="TabContainer/Local/Red/HSplitContainer/RDr1" to="." method="_on_r_dr_1_selected"]
+[connection signal="pressed" from="TabContainer/Local/Red/HSplitContainer2/RDr2" to="." method="_on_r_dr_2_selected"]
+[connection signal="pressed" from="TabContainer/Local/Blue/HSplitContainer/BDr1" to="." method="_on_b_dr_1_selected"]
+[connection signal="pressed" from="TabContainer/Local/Blue/HSplitContainer2/BDr2" to="." method="_on_b_dr_2_selected"]

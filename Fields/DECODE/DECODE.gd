@@ -171,7 +171,7 @@ func _on_decode_overlay_match_finished() -> void:
 		if dist<avgLen/2:
 			$DECODEOverlay.scoreB += 5
 	inBounds = $Robot/R.get_child(0) in $Park/ParkRed.get_overlapping_bodies()
-	dist = $Robot/R.get_child(0).global_position.distance_to($Park/ParkBlue.global_position)
+	dist = $Robot/R.get_child(0).global_position.distance_to($Park/ParkRed.global_position)
 	avgLen = ($Robot/R.get_child(0).get_node("CollisionShape3D").shape.size.x+$Robot/R.get_child(0).get_node("CollisionShape3D").shape.size.z)/2
 	if inBounds:
 		$DECODEOverlay.scoreR += 5

@@ -101,14 +101,62 @@ func _on_robot_red_item_selected(index: int) -> void:
 	robots[1] = $TabContainer/Local/RobotRed.get_item_text(index)
 
 
-func _on_r_dr_1_item_selected(index: int) -> void:
-	redDrivers[0] = index
+func _on_r_dr_1_selected() -> void:
+	if redDrivers[0]<4:
+		redDrivers[0] += 1
+	else:
+		redDrivers[0] = 0
+	if redDrivers[0]>0:
+		$TabContainer/Local/Red/HSplitContainer/RDr1.text = str(redDrivers[0])
+		if redDrivers[0]==1:
+			redDrivers[1] = 1
+			$TabContainer/Local/Red/HSplitContainer2/RDr2.text = str(redDrivers[1])
+	else:
+		redDrivers[1] = 0
+		$TabContainer/Local/Red/HSplitContainer/RDr1.text = "AI"
+		$TabContainer/Local/Red/HSplitContainer2/RDr2.text = "AI"
 
-func _on_r_dr_2_item_selected(index: int) -> void:
-	redDrivers[1] = index
+func _on_r_dr_2_selected() -> void:
+	if redDrivers[1]<4:
+		redDrivers[1] += 1
+	else:
+		redDrivers[1] = 0
+	if redDrivers[1]>0:
+		$TabContainer/Local/Red/HSplitContainer2/RDr2.text = str(redDrivers[1])
+		if redDrivers[1]==1:
+			redDrivers[0] = 1
+			$TabContainer/Local/Red/HSplitContainer/RDr1.text = str(redDrivers[0])
+	else:
+		redDrivers[0] = 0
+		$TabContainer/Local/Red/HSplitContainer/RDr1.text = "AI"
+		$TabContainer/Local/Red/HSplitContainer2/RDr2.text = "AI"
 
-func _on_b_dr_1_item_selected(index: int) -> void:
-	blueDrivers[0] = index
+func _on_b_dr_1_selected() -> void:
+	if blueDrivers[0]<4:
+		blueDrivers[0] += 1
+	else:
+		blueDrivers[0] = 0
+	if blueDrivers[0]>0:
+		$TabContainer/Local/Blue/HSplitContainer/BDr1.text = str(blueDrivers[0])
+		if blueDrivers[0]==1:
+			blueDrivers[1] = 1
+			$TabContainer/Local/Blue/HSplitContainer2/BDr2.text = str(blueDrivers[1])
+	else:
+		blueDrivers[1] = 0
+		$TabContainer/Local/Blue/HSplitContainer/BDr1.text = "AI"
+		$TabContainer/Local/Blue/HSplitContainer2/BDr2.text = "AI"
 
-func _on_b_dr_2_item_selected(index: int) -> void:
-	blueDrivers[1] = index
+func _on_b_dr_2_selected() -> void:
+	if blueDrivers[1]<4:
+		blueDrivers[1] += 1
+	else:
+		blueDrivers[1] = 0
+	if blueDrivers[1]>0:
+		$TabContainer/Local/Blue/HSplitContainer2/BDr2.text = str(blueDrivers[1])
+		if blueDrivers[1]==1:
+			blueDrivers[0] = 1
+			$TabContainer/Local/Blue/HSplitContainer/BDr1.text = str(blueDrivers[0])
+	else:
+		blueDrivers[0] = 0
+		$TabContainer/Local/Blue/HSplitContainer/BDr1.text = "AI"
+		$TabContainer/Local/Blue/HSplitContainer2/BDr2.text = "AI"
