@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcd1yxpi5hm6f" path="res://Menu/Menu.gd" id="1_jf1j2"]
 [ext_resource type="PackedScene" uid="uid://deg5jhjg6uw1h" path="res://Menu/Cursor/Cursor.tscn" id="2_e56cd"]
+[ext_resource type="Script" uid="uid://by5ysscv4axkp" path="res://Menu/Online.gd" id="3_u03px"]
 
 [node name="Menu" type="Control" unique_id=1867579616]
 layout_mode = 3
@@ -291,6 +292,7 @@ text = "Seasons"
 visible = false
 layout_mode = 2
 focus_behavior_recursive = 1
+script = ExtResource("3_u03px")
 metadata/_tab_index = 1
 
 [node name="Label" type="Label" parent="TabContainer/Online" unique_id=2063549546]
@@ -303,6 +305,171 @@ focus_behavior_recursive = 1
 theme_override_font_sizes/font_size = 128
 text = "Coming Soon!"
 
+[node name="LineEdit" type="LineEdit" parent="TabContainer/Online" unique_id=650921992]
+visible = false
+layout_mode = 0
+offset_left = 520.0
+offset_top = -10.0
+offset_right = 1080.0
+offset_bottom = 86.0
+focus_behavior_recursive = 2
+theme_override_font_sizes/font_size = 64
+placeholder_text = " Enter Username "
+alignment = 1
+max_length = 16
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Lobby" type="Label" parent="TabContainer/Online" unique_id=1047560720]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 224.0
+offset_right = 369.0
+offset_bottom = 291.0
+theme_override_font_sizes/font_size = 48
+text = "Lobby Settings:"
+
+[node name="Max" type="Label" parent="TabContainer/Online/Lobby" unique_id=987257128]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 143.0
+offset_right = 203.0
+offset_bottom = 188.0
+theme_override_font_sizes/font_size = 32
+text = "Max Players:"
+
+[node name="Max2" type="SpinBox" parent="TabContainer/Online/Lobby" unique_id=1421904353]
+layout_mode = 0
+offset_left = 214.99998
+offset_top = 145.0
+offset_right = 301.5
+offset_bottom = 176.0
+scale = Vector2(1.5, 1.5)
+min_value = 2.0
+max_value = 4.0
+value = 2.0
+
+[node name="Lobby" type="LineEdit" parent="TabContainer/Online/Lobby" unique_id=1982271912]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 76.0
+offset_right = 287.0
+offset_bottom = 129.0
+focus_behavior_recursive = 2
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Lobby Name"
+max_length = 16
+
+[node name="IP" type="Label" parent="TabContainer/Online" unique_id=1475535839]
+visible = false
+layout_mode = 0
+offset_left = 1232.0
+offset_top = 224.0
+offset_right = 1588.0
+offset_bottom = 291.0
+theme_override_font_sizes/font_size = 48
+text = "Enter IP to Join:"
+
+[node name="IP" type="LineEdit" parent="TabContainer/Online/IP" unique_id=734058088]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 76.0
+offset_right = 302.0
+offset_bottom = 129.0
+focus_behavior_recursive = 2
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Enter Address"
+max_length = 16
+
+[node name="Create" type="Button" parent="TabContainer/Online" unique_id=1781535075]
+visible = false
+layout_mode = 0
+offset_left = 592.0
+offset_top = 224.0
+offset_right = 1008.0
+offset_bottom = 320.0
+theme_override_font_sizes/font_size = 64
+text = "Create Lobby"
+
+[node name="Join" type="Button" parent="TabContainer/Online" unique_id=278070083]
+visible = false
+layout_mode = 0
+offset_left = 635.0
+offset_top = 360.0
+offset_right = 965.0
+offset_bottom = 456.0
+theme_override_font_sizes/font_size = 64
+text = "Join Lobby"
+
+[node name="Players" type="Control" parent="TabContainer/Online" unique_id=1272901654]
+visible = false
+anchors_preset = 0
+offset_top = -216.0
+offset_right = 40.0
+offset_bottom = -176.0
+
+[node name="List" type="Label" parent="TabContainer/Online/Players" unique_id=285271472]
+layout_mode = 0
+offset_left = 1313.0
+offset_top = 469.0
+offset_right = 1482.0
+offset_bottom = 514.0
+theme_override_font_sizes/font_size = 32
+text = "Player List:"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="TabContainer/Online/Players" unique_id=22213807]
+layout_mode = 0
+offset_left = 1257.0
+offset_top = 517.0
+offset_right = 1533.0
+offset_bottom = 843.0
+
+[node name="Host" type="Label" parent="TabContainer/Online/Players" unique_id=858804520]
+layout_mode = 0
+offset_left = 1313.0
+offset_top = 382.0
+offset_right = 1482.0
+offset_bottom = 427.0
+theme_override_font_sizes/font_size = 32
+text = "Host:"
+horizontal_alignment = 1
+
+[node name="Host" type="Label" parent="TabContainer/Online/Players/Host" unique_id=714649864]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 30.0
+offset_right = 210.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 32
+text = "PlayerName"
+horizontal_alignment = 1
+
+[node name="Lobby" type="Label" parent="TabContainer/Online/Players" unique_id=1465429751]
+layout_mode = 0
+offset_left = 1313.0
+offset_top = 294.0
+offset_right = 1482.0
+offset_bottom = 339.0
+theme_override_font_sizes/font_size = 32
+text = "Lobby:"
+horizontal_alignment = 1
+
+[node name="Lobby" type="Label" parent="TabContainer/Online/Players/Lobby" unique_id=2049294187]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 30.0
+offset_right = 210.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 32
+text = "LobbyName"
+horizontal_alignment = 1
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=974231013]
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
@@ -314,3 +481,9 @@ text = "Coming Soon!"
 [connection signal="pressed" from="TabContainer/Local/Red/HSplitContainer2/RDr2" to="." method="_on_r_dr_2_selected"]
 [connection signal="pressed" from="TabContainer/Local/Blue/HSplitContainer/BDr1" to="." method="_on_b_dr_1_selected"]
 [connection signal="pressed" from="TabContainer/Local/Blue/HSplitContainer2/BDr2" to="." method="_on_b_dr_2_selected"]
+[connection signal="text_submitted" from="TabContainer/Online/LineEdit" to="TabContainer/Online" method="_on_line_edit_text_submitted"]
+[connection signal="value_changed" from="TabContainer/Online/Lobby/Max2" to="TabContainer/Online" method="_on_max_2_value_changed"]
+[connection signal="text_submitted" from="TabContainer/Online/Lobby/Lobby" to="TabContainer/Online" method="_on_lobby_text_submitted"]
+[connection signal="text_submitted" from="TabContainer/Online/IP/IP" to="TabContainer/Online" method="_on_ip_text_submitted"]
+[connection signal="pressed" from="TabContainer/Online/Create" to="TabContainer/Online" method="_on_create_pressed"]
+[connection signal="pressed" from="TabContainer/Online/Join" to="TabContainer/Online" method="_on_join_pressed"]
