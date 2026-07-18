@@ -429,6 +429,7 @@ offset_left = 1257.0
 offset_top = 517.0
 offset_right = 1533.0
 offset_bottom = 843.0
+theme_override_font_sizes/font_size = 32
 
 [node name="Host" type="Label" parent="TabContainer/Online/Players" unique_id=858804520]
 layout_mode = 0
@@ -448,26 +449,6 @@ offset_right = 210.0
 offset_bottom = 75.0
 theme_override_font_sizes/font_size = 32
 text = "PlayerName"
-horizontal_alignment = 1
-
-[node name="Lobby" type="Label" parent="TabContainer/Online/Players" unique_id=1465429751]
-layout_mode = 0
-offset_left = 1313.0
-offset_top = 294.0
-offset_right = 1482.0
-offset_bottom = 339.0
-theme_override_font_sizes/font_size = 32
-text = "Lobby:"
-horizontal_alignment = 1
-
-[node name="Lobby" type="Label" parent="TabContainer/Online/Players/Lobby" unique_id=2049294187]
-layout_mode = 0
-offset_left = -40.0
-offset_top = 30.0
-offset_right = 210.0
-offset_bottom = 75.0
-theme_override_font_sizes/font_size = 32
-text = "LobbyName"
 horizontal_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=974231013]

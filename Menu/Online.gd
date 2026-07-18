@@ -55,8 +55,12 @@ func _ready() -> void:
 	loadOnline()
 func _process(delta: float) -> void:
 	$Players/ItemList.clear()
-	for v in players.values():
-		$Players/ItemList.add_item(v.name)
+	var ids = players.keys()
+	ids.sort()
+	for id in ids:
+		$Players/ItemList.add_item(str(players[id].name))
+	if players.has(1):
+		$Players/Host/Host.text = players[1].name
 
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	onlineData.user = new_text
@@ -79,18 +83,16 @@ func _on_create_pressed() -> void:
 	$IP.visible = false
 	$Lobby.visible = false
 	$Players.visible = true
-	#$Players/Lobby/Lobby.text = onlineData.lobby
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(7000, onlineData.maxPlayers)
 	multiplayer.multiplayer_peer = peer
-	#$Players/ItemList.add_item(player.name)
+	players[1] = player
 func _on_join_pressed() -> void:
 	$Create.disabled = true
 	$Join.disabled = true
 	$IP.visible = false
 	$Lobby.visible = false
 	$Players.visible = true
-	#$Players/Lobby/Lobby.text = onlineData.lobby
 	if address.is_empty():
 		address = defaultOnline.address
 	var peer = ENetMultiplayerPeer.new()
