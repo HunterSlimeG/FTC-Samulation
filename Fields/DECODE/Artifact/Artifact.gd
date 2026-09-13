@@ -22,5 +22,5 @@ func _integrate_forces(state):
 		reset_state = false
 
 func move_body(targetPos: Vector3):
-	moveVector = targetPos;
-	reset_state = true;
+	moveVector = targetPos
+	reset_state = true

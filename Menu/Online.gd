@@ -52,7 +52,7 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(connected_fail)
 	multiplayer.server_disconnected.connect(disconnected_client)
 	
-	loadOnline()
+	#loadOnline()
 func _process(delta: float) -> void:
 	$Players/ItemList.clear()
 	var ids = players.keys()
