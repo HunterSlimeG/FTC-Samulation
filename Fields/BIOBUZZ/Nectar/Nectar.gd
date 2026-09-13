@@ -14,7 +14,7 @@ func _ready() -> void:
 		0:
 			$MeshInstance3D.mesh = load("res://Fields/BIOBUZZ/Nectar/Red.res")
 		1:
-			$MeshInstance3D.mesh = load("res://Fields/BIOBUZZ/Nectar/Red.res")
+			$MeshInstance3D.mesh = load("res://Fields/BIOBUZZ/Nectar/Blue.res")
 
 func _integrate_forces(state):
 	if reset_state:

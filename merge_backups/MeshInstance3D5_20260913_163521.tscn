@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cfa6i0nev8743"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_455qy"]
+uv1_scale = Vector3(4, 1, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_lquwl"]
+inner_radius = 0.325
+outer_radius = 0.625
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pc2h3"]
+uv1_scale = Vector3(3, 1.96, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hc20j"]
+albedo_color = Color(1, 0, 1, 1)
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0xm2m"]
+
+[node name="MeshInstance3D5_backup" type="Node3D" unique_id=1308986517]
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=2123449038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.347708, -0.965097, 0.899758)
+material_override = SubResource("StandardMaterial3D_455qy")
+mesh = SubResource("TorusMesh_lquwl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=355781777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0845332, 0, 0)
+material_override = SubResource("StandardMaterial3D_pc2h3")
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=208299995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.566937, 0, 0)
+material_override = SubResource("StandardMaterial3D_hc20j")
+mesh = SubResource("CapsuleMesh_0xm2m")
